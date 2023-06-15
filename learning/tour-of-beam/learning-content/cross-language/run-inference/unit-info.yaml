@@ -19,11 +19,9 @@
 
 sdk:
   - Java
-  - Python
-id: cross-language
-name: Cross-Language Transforms
+id: run-inference
+name: Run inference
 complexity: ADVANCED
-content:
-- sql-transform
-- multi-pipeline
-- run-inference
+taskName: run-inference
+
+
