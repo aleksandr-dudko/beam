@@ -169,6 +169,9 @@ class TourNotifier extends ChangeNotifier with PageStateMixin<void> {
       _trackUnitClosed();
     }
 
+    if (_currentUnitContent != null) {
+      _isPlaygroundShown = _currentUnitContent!.taskSnippetId != null;
+    }
     _currentUnitContent = unitContent;
     if (_currentUnitContent != null) {
       _isPlaygroundShown = _currentUnitContent!.taskSnippetId != null;
