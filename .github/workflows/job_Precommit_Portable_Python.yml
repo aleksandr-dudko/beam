@@ -2,7 +2,7 @@ name: Precommit Portable Python
 run-name: Portable Python Precommit
 on:
   pull_request:
-   # branches: [ "master", "release-*" ]
+# branches: [ "master", "release-*" ]
     paths: [ 'model/**']
   issue_comment:
     types: [created, edited]
