@@ -1,0 +1,16 @@
+project_id = "apache-beam-testing"                                     # google PROJECT_ID that you want to deploy in
+region = "europe-west3"                                         # GCP region for the network
+zone = "europe-west3-c"                                       # GCP zone for the nodes
+min_main_node_count = "1"                                     # Minimal and initial node count for main pool
+max_main_node_count = "5"                                     # Maximal node count for main pool
+environment = "adudko"                         # Name of the environment. Used as a prefix like dev- stag- anything-
+ingress_domain = "example.com"                                       # FQDN for webhook ingress
+organization = "aleksandr-dudko"                                          # Github Organization to use runners in
+repository = "beam"                                           # Repository to use runners in
+github_app_id_secret_name = "adudko_github_app_id_secret_name"              # Google secret name for app id
+github_app_install_id_secret_name = "adudko_github_app_install_id_secret_name"  # Google secret name for install_id
+github_private_key_secret_name = "adudko_github_private_key_secret_name"       # Google secret name for pem file
+deploy_webhook = "false"                                      # Terraform to deploy the scaling webhook
+max_main_replicas = "2"                                       # Max number of runner PODs . Do not confuse with Nodes
+min_main_replicas = "1"                                       # Min number of runner PODs . Do not confuse with Nodes
+webhook_scaling = "false"                                     # Enable webhook scaling. When disabled runner busy percentage is used
