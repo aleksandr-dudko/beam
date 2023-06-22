@@ -1,6 +1,9 @@
 name: Precommit Portable Python
 run-name: Portable Python Precommit
 on:
+  push:
+    tags: [ 'v*' ]
+    branches: [ 'master', 'release-*' ]
   pull_request:
     branches: [ "master", "release-*" ]
     paths: [ 'model/**' ]
@@ -13,7 +16,7 @@ jobs:
       matrix:
         python_version: ['3.7','3.10']
     if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Portable_Python PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, ubuntu-20.04]
 
     steps:
       - uses: actions/checkout@v3
