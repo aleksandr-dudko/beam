@@ -13,7 +13,7 @@ jobs:
       matrix:
         python_version: ['3.7','3.10']
     if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Portable_Python PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: [self-hosted, ubuntu-20.04]
+    runs-on: [self-hosted, Linux]
 
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +26,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-          gradle-version: 8.1.1
       - name: Install Python
         uses: actions/setup-python@v4
         with:
