@@ -7,20 +7,15 @@ on:
   issue_comment:
     types: [created]
 
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 jobs:
   PortablePythonPrecommit:
-
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Portable_Python PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: ['self-hosted', ubuntu-20.04]
-
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
-        python_version: [ '3.8', '3.11' ]
+        python_version: ['3.8', '3.11']
+    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Portable_Python PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
+    runs-on: ['self-hosted', ubuntu-20.04]
 
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +24,12 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-          cache: 'gradle'
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: |
+            ${{matrix.python_version}}
+            3.8
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
