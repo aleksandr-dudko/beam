@@ -22,7 +22,7 @@ on:
 #   branches: [ "master", "release-*" ]
     paths: [ ".test-infra/metrics/**"]
   issue_comment:
-    types: [created, edited]
+    types: [created]
 #  schedule:
 #    - cron: '* */6 * * *'
 
@@ -44,5 +44,7 @@ jobs:
           cache-read-only: false
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: Tests
+        uses: cloudposse/github-action-docker-compose-test-run@main
       - name: run Community Metrics Precommit script
         run: ./gradlew :communityMetricsPreCommit
