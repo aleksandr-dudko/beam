@@ -1,5 +1,5 @@
-name: Precommit Portable Python
-run-name: Portable Python Precommit
+name: beam_PreCommit_Portable_Python
+
 on:
   push:
     tags: ['v*']
