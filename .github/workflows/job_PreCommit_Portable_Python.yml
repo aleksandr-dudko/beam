@@ -1,4 +1,4 @@
-name: beam_PreCommit_Portable_Python
+name: PreCommit Portable Python
 
 on:
   push:
