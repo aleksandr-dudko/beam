@@ -19,7 +19,8 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
   pull_request:
-#    branches: [ "master", "release-*" ]
+#   branches: [ "master", "release-*" ]
+    branches: ["community-*" ]
     paths: [ ".test-infra/metrics/.**"]
   issue_comment:
     types: [created, edited]
