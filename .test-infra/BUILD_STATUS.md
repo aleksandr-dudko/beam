@@ -17,7 +17,6 @@
     under the License.
 -->
 
-
 `ValidatesRunner` compliance status (on master branch)
 --------------------------------------------------------
 
