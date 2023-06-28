@@ -42,8 +42,9 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: run Community Metrics Precommit script
+      - name: Tests
         uses: cloudposse/github-action-docker-compose-test-run@main
-        run: ./gradlew :communityMetricsPreCommit
+        with:
+          file: test/docker-compose.yml
+          service: app
+          command: ./gradlew :communityMetricsPreCommit
