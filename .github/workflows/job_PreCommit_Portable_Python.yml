@@ -22,7 +22,7 @@ on:
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
   pull_request:
 #     branches: [ "master", "release-*" ]
-      branches: [ "portable-python" ]
+      branches: ['portable-python']
       paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
 
   issue_comment:
@@ -33,6 +33,7 @@ on:
 jobs:
   PortablePythonPreCommit:
     name: Portable Python
+    runs-on: ['self-hosted', ubuntu-20.04]
     strategy:
       fail-fast: false
       matrix:
@@ -41,9 +42,6 @@ jobs:
       || github.event_name == 'pull_request'
       || github.event_name == 'schedule'
       || github.event.comment.body == 'Run Portable_Python PreCommit'
-
-    runs-on: ['self-hosted', ubuntu-20.04]
-
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
