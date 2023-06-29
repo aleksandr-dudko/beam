@@ -1,13 +1,15 @@
 name: PreCommit Portable Python
 
+
 on:
   push:
     tags: ['v*']
-    branches: ['master', 'release-*']
-  pull_request:
-# branches: [ "master", "release-*" ] portable-python
+    # branches: ['master', 'release-*']
     branches: [ "portable-python"]
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
+  pull_request:
+     branches: [ "master", "release-*" ]
+     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
 
   issue_comment:
     types: [created]
