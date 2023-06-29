@@ -14,6 +14,7 @@
 # limitations under the License.
 
 name: PreCommit Portable Python
+run-name: Portable Python
 
 on:
   push:
@@ -32,7 +33,7 @@ on:
 
 jobs:
   PortablePythonPreCommit:
-    name: Portable Python
+    name: Python
     strategy:
       fail-fast: false
       matrix:
