@@ -17,7 +17,6 @@ name: PreCommit Portable Python
 
 on:
   push:
-    tags: ['v*']
 #    branches: ['master', 'release-*']
     branches: [ "portable-python" ]
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
