@@ -42,9 +42,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
+          gradle-version: 8.1.1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        with:
-          buildkitd-flags: --debug
       - name: run Community Metrics Precommit script
         run: ./gradlew :communityMetricsPreCommit
