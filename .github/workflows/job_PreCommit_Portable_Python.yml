@@ -31,7 +31,7 @@ on:
 #    - cron: '* */6 * * *'
 
 jobs:
-    name: Portable Python
+    run-name: Portable Python
     strategy:
       fail-fast: false
       matrix:
