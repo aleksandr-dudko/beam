@@ -20,7 +20,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
-  pull_request:
+  pull_request_target:
 #     branches: [ "master", "release-*" ]
       branches: [ "portable-python" ]
       paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
