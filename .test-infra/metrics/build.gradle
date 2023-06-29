@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 
-
 plugins {
   id 'org.apache.beam.module'
   // https://github.com/avast/gradle-docker-compose-plugin

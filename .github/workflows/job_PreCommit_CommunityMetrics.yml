@@ -20,7 +20,7 @@ on:
     branches: ['master', 'release-*']
   pull_request:
 #   branches: [ "master", "release-*" ]
-    paths: [ '.test-infra/metrics/**']
+    paths: ['.test-infra/metrics/**']
   issue_comment:
     types: [created]
 #  schedule:
@@ -28,9 +28,9 @@ on:
 
 jobs:
   CommunityMetricsPrecommit:
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run CommunityMetrics PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
+    if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run Portable_Python PreCommit'
 
-    runs-on: [self-hosted, Linux]
+    runs-on: ['self-hosted', ubuntu-20.04]
 
     steps:
       - uses: actions/checkout@v3
