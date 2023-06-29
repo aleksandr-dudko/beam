@@ -28,8 +28,9 @@ on:
 
 jobs:
   CommunityMetricsPrecommit:
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run CommunityMetrics PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: [self-hosted, Linux]
+    name: Community Metrics
+    runs-on: [ 'self-hosted', ubuntu-20.04 ]
+    if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run CommunityMetrics PreCommit'
 
     steps:
       - uses: actions/checkout@v3
