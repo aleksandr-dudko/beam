@@ -20,7 +20,8 @@ on:
     branches: ['master', 'release-*']
   pull_request:
 #   branches: [ "master", "release-*" ]
-    paths: [ ".test-infra/metrics/**"]
+    branches: ['сommunity-metrics']
+    paths: ['.test-infra/metrics/**']
   issue_comment:
     types: [created]
 #  schedule:
@@ -29,7 +30,7 @@ on:
 jobs:
   CommunityMetricsPrecommit:
     name: Community Metrics
-    runs-on: [ 'self-hosted', ubuntu-20.04 ]
+    runs-on: ['self-hosted', ubuntu-20.04 ]
     if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run CommunityMetrics PreCommit'
 
     steps:

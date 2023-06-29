@@ -86,7 +86,6 @@ docker-compose build
 docker-compose up
 ```
 
-
 After running these commands, you can access the services running on your local
 machine:
 
