@@ -14,7 +14,6 @@
 # limitations under the License.
 
 name: PreCommit Portable Python
-run-name: PreCommit Portable Python
 
 on:
   push:
