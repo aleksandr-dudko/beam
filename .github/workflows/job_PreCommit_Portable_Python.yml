@@ -24,21 +24,25 @@ on:
 #     branches: [ "master", "release-*" ]
       branches: ['portable-python']
       paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
-
   issue_comment:
     types: [created]
 #  schedule:
 #    - cron: '* */6 * * *'
+
 permissions: read-all
 jobs:
   PortablePythonPreCommit:
     name: Portable Python
-    runs-on: ['self-hosted', ubuntu-20.04]
     strategy:
       fail-fast: false
       matrix:
         python_version: ['3.8', '3.11']
-    if: github.event_name == 'push'|| github.event_name == 'pull_request_target'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run Portable_Python PreCommit'
+    runs-on: [self-hosted, ubuntu-20.04]
+    if: |
+      github.event_name == 'push' ||
+      github.event_name == 'pull_request_target' ||
+      github.event_name == 'schedule' ||
+      github.event.comment.body == 'Run Portable_Python PreCommit'
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
