@@ -42,5 +42,7 @@ jobs:
           java-version: '8'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+      - name: Remove default github maven configuration
+        run: rm ~/.m2/settings.xml
       - name: run Community Metrics PreCommit script
         run: ./gradlew :communityMetricsPreCommit
