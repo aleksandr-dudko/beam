@@ -37,8 +37,14 @@ jobs:
       fail-fast: false
       matrix:
         python_version: ['3.8', '3.11']
-    runs-on: ['self-hosted', ubuntu-20.04]
+#    runs-on: ['self-hosted', ubuntu-20.04]
 #    if: github.event_name == 'push'||github.event_name == 'pull_request_target'||github.event_name == 'schedule'||github.event.comment.body == 'Run Typescript PreCommit'
+    runs-on: [self-hosted, ubuntu-20.04]
+    if: |
+      github.event_name == 'push' ||
+      github.event_name == 'pull_request_target' ||
+      github.event_name == 'schedule' ||
+      github.event.comment.body == 'Run Portable_Python PreCommit'
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
