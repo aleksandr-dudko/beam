@@ -12,24 +12,27 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-name: Precommit Community Metrics
+
+name: PreCommit Community Metrics
 
 on:
   push:
     tags: ['v*']
     branches: ['master', 'release-*']
   pull_request:
-#    branches: [ "master", "release-*" ]
-    paths: [ ".test-infra/metrics/.**"]
+#   branches: [ "master", "release-*" ]
+    paths: ['.test-infra/metrics/**']
   issue_comment:
-    types: [created, edited]
+    types: [created]
+   
 #  schedule:
 #    - cron: '* */6 * * *'
 
 jobs:
   CommunityMetricsPrecommit:
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run CommunityMetrics PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: [self-hosted, ubuntu-20.04]
+    if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run Portable_Python PreCommit'
+
+    runs-on: ['self-hosted', Linux]
 
     steps:
       - uses: actions/checkout@v3
@@ -43,4 +46,8 @@ jobs:
         with:
           cache-read-only: false
       - name: run Community Metrics Precommit script
-        run: ./gradlew :communityMetricsPreCommit
+        run: |
+          cd .test-infra/metrics/ 
+          docker-compose build
+          docker-compose up
+         ./gradlew :communityMetricsPreCommit
