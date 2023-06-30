@@ -23,7 +23,7 @@ on:
   pull_request_target:
       types:
         - opened
-        - synchronize
+        - edited
 #     branches: [ "master", "release-*" ]
       branches: ['portable-python']
       paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
