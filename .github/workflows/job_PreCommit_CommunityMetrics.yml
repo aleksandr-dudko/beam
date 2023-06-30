@@ -45,5 +45,5 @@ jobs:
       - run: |
           cd .test-infra/metrics/ 
           docker-compose build
-          docker-compose up
+          docker-compose up -d
       - run: ./gradlew :communityMetricsPreCommit
