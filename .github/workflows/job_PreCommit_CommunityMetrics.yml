@@ -42,8 +42,5 @@ jobs:
           java-version: '8'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      - run: |
-          cd .test-infra/metrics/ 
-          docker-compose build
-          docker-compose up -d
-      - run: ./gradlew :communityMetricsPreCommit
+      - name: run Community Metrics PreCommit script
+        run: ./gradlew :communityMetricsPreCommit
