@@ -12,7 +12,6 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-
 name: PreCommit Community Metrics
 
 on:
@@ -24,13 +23,13 @@ on:
     paths: ['.test-infra/metrics/**']
   issue_comment:
     types: [created]
-   
 #  schedule:
 #    - cron: '* */6 * * *'
 
 jobs:
   CommunityMetricsPrecommit:
-    if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run Portable_Python PreCommit'
+    name: Community Metrics
+    if: github.event_name == 'push'|| github.event_name == 'pull_request'|| github.event_name == 'schedule'|| github.event.comment.body == 'Run CommunityMetrics PreCommit'
 
     runs-on: ['self-hosted', Linux]
 
@@ -45,7 +44,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-      - name: run Community Metrics Precommit script
+      - name: run Community Metrics PreCommit script
         run: |
           cd .test-infra/metrics/ 
           docker-compose build
