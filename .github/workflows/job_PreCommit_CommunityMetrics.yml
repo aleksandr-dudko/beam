@@ -42,8 +42,6 @@ jobs:
           java-version: '8'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
       - name: run Community Metrics PreCommit script
         run: |
           cd .test-infra/metrics/ 
