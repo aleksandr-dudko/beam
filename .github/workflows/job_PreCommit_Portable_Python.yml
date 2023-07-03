@@ -22,7 +22,7 @@ on:
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
   pull_request_target:
 #     branches: [ "master", "release-*" ]
-#    branches: ['portable-python']
+    branches: ['portable-python-master']
     paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
   issue_comment:
     types: [created]
