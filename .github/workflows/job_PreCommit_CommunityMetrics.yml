@@ -45,13 +45,13 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Install certificates
         run: |
-          sudo apt-get update
+          sudo apt-get update --yes
           sudo apt-get install \
           apt-transport-https \
           ca-certificates \
           curl \
           gnupg2 \
-          software-properties-common
+          software-properties-common --yes
           sudo apt-key fingerprint 0EBFCD88
       - name: Install docker compose
         run: |
