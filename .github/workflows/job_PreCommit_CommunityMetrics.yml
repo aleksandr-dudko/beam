@@ -64,4 +64,6 @@ jobs:
          cd .test-infra/metrics/
          docker-compose build
       - name: run Community Metrics PreCommit script
-        run: ./gradlew :communityMetricsPreCommit
+        run: |
+         ./gradlew -P docker-pull-licenses
+         ./gradlew :communityMetricsPreCommit
