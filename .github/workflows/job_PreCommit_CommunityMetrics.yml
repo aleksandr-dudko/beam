@@ -87,4 +87,6 @@ jobs:
       - name: Install gcloud Kubectl
         run: gcloud components install kubectl
       - name: run Community Metrics PreCommit script
-        run: ./gradlew :communityMetricsPreCommit
+        run: |
+          ./gradlew -P docker-pull-licenses
+          ./gradlew :communityMetricsPreCommit
