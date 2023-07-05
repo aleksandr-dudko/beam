@@ -25,7 +25,22 @@ on:
     types: [created]
 #  schedule:
 #    - cron: '* */6 * * *'
-permissions: read-all
+#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
+permissions:
+  actions: write
+  pull-requests: read
+  checks: read
+  contents: read
+  deployments: read
+  id-token: none
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
+
 jobs:
   CommunityMetricsPrecommit:
     name: Community Metrics
@@ -47,7 +62,7 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.sha}}
       - name: Rerun on comment
-        if: github.event.comment.body == 'Run Go PreCommit'
+        if: github.event.comment.body == 'Run CommunityMetrics PreCommit'
         uses: ./.github/actions/rerun-job-action
         with:
           pull_request_url: ${{ github.event.issue.pull_request.url }}
