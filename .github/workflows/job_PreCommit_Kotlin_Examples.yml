@@ -20,7 +20,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
-  pull_request:
+  pull_request_target:
 #    branches: ['master', 'release-*']
     branches: ['master', '*precommit-kotlin*']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
