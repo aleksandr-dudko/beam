@@ -86,7 +86,10 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       - name: Install gcloud Kubectl
-        run: gcloud components install kubectl
+        run: |
+          gcloud components install kubectl
+          cp /var/lib/k0s/pki/admin.conf ~/.kube/config
+          cp ~/.kube/config/admin.conf /var/lib/jenkins
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
