@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 
-
 plugins {
   id 'org.apache.beam.module'
   // https://github.com/avast/gradle-docker-compose-plugin
@@ -28,7 +27,7 @@ ext {
   cluster = 'metrics'
   zone='us-central1-a'
   projectName='apache-beam-testing'
-  kubeConfigPath=${HOME}/'.kube/config'
+  kubeConfigPath='$HOME/.kube/config'
 }
 
 applyGroovyNature()
