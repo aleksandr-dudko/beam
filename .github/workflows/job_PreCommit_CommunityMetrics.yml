@@ -87,7 +87,7 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
       - name: Install gcloud Kubectl
         run: |
-          gcloud components install kubectl --yes
+          gcloud components install kubectl
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
