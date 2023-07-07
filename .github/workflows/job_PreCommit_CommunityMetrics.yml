@@ -88,9 +88,9 @@ jobs:
       - name: Install gcloud Kubectl
         run: |
           gcloud components install kubectl
+          kubectl config view
           sudo mkdir -p '/home/jenkins/.kube'
-          cp /home/user/.kube/config /home/jenkins/.kube/config
-#          export KUBECONFIG=${HOME}/.kube/config
+          cp '${HOME}/.kube/config' '/home/jenkins/.kube/config'
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
