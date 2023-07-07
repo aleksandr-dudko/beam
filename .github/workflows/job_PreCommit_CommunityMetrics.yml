@@ -91,4 +91,4 @@ jobs:
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
-          ./gradlew :communityMetricsPreCommit
+          ./gradlew :communityMetricsPreCommit -PKUBE_CONFIG_PATH='$HOME/.kube/config'
