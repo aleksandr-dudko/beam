@@ -88,7 +88,8 @@ jobs:
       - name: Install gcloud Kubectl
         run: |
           gcloud components install kubectl
+          kubectl --kubeconfig='/home/runner/.kube/config' get pods
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
-          ./gradlew :communityMetricsPreCommit -PKUBE_CONFIG_PATH='$HOME/.kube/config'
+          ./gradlew :communityMetricsPreCommit
