@@ -88,9 +88,10 @@ jobs:
       - name: Install gcloud Kubectl
         run: |
           gcloud components install kubectl
-          sudo mkdir -p '/home/jenkins/.kube'
-          cd /opt/hostedtoolcache/gcloud/437.0.1/x64/bin/kubectl
-          ls -l
+          sudo mkdir -p $HOME/.kube
+          export KBUECONFIG=%HOME/.kube/config
+#          cd /opt/hostedtoolcache/gcloud/437.0.1/x64/bin/kubectl
+ #         ls -l
           cp /opt/hostedtoolcache/gcloud/437.0.1/x64/bin/kubectl/.kube/config /home/jenkins/.kube/config
       - name: run Community Metrics PreCommit script
         run: |
