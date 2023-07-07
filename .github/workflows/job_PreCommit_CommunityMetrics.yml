@@ -89,7 +89,7 @@ jobs:
         run: |
           gcloud components install kubectl
           sudo mkdir -p $HOME/.kube
-          export KBUECONFIG=%HOME/.kube/config
+          export KBUECONFIG = '%HOME/.kube/config'
 #          cd /opt/hostedtoolcache/gcloud/437.0.1/x64/bin/kubectl
  #         ls -l
           cp /opt/hostedtoolcache/gcloud/437.0.1/x64/bin/kubectl/.kube/config /home/jenkins/.kube/config
