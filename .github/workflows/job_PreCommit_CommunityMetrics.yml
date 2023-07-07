@@ -89,7 +89,7 @@ jobs:
         run: |
           gcloud components install kubectl
           sudo mkdir -p $HOME/.kube
-          export KBUECONFIG = '%HOME/.kube/config'
+          export KUBECONFIG="$HOME/.kube/config"
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
