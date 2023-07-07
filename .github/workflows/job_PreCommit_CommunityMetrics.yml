@@ -90,6 +90,7 @@ jobs:
           gcloud components install kubectl
           sudo mkdir -p '/home/jenkins/.kube'
           sudo touch '/home/jenkins/.kube/config'
+          sudo chmod +w '/home/jenkins/.kube/config'
 #          export KUBECONFIG=${HOME}/.kube/config
       - name: run Community Metrics PreCommit script
         run: |
