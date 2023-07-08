@@ -89,7 +89,6 @@ jobs:
         run: |
           gcloud components install kubectl
           sudo mkdir -p $HOME/.kube
-          sudo chmod +rwX $HOME/.kube
           sudo mkdir -p /home/jenkins/.kube
           sudo chmod +rwX '/home/jenkins/.kube'
           sudo touch '/home/jenkins/.kube/config'
