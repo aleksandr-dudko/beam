@@ -92,6 +92,8 @@ jobs:
           sudo chmod +rwX $HOME/.kube
           sudo mkdir -p /home/jenkins/.kube
           sudo chmod +rwX '/home/jenkins/.kube'
+          sudo touch '/home/jenkins/.kube/config'
+          sudo chmod +rwX '/home/jenkins/.kube/config'
           export KUBECONFIG="$HOME/.kube/config"
       - name: run Community Metrics PreCommit script
         run: |
