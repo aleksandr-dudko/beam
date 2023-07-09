@@ -91,6 +91,4 @@ jobs:
           sudo mkdir -p /home/jenkins/.kube
           sudo touch '/home/jenkins/.kube/config'
       - name: run Community Metrics PreCommit script
-        run: |
-          ./gradlew -P docker-pull-licenses
-          sudo ./gradlew :communityMetricsPreCommit
+        run: sudo ./gradlew :communityMetricsPreCommit
