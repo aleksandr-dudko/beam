@@ -93,7 +93,6 @@ jobs:
           sudo chmod +rwX '/home/jenkins/.kube'
           sudo touch '/home/jenkins/.kube/config'
           sudo chmod +rwX '/home/jenkins/.kube/config'
-          export KUBECONFIG="$HOME/.kube/config"
       - name: run Community Metrics PreCommit script
         run: |
           ./gradlew -P docker-pull-licenses
