@@ -96,7 +96,7 @@ jobs:
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: PY_VER=${{ matrix.python_version }} ; :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+          gradle-command: :sdks:python:test-suites:portable:py${{matrix.python_version}}:preCommitPy${{matrix.python_version}}
           default-arguments: true
           max-workers: true
 
