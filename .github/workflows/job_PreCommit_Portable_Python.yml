@@ -94,4 +94,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: run Portable Python script
-        run: PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: PY_VER=${{ matrix.python_version }} ; :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+          default-arguments: true
+          max-workers: true
+
+#      - name: run Portable Python script
+#        run: PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
