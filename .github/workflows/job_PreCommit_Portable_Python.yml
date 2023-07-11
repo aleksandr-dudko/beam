@@ -19,11 +19,29 @@ on:
   push:
     tags: [ 'v*' ]
     branches: [ 'master', 'release-*' ]
-    paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
+    paths:
+      - 'model/**'
+      - 'runners/core-construction-java/**'
+      - 'runners/core-java/**'
+      - 'runners/extensions-java/**'
+      - 'runners/flink/**'
+      - 'runners/java-fn-execution/**'
+      - 'runners/reference/**'
+      - 'sdks/python/**'
+      - 'release/**'
   pull_request:
     #     branches: [ "master", "release-*" ]
     branches: [ 'portable-python-master' ]
-    paths: [ 'model/**', 'runners/core-construction-java/**', 'runners/core-java/**', 'runners/extensions-java/**', 'runners/flink/**', 'runners/java-fn-execution/**', 'runners/reference/**', 'sdks/python/**', 'release/**' ]
+    paths:
+      - 'model/**'
+      - 'runners/core-construction-java/**'
+      - 'runners/core-java/**'
+      - 'runners/extensions-java/**'
+      - 'runners/flink/**'
+      - 'runners/java-fn-execution/**'
+      - 'runners/reference/**'
+      - 'sdks/python/**'
+      - 'release/**'
   issue_comment:
     types: [ created ]
 #  schedule:
@@ -94,11 +112,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: run Portable Python script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:python:test-suites:portable:py${{matrix.python_version}}:preCommitPy${{matrix.python_version}}
-          default-arguments: true
-          max-workers: true
-
-#      - name: run Portable Python script
-#        run: PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+        run: :sdks:python:test-suites:portable:py${{matrix.python_version}}:preCommitPy${{matrix.python_version}}
+          --continue
+          -Dorg.gradle.jvmargs=-Xms2g
+          -Dorg.gradle.jvmargs=-Xmx6g
+          -Dorg.gradle.vfs.watch=false
+          -Pdocker-pull-licenses
+          --max-workers=8
