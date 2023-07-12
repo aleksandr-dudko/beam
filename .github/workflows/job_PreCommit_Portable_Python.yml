@@ -114,10 +114,10 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: run Portable Python script
         run: | 
-          PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.} \   
-          --continue \
-          -Dorg.gradle.jvmargs=-Xms2g \
-          -Dorg.gradle.jvmargs=-Xmx6g \
-          -Dorg.gradle.vfs.watch=false \
-          -Pdocker-pull-licenses \
+          PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}  
+          --continue 
+          -Dorg.gradle.jvmargs=-Xms2g 
+          -Dorg.gradle.jvmargs=-Xmx6g 
+          -Dorg.gradle.vfs.watch=false 
+          -Pdocker-pull-licenses
           --max-workers=8
