@@ -20,8 +20,8 @@
 name: Build python source distribution and wheels
 
 on:
-  schedule:
-    - cron: '10 2 * * *'
+#  schedule:
+#    - cron: '10 2 * * *'
   push:
     branches: ['master', 'release-*']
     tags: 'v*'
