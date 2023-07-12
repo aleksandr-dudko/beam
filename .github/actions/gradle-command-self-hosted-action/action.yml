@@ -28,12 +28,15 @@ inputs:
     required: false
     description: 'Default gradle switches' # Copied from CommonJobProperties.groovy'
     default: |
-      --continue -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g \
-      -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses
+      --continue
+      -Dorg.gradle.jvmargs=-Xms2g 
+      -Dorg.gradle.jvmargs=-Xmx6g
+      -Dorg.gradle.vfs.watch=false
+      -Pdocker-pull-licenses
   max-workers:
     required: false
     description: 'Max number of workers'
-    default: 8
+    default: '8'
 
 runs:
   using: "composite"
