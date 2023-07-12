@@ -23,7 +23,6 @@ on:
   pull_request_target:
     branches: ['master', 'release-*']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
-
   issue_comment:
     types: [created]
 #  schedule:
