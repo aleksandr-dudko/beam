@@ -24,7 +24,6 @@ on:
     #    branches: ['master', 'release-*']
     branches: ['aleksandr-dudko/precommit-kotlin-pr-branch']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
-
   issue_comment:
     types: [created]
 #  schedule:
