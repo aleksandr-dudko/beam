@@ -21,8 +21,8 @@ name: Performance alerting tool on Python load/performance/benchmark tests.
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '5 22 * * *'
+#  schedule:
+#    - cron: '5 22 * * *'
   pull_request:
     branches: ['master']
     tags: 'v*'
