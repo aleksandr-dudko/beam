@@ -29,7 +29,7 @@ on:
       - 'runners/reference/**'
       - 'sdks/python/**'
       - 'release/**'
-      - '.github/workflows/job_PreCommit_Portable_Python.yml'
+      - '.github/workflows/beam_PreCommit_Portable_Python.yml'
   pull_request:
     #     branches: [ "master", "release-*" ]
     paths:
@@ -46,7 +46,6 @@ on:
     types: [ created ]
 #  schedule:
 #    - cron: '* */6 * * *'
-
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -65,8 +64,8 @@ permissions:
   statuses: read
 
 jobs:
-  PortablePythonPreCommit:
-    name: Portable Python
+  beam_PreCommit_Portable_Python:
+    name: beam_PreCommit_Portable_Python
     runs-on: [ 'self-hosted', ubuntu-20.04 ]
     strategy:
       fail-fast: false
