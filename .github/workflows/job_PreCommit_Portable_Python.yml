@@ -115,4 +115,4 @@ jobs:
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: ./gradlew :sdks:python:test-suites:portable:py38:preCommitPy38
+          gradle-command: :sdks:python:test-suites:portable:py38:preCommitPy38
