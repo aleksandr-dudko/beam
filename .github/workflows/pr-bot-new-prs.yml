@@ -17,8 +17,8 @@ name: pr-bot-new-prs
 
 # Run every 30 minutes
 on:
-  schedule:
-  - cron: '0,30 * * * *'
+#  schedule:
+#  - cron: '0,30 * * * *'
   workflow_dispatch:
 
 jobs:
