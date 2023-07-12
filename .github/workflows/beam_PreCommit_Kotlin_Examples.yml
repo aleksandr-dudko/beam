@@ -46,8 +46,8 @@ permissions:
   statuses: read
 
 jobs:
-  KotlinExamplesPreCommit:
-    name: Kotlin Examples
+  beam_PreCommit_Kotlin_Examples:
+    name: beam_PreCommit_Kotlin_Examples
     runs-on: ['self-hosted', ubuntu-20.04]
     if: |
       github.event_name == 'push' ||
