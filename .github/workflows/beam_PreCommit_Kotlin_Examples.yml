@@ -18,11 +18,10 @@ name: PreCommit Kotlin Examples
 on:
   push:
     tags: ['v*']
-    branches: ['master', 'release-*']
+    branches: ['aleksandr-dudko/precommit-kotlin-examples', 'release-*']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
   pull_request_target:
-    #    branches: ['master', 'release-*']
-    branches: ['aleksandr-dudko/precommit-kotlin-pr-branch']
+    branches: ['master', 'release-*']
     paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
 
   issue_comment:
