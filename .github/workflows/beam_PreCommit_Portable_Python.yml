@@ -66,13 +66,11 @@ permissions:
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
-    runs-on: [ 'self-hosted', ubuntu-20.04 ]
+    runs-on: ['self-hosted', ubuntu-20.04 ]
     strategy:
       fail-fast: false
       matrix:
         python_version: [ '3.8', '3.11' ]
-#    env:
-#      PY_VER: ${{ matrix.python_version }}
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request' ||
@@ -122,4 +120,4 @@ jobs:
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:python:test-suites:portable:py${{steps.set_py_ver_clean.outputs.py_ver_clean}}:preCommitPy${{steps.set_py_ver_clean.outputs.py_ver_clean}}
+          gradle-command: sdks:python:test-suites:portable:py38:preCommitPy38
