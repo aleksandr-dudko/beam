@@ -31,7 +31,7 @@ on:
       - 'release/**'
   pull_request:
     #     branches: [ "master", "release-*" ]
-    branches: [ 'portable-python-master' ]
+#    branches: [ 'portable-python-master' ]
     paths:
       - 'model/**'
       - 'runners/core-construction-java/**'
