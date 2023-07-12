@@ -18,7 +18,7 @@ name: PreCommit Portable Python
 on:
   push:
     tags: [ 'v*' ]
-#    branches: [ 'master', 'release-*' ]
+    branches: ['portable-python-test-pr-target1', 'release-*' ]
     paths:
       - 'model/**'
       - 'runners/core-construction-java/**'
@@ -32,7 +32,6 @@ on:
       - '.github/workflows/job_PreCommit_Portable_Python.yml'
   pull_request:
     #     branches: [ "master", "release-*" ]
-    #    branches: [ 'portable-python-master' ]
     paths:
       - 'model/**'
       - 'runners/core-construction-java/**'
@@ -116,4 +115,6 @@ jobs:
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: PY_VER=${{matrix.python_version}} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+          gradle-command: |
+            PY_VER=${{ matrix.python_version }}
+            ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
