@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: [ '3.8' ]
+        python_version: [ '3.8', '3.11' ]
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request' ||
@@ -103,7 +103,9 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: |
+            ${{matrix.python_version}}
+            3.8
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -113,4 +115,6 @@ jobs:
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: PY_VER=${{matrix.python_version}} ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+          gradle-command: |
+            PY_VER=${{ matrix.python_version }}
+            ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
