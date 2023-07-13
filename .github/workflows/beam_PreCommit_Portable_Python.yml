@@ -110,6 +110,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
+      - name: Remove default maven configuration
+        run: rm ~/.m2/settings.xml
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Set PY_VER_CLEAN
