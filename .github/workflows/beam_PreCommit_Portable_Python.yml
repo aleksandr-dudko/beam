@@ -118,8 +118,6 @@ jobs:
           PY_VER=${{ matrix.python_version }}
           PY_VER_CLEAN=${PY_VER//.}
           echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
-      - name: Remove default github maven configuration
-        run: rm ~/.m2/settings.xml
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
