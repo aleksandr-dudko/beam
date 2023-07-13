@@ -115,8 +115,8 @@ jobs:
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
-          PY_VER: ${{ matrix.python_version }}
-          PY_VER_CLEAN: ${PY_VER//.}
+          PY_VER=${{ matrix.python_version }}
+          PY_VER_CLEAN=${PY_VER//.}
           echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
