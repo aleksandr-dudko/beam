@@ -27,15 +27,23 @@ inputs:
   default-arguments:
     required: false
     description: 'Default gradle switches' # Copied from CommonJobProperties.groovy'
-    default: --continue -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses
+    default: |
+      --continue -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g \
+      -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses
   max-workers:
     required: false
     description: 'Max number of workers'
-    default: '8'
+    default: 8
 
 runs:
   using: "composite"
   steps:
     - name: Run Gradle Command
       shell: bash
-      run: ./gradlew --warning-mode all ${{inputs.gradle-command}} --max-workers=${{inputs.max-workers }} ${{inputs.arguments}} ${{inputs.default-arguments}}
+      run: |
+        # Removing settings.xml is a workaround to avoid a decryption issue
+        # of Beam's gradle-command-action plugin and github's provided
+        # maven settings.xml file
+        rm ~/.m2/settings.xml
+        ./gradlew ${{ inputs.gradle-command }} --max-workers=${{ inputs.max-workers }} ${{ inputs.arguments }} \
+        ${{ inputs.default-arguments }}
