@@ -40,7 +40,7 @@ runs:
   steps:
     - name: Run Gradle Command
       shell: bash
-      run:
+      run: |
         rm ~/.m2/settings.xml
         ./gradlew ${{ inputs.gradle-command }} --max-workers=${{ inputs.max-workers }} ${{ inputs.arguments }} \
         ${{ inputs.default-arguments }}
