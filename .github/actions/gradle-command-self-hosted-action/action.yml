@@ -31,7 +31,7 @@ inputs:
   max-workers:
     required: false
     description: 'Max number of workers'
-    default: 8
+    default: '8'
 
 runs:
   using: "composite"
