@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: [ '3.8', '3.11' ]
+        python_version: ['3.8']
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request' ||
@@ -103,9 +103,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: |
-            ${{matrix.python_version}}
-            3.8
+          python-version: 3.8
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
