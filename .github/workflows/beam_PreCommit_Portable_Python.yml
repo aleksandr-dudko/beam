@@ -109,6 +109,9 @@ jobs:
           PY_VER=${{ matrix.python_version }}
           PY_VER_CLEAN=$(echo $PY_VER | sed 's/\.//g')
           echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
+          systemctl start docker
+          systemctl enable docker
+          systemctl restart docker
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
