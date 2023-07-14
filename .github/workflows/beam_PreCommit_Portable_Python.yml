@@ -67,7 +67,7 @@ permissions:
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
-    runs-on: ['self-hosted', Linux]
+    runs-on: [self-hosted, ubuntu-20.04, main]
     container: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:738c02cac4d6a88faa3dd02606d50f1d2efed5e7
 
     strategy:
