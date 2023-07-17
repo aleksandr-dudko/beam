@@ -107,6 +107,7 @@ jobs:
         run: |
           docker --version
           lsb_release -a
+          systemctl start docker
           sudo usermod -aG docker runner
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
