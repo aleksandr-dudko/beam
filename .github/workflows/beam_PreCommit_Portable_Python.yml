@@ -105,7 +105,7 @@ jobs:
           cache-read-only: false
       - name: Start Docker
         run: |
-          sudo service docker start
+          sudo systemctl start docker
           sudo usermod -aG docker $USER
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
