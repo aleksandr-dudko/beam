@@ -106,7 +106,7 @@ jobs:
       - name: Start Docker
         run: |
           docker --version
-          sudo usermod -aG docker $USER
+          sudo usermod -aG docker runner
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
