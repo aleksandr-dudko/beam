@@ -105,6 +105,7 @@ jobs:
           cache-read-only: false
       - name: Start Docker
         run: |
+          sudo systemctl status dbus
           sudo systemctl status docker
           ls -l /var/run/docker.sock
           docker --version
