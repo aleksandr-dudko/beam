@@ -108,7 +108,7 @@ jobs:
           docker --version
           sudo usermod -aG docker runner
           sudo usermod -aG messagebus runner
-          sudo ls -l /var/run/docker.sock
+          sudo systemctl restart docker
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
