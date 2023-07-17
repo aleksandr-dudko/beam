@@ -105,9 +105,10 @@ jobs:
           cache-read-only: false
       - name: Start Docker
         run: |
-          sudo systemctl status dbus
           docker --version
           sudo usermod -aG docker runner
+          sudo usermod -aG dbus runner
+          sudo systemctl status dbus
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
