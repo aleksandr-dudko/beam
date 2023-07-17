@@ -106,8 +106,6 @@ jobs:
       - name: Start Docker
         run: |
           sudo systemctl status dbus
-          sudo systemctl status docker
-          ls -l /var/run/docker.sock
           docker --version
           sudo usermod -aG docker runner
       - name: Set PY_VER_CLEAN
