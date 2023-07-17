@@ -108,7 +108,9 @@ jobs:
           docker --version
           sudo usermod -aG docker runner
           sudo usermod -aG messagebus runner
-          sudo systemctl restart docker
+          wsl --update
+          sudo -e /etc/wsl.conf
+          sudo systemctl status
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
