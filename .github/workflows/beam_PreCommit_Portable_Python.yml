@@ -68,7 +68,7 @@ permissions:
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, ubuntu-local]
 
     strategy:
       fail-fast: false
@@ -93,15 +93,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
-      - name: Install Java
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'zulu'
-          java-version: '8'
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.20'
       - name: Install Python
         uses: actions/setup-python@v4
         with:
@@ -112,13 +103,15 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Start Docker
+        run: |
+          sudo service docker start
+          sudo usermod -aG docker $USER
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
           PY_VER=${{ matrix.python_version }}
-          PY_VER_CLEAN=${PY_VER//.}
+          PY_VER_CLEAN=$(echo $PY_VER | sed 's/\.//g')
           echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
