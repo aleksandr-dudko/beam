@@ -109,7 +109,6 @@ jobs:
           sudo usermod -aG docker runner
           sudo usermod -aG messagebus runner
           sudo service dbus start
-          sudo systemctl status dbus
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
