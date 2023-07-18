@@ -19,7 +19,7 @@ name: PreCommit Portable Python
 on:
   push:
     tags: [ 'v*' ]
-    branches: ['portable-python-test-pr-target1-*', 'release-*' ]
+    branches: ['portable-python-test-pr-target1-master', 'release-*' ]
     paths:
       - 'model/**'
       - 'runners/core-construction-java/**'
@@ -68,7 +68,7 @@ permissions:
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
-    runs-on: [self-hosted, ubuntu-20.04]
+    runs-on: [self-hosted, Linux, my-label]
 
     strategy:
       fail-fast: false
