@@ -68,7 +68,7 @@ permissions:
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
-    runs-on: [self-hosted, Linux, my-label]
+    runs-on: [self-hosted, ubuntu-20.04]
 
     strategy:
       fail-fast: false
