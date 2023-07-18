@@ -1,30 +1,99 @@
-name: Precommit Portable Python
-run-name: Portable Python Precommit
+
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: PreCommit Portable Python
+
 on:
   push:
     tags: [ 'v*' ]
-    branches: [ 'master', 'release-*' ]
+    branches: ['portable-python-test-pr-target1-*', 'release-*' ]
+    paths:
+      - 'model/**'
+      - 'runners/core-construction-java/**'
+      - 'runners/core-java/**'
+      - 'runners/extensions-java/**'
+      - 'runners/flink/**'
+      - 'runners/java-fn-execution/**'
+      - 'runners/reference/**'
+      - 'sdks/python/**'
+      - 'release/**'
+      - '.github/workflows/beam_PreCommit_Portable_Python.yml'
   pull_request:
-    branches: [ "master", "release-*" ]
-    paths: [ 'model/.*', 'runners/core-construction-java/.*', 'runners/core-java/.*', 'runners/extensions-java/.*', 'runners/flink/.*', 'runners/java-fn-execution/.*', 'runners/reference/.*$', 'sdks/python/.*', 'release/.*' ]
+    #     branches: [ "master", "release-*" ]
+    paths:
+      - 'model/**'
+      - 'runners/core-construction-java/**'
+      - 'runners/core-java/**'
+      - 'runners/extensions-java/**'
+      - 'runners/flink/**'
+      - 'runners/java-fn-execution/**'
+      - 'runners/reference/**'
+      - 'sdks/python/**'
+      - 'release/**'
   issue_comment:
-    types: [created, edited]
+    types: [ created ]
+#  schedule:
+#    - cron: '* */6 * * *'
+
+#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
+
+
+permissions:
+  actions: write
+  pull-requests: read
+  checks: read
+  contents: read
+  deployments: read
+  id-token: none
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
 
 jobs:
-  PortablePythonPrecommit:
-    strategy:
-      matrix:
-        python_version: ['3.7','3.10']
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Portable_Python PreCommit'}} || ${{github.event.schedule == '* */6 * * *'}}
-    runs-on: [self-hosted, ubuntu-20.04]
+  beam_PreCommit_Portable_Python:
+    name: beam_PreCommit_Portable_Python
+    runs-on: [self-hosted, Linux, X64, my-lable]
 
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: [ '3.8', '3.11' ]
+    if: |
+      github.event_name == 'push' ||
+      github.event_name == 'pull_request' ||
+      github.event_name == 'schedule' ||
+      github.event.comment.body == 'Run Portable_Python PreCommit'
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Java
-        uses: actions/setup-java@v3.8.0
+      - name: Git checkout
+        uses: actions/checkout@v3
         with:
-          distribution: 'zulu'
-          java-version: '8'
+          ref: ${{github.event.pull_request.head.sha}}
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run Portable_Python PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
       - name: Install Python
         uses: actions/setup-python@v4
         with:
@@ -35,9 +104,18 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-            go-version: '1.20'
+      - name: Usermod
+        run: |
+          docker --version
+          lsb_release -a
+          sudo usermod -aG docker runner
+      - name: Set PY_VER_CLEAN
+        id: set_py_ver_clean
+        run: |
+          PY_VER=${{ matrix.python_version }}
+          PY_VER_CLEAN=$(echo $PY_VER | sed 's/\.//g')
+          echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
       - name: run Portable Python script
-        run: PY_VER=${{ matrix.python_version }} ; ./gradlew :sdks:python:test-suites:portable:py${PY_VER//.}:preCommitPy${PY_VER//.}
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:python:test-suites:portable:py${{steps.set_py_ver_clean.outputs.py_ver_clean}}:preCommitPy${{steps.set_py_ver_clean.outputs.py_ver_clean}}
