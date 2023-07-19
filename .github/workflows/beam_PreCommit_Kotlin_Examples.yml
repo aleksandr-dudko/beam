@@ -87,15 +87,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
-      - name: Install Java
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'zulu'
-          java-version: '8'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
       - name: run Kotlin Examples script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
