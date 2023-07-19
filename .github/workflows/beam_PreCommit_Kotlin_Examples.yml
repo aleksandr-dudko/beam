@@ -18,19 +18,37 @@ name: PreCommit Kotlin Examples
 on:
   push:
     tags: ['v*']
-    branches: ['aleksandr-dudko/precommit-kotlin-examples-*', 'release-*']
-    paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
+    branches: ['aleksandr-dudko/precommit-kotlin-examples-master', 'release-*']
+    paths:
+      - 'model/**'
+      - 'sdks/java/**'
+      - 'runners/flink/**'
+      - 'runners/spark/**'
+      - 'runners/direct-java/**'
+      - 'examples/kotlin/**'
+      - 'release/**'
+      - '.github/workflows/beam_PreCommit_Kotlin_Examples.yml'
   pull_request_target:
-    #    branches: ['master', 'release-*']
-    branches: ['aleksandr-dudko/precommit-kotlin-pr-branch']
-    paths: ['model/**', 'sdks/java/**', 'runners/flink/**', 'runners/spark/**', 'runners/direct-java/**', 'examples/kotlin/**', 'release/**']
+    branches: ['master', 'release-*']
+    paths:
+      - 'model/**'
+      - 'sdks/java/**'
+      - 'runners/flink/**'
+      - 'runners/spark/**'
+      - 'runners/direct-java/**'
+      - 'examples/kotlin/**'
+      - 'release/**'
   issue_comment:
     types: [created]
-
 #  schedule:
 #    - cron: '* */6 * * *'
-#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
   pull-requests: read
@@ -49,7 +67,7 @@ permissions:
 jobs:
   beam_PreCommit_Kotlin_Examples:
     name: beam_PreCommit_Kotlin_Examples
-    runs-on: ['self-hosted', ubuntu-20.04]
+    runs-on: [self-hosted, ubuntu-20.04, main]
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
@@ -79,4 +97,6 @@ jobs:
         with:
           cache-read-only: false
       - name: run Kotlin Examples script
-        run: ./gradlew :examples:kotlin:preCommit
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :examples:kotlin:preCommit
