@@ -35,6 +35,7 @@ def hadoopVersions = [
 hadoopVersions.each {kv -> configurations.create("hadoopVersion$kv.key")}
 
 dependencies {
+  implementation 'net.minidev:json-smart:2.5.0'
   implementation library.java.vendored_guava_26_0_jre
   implementation project(path: ":sdks:java:core", configuration: "shadow")
   implementation library.java.jackson_core
