@@ -135,5 +135,5 @@ compileTestKotlin {
     }
 }
 repositories {
-  mavenCentral()
+  jcenter()
 }
