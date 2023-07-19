@@ -44,6 +44,17 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>packages.confluent</id>
+      <name>Сonfluent</name>
+      <url>https://packages.confluent.io/maven/io/confluent/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
   </repositories>
 
   <build>
