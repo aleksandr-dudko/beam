@@ -880,7 +880,7 @@ class BeamModulePlugin implements Plugin<Project> {
       maven {
         url(project.properties['distMgmtSnapshotsUrl'] ?: isRelease(project)
             ? 'https://repository.apache.org/service/local/staging/deploy/maven2'
-            : 'https://repository.apache.org/content/repositories/snapshots')
+            : 'https://packages.confluent.io/maven/io/confluent')
         name(project.properties['distMgmtServerId'] ?: isRelease(project)
             ? 'apache.releases.https' : 'apache.snapshots.https')
         // The maven settings plugin will load credentials from ~/.m2/settings.xml file that a user
@@ -2345,7 +2345,7 @@ class BeamModulePlugin implements Plugin<Project> {
 
       def taskName = "run${config.type}Java${config.runner}"
       def releaseVersion = project.findProperty('ver') ?: project.version
-      def releaseRepo = project.findProperty('repourl') ?: 'https://repository.apache.org/content/repositories/snapshots'
+      def releaseRepo = project.findProperty('repourl') ?: 'https://packages.confluent.io/maven/io/confluent'
       def argsNeeded = [
         "--ver=${releaseVersion}",
         "--repourl=${releaseRepo}"

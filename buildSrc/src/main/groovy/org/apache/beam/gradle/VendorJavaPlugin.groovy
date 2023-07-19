@@ -194,7 +194,7 @@ artifactId=${project.name}
             maven {
               url(project.properties['distMgmtSnapshotsUrl'] ?: isRelease(project)
                   ? 'https://repository.apache.org/service/local/staging/deploy/maven2'
-                  : 'https://repository.apache.org/content/repositories/snapshots')
+                  : 'https://packages.confluent.io/maven/io/confluent')
               name(project.properties['distMgmtServerId'] ?: isRelease(project)
                   ? 'apache.releases.https' : 'apache.snapshots.https')
               // The maven settings plugin will load credentials from ~/.m2/settings.xml file that a user
