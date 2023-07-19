@@ -96,3 +96,4 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :examples:kotlin:preCommit
+
