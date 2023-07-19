@@ -2345,7 +2345,7 @@ class BeamModulePlugin implements Plugin<Project> {
 
       def taskName = "run${config.type}Java${config.runner}"
       def releaseVersion = project.findProperty('ver') ?: project.version
-      def releaseRepo = project.findProperty('repourl') ?: 'https://repository.apache.org/content/repositories/snapshots'
+      def releaseRepo = project.findProperty('repourl') ?: 'https://packages.confluent.io/maven/io/confluent'
       def argsNeeded = [
         "--ver=${releaseVersion}",
         "--repourl=${releaseRepo}"
