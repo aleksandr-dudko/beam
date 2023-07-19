@@ -106,6 +106,8 @@ jobs:
           PY_VER=${{ matrix.python_version }}
           PY_VER_CLEAN=${PY_VER//.}
           echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
+          export FLINK_HOME=/path/to/flink-1.16
+          $FLINK_HOME/bin/start-cluster.sh
       - name: run Portable Python script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
