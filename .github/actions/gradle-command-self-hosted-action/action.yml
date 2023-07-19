@@ -38,4 +38,4 @@ runs:
   steps:
     - name: Run Gradle Command
       shell: bash
-      run: ./gradlew --warning-mode all ${{inputs.gradle-command}} -Pver=2.3.0 -Prepourl=https://packages.confluent.io/maven/io/confluent
+      run: ./gradlew ${{inputs.gradle-command}} -Prepourl=https://packages.confluent.io/maven/io/confluent
