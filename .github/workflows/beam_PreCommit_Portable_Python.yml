@@ -18,7 +18,7 @@ name: PreCommit Portable Python
 on:
   push:
     tags: [ 'v*' ]
-    branches: ['portable-python-test-pr-target1-*', 'release-*' ]
+    branches: ['portable-python-test-pr-target-master', 'release-*' ]
     paths:
       - 'model/**'
       - 'runners/core-construction-java/**'
