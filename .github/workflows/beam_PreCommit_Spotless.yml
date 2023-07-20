@@ -27,7 +27,7 @@ on:
       - '.test-infra/jenkins/'
       - '.github/workflows/beam_PreCommit_Spotless.yml'
   pull_request_target:
-    #   branches: ['master', 'release-*']
+#    branches: ['master', 'release-*']
     paths:
       - 'buildSrc/**'
       - 'sdks/java/**'
