@@ -97,6 +97,13 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
+      - name: Cache net/minidev/json-smart
+        uses: actions/cache@v2
+        with:
+          path: json-smart
+          key: ${{ runner.os }}-folder-${{ hashFiles('**net/minidev/json-smart/**') }}
+          restore-keys: |
+            ${{ runner.os }}-folder-
       - name: run Kotlin Examples script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
