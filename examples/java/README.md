@@ -17,7 +17,6 @@
     under the License.
 -->
 
-
 # Example Pipelines
 
 The examples included in this module serve to demonstrate the basic
