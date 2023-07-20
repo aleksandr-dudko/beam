@@ -73,6 +73,7 @@ jobs:
     name: beam_PreCommit_Portable_Python
     runs-on: [self-hosted, Linux, X64, main]
     strategy:
+      fail-fast: false
       matrix:
         python_version: ['3.8', '3.11']
     if: |
