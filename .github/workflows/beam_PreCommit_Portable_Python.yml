@@ -67,12 +67,12 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+
 jobs:
   beam_PreCommit_Portable_Python:
     name: beam_PreCommit_Portable_Python
     runs-on: [self-hosted, Linux, X64, main]
     strategy:
-      fail-fast: false
       matrix:
         python_version: ['3.8', '3.11']
     if: |
@@ -105,6 +105,10 @@ jobs:
           python-version: |
             ${{matrix.python_version}}
             3.8
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: false
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
