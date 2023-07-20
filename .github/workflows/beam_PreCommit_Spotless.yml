@@ -27,7 +27,7 @@ on:
       - '.test-infra/jenkins/'
       - '.github/workflows/beam_PreCommit_Spotless.yml'
   pull_request:
-    #    branches: ['master', 'release-*']
+    branches: ['aleksandr.dudko/bi-113-precommit-spotless-master', 'release-*']
     paths:
       - 'buildSrc/**'
       - 'sdks/java/**'
@@ -60,7 +60,6 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
-
 
 jobs:
   beam_PreCommit_Spotless:
