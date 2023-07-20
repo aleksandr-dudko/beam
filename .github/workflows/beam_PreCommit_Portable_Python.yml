@@ -47,6 +47,11 @@ on:
 #  schedule:
 #    - cron: '* */6 * * *'
 
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
@@ -94,14 +99,13 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-      - name: Install Python 1
+      - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
-      - name: Install Python 2
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
+          python-version: |
+            ${{matrix.python_version}}
+            3.8
+
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
