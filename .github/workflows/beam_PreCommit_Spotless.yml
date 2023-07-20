@@ -26,8 +26,8 @@ on:
       - 'examples/kotlin/**'
       - '.test-infra/jenkins/'
       - '.github/workflows/beam_PreCommit_Spotless.yml'
-  pull_request_target:
-#    branches: ['master', 'release-*']
+  pull_request:
+    #    branches: ['master', 'release-*']
     paths:
       - 'buildSrc/**'
       - 'sdks/java/**'
@@ -67,7 +67,7 @@ jobs:
     runs-on: [self-hosted, Linux, X64, main]
     if: |
       github.event_name == 'push' ||
-      github.event_name == 'pull_request_target' ||
+      github.event_name == 'pull_request' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Spotless PreCommit'
     steps:
