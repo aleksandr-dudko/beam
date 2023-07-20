@@ -40,8 +40,8 @@ on:
       - 'release/**'
   issue_comment:
     types: [created]
-#  schedule:
-#    - cron: '* */6 * * *'
+  schedule:
+    - cron: '* */6 * * *'
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
