@@ -94,12 +94,14 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-      - name: Install Python
+      - name: Install Python 1
         uses: actions/setup-python@v4
         with:
-          python-version: |
-            ${{matrix.python_version}}
-            3.8
+          python-version: 3.8
+      - name: Install Python 2
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
