@@ -18,7 +18,7 @@ name: PreCommit Kotlin Examples
 on:
   push:
     tags: ['v*']
-    branches: ['aleksandr-dudko/precommit-kotlin-examples-master1', 'release-*']
+    branches: ['master', 'release-*']
     paths:
       - 'model/**'
       - 'sdks/java/**'
@@ -28,8 +28,8 @@ on:
       - 'examples/kotlin/**'
       - 'release/**'
       - '.github/workflows/beam_PreCommit_Kotlin_Examples.yml'
-  pull_request_target:
-    branches: ['master', 'release-*']
+  pull_request:
+    branches: ['aleksandr-dudko/precommit-kotlin-examples-master1', 'release-*']
     paths:
       - 'model/**'
       - 'sdks/java/**'
@@ -70,7 +70,7 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     if: |
       github.event_name == 'push' ||
-      github.event_name == 'pull_request_target' ||
+      github.event_name == 'pull_request' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Kotlin_Examples PreCommit'
     steps:
