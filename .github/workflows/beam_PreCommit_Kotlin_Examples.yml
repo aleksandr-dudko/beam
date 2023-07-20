@@ -96,15 +96,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          cache: 'maven'
       - name: run Kotlin Examples script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
