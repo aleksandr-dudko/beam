@@ -61,6 +61,7 @@ permissions:
   security-events: read
   statuses: read
 
+
 jobs:
   beam_PreCommit_Spotless:
     name: beam_PreCommit_Spotless
