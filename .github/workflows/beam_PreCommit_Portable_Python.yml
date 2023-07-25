@@ -96,20 +96,18 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
       - name: Install Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v3.8.0
         with:
           distribution: 'zulu'
           java-version: '8'
+          cache: 'gradle'
+          check-latest: true
       - name: Install Python
         uses: actions/setup-python@v4
         with:
           python-version: |
             ${{matrix.python_version}}
             3.8
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
