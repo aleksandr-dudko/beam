@@ -43,11 +43,6 @@ on:
   schedule:
     - cron: '* */6 * * *'
 
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
@@ -63,6 +58,11 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
 
 jobs:
   beam_PreCommit_Kotlin_Examples:
@@ -87,18 +87,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
-      - name: Cache local Maven repository
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+
       - name: Install Java
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'zulu'
           java-version: '8'
+          cache: 'gradle'
+          check-latest: true
       - name: run Kotlin Examples script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
