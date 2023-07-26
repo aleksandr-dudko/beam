@@ -24,8 +24,10 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: [ "model/**","sdks/python/**","release/**",".github/workflows/job_PreCommit_Python_Transforms.yml"]
-#  schedule:
-#    - cron: '* */6 * * *'
+  schedule:
+    - cron: '* */6 * * *'
+  workflow_dispatch:
+
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
