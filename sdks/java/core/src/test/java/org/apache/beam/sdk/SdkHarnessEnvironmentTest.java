@@ -78,7 +78,6 @@ public class SdkHarnessEnvironmentTest {
     PCollection<String> output = input.apply(ParDo.of(new JammDoFn()));
 
     PAssert.that(output).containsInAnyOrder("measured");
-    p.run().waitUntilFinish();
   }
 
   /** {@link DoFn} used to validate that TLS was enabled as part of java security properties. */
@@ -117,7 +116,6 @@ public class SdkHarnessEnvironmentTest {
 
     PAssert.that(output).containsInAnyOrder("TLSv1-TLSv1.1 enabled");
 
-    p.run().waitUntilFinish();
   }
 
   private static class LoggingDoFn extends DoFn<String, String> {
@@ -194,6 +192,5 @@ public class SdkHarnessEnvironmentTest {
     PCollection<String> input = p.apply(Create.of("Logging Works").withCoder(StringUtf8Coder.of()));
     PCollection<String> output = input.apply(ParDo.of(new LoggingDoFn()));
     PAssert.that(output).containsInAnyOrder("Logging Works");
-    p.run().waitUntilFinish();
   }
 }
