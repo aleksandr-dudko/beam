@@ -38,12 +38,7 @@ on:
   issue_comment:
     types: [created]
 #  schedule:
-#    - cron: '* */6 * * *'
-
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
+#    cron: '* */6 * * *'
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -60,6 +55,11 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
 
 jobs:
   beam_PreCommit_Spotless:
@@ -89,6 +89,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
+          cache: 'gradle'
+          check-latest: true
       - name: run Spotless PreCommit script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
