@@ -38,8 +38,8 @@ on:
       - 'runners/java-fn-execution/**'
   issue_comment:
     types: [created]
-  schedule:
-    - cron: '0 * * * *'
+#  schedule:
+#    - cron: '0 * * * *'
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -102,4 +102,3 @@ jobs:
         with:
           name: java-code-coverage-report
           path: "**/build/test-results/**/*.xml"
-          
