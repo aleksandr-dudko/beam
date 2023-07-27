@@ -32,7 +32,7 @@ on:
       - 'buildSrc/**'
       - 'sdks/java/**'
       - 'runners/**'
-      - 'examples/java/**'
+      - 'examples/**'
       - 'examples/kotlin/**'
       - '.test-infra/jenkins/'
   issue_comment:
