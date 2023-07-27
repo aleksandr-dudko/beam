@@ -32,7 +32,7 @@ import org.junit.runners.JUnit4;
 public class InMemoryBundleFinalizerTest {
   @Test
   public void testCallbackRegistration() {
-    InMemoryBundleFinalizer finalizer = new InMemoryBundleFinalizer();
+    InMemoryBundleFinalizer finalizer = null;
     // Check when nothing has been registered
     assertThat(finalizer.getAndClearFinalizations(), is(empty()));
     finalizer.afterBundleCommit(new Instant(), () -> {});
