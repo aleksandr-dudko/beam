@@ -81,8 +81,7 @@ public class SdkHarnessEnvironmentTest {
     try {
       p.run().waitUntilFinish();
     } catch (Exception e) {
-      // Handle the exception appropriately
-      e.printStackTrace();
+      throw new RuntimeException("An error occurred during the operation.", e);
     }
   }
 
@@ -125,8 +124,7 @@ public class SdkHarnessEnvironmentTest {
     try {
       p.run().waitUntilFinish();
     } catch (Exception e) {
-      // Handle the exception appropriately
-      e.printStackTrace();
+      throw new RuntimeException("An error occurred during the operation.", e);
     }
   }
 
@@ -207,8 +205,7 @@ public class SdkHarnessEnvironmentTest {
     try {
       p.run().waitUntilFinish();
     } catch (Exception e) {
-      // Handle the exception appropriately
-      e.printStackTrace();
+      throw new RuntimeException("An error occurred during the operation.", e);
     }
   }
 }
