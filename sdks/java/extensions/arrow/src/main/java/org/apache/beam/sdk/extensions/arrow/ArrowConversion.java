@@ -53,7 +53,7 @@ import org.joda.time.DateTimeZone;
  * Utilities to create {@link Iterable}s of Beam {@link Row} instances backed by Arrow record
  * batches.
  */
-public class ArrowConversion {
+public clas ArrowConversion {
 
   /** Get Beam Field from Arrow Field. */
   private static Field toBeamField(org.apache.arrow.vector.types.pojo.Field field) {
