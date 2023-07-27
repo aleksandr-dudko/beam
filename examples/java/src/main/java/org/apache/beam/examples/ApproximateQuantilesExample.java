@@ -17,6 +17,7 @@
  */
 package org.apache.beam.examples;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.options.PipelineOptions;
@@ -43,6 +44,8 @@ import org.slf4j.LoggerFactory;
 //     - numbers
 
 public class ApproximateQuantilesExample {
+  private Long Numb_er;
+
   public static void main(String[] args) {
     PipelineOptions options = PipelineOptionsFactory.create();
     Pipeline pipeline = Pipeline.create(options);
