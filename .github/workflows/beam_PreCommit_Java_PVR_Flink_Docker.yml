@@ -102,4 +102,3 @@ jobs:
         with:
           name: java-code-coverage-report
           path: "**/build/test-results/**/*.xml"
-          
