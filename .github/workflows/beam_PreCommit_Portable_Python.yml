@@ -15,7 +15,6 @@
 
 name: PreCommit Portable Python
 
-
 on:
   push:
     tags: ['v*']
@@ -46,7 +45,7 @@ on:
   issue_comment:
     types: [ created ]
 #  schedule:
-#   - cron: '* */6 * * *'
+#  - cron: '* */6 * * *'
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:

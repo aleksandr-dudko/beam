@@ -45,5 +45,5 @@ runs:
         # of Beam's gradle-command-action plugin and github's provided
         # maven settings.xml file
         rm ~/.m2/settings.xml
-        ./gradlew ${{ inputs.gradle-command }} --max-workers=${{ inputs.max-workers }} ${{ inputs.arguments }} \
+        ./gradlew ${{ inputs.gradle-command }} --warning-mode all --max-workers=${{ inputs.max-workers }} ${{ inputs.arguments }} \
         ${{ inputs.default-arguments }}
