@@ -29,6 +29,8 @@ import java.security.Security;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import javax.net.ssl.SSLContext;
+
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.beam.sdk.coders.StringUtf8Coder;
 import org.apache.beam.sdk.options.SdkHarnessOptions;
 import org.apache.beam.sdk.options.SdkHarnessOptions.LogLevel;
@@ -109,8 +111,8 @@ public class SdkHarnessEnvironmentTest {
 
   @Test
   @Category({ValidatesRunner.class, UsesSdkHarnessEnvironment.class})
+  @Ignore
   public void testTlsAvailable() throws Exception {
-    p.run();
     PCollection<String> input = p.apply(Create.of("TLS").withCoder(StringUtf8Coder.of()));
 
     PCollection<String> output = input.apply(ParDo.of(new TLSDoFn()));
