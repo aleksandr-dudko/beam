@@ -86,17 +86,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
-      - name: Install Java
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'zulu'
-          java-version: '8'
-          cache: 'gradle'
-          check-latest: true
       - name: run PreCommit Java PVR Flink Docker script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :runners:flink:1.15:job-server:validatesPortableRunnerDocker
+          gradle-command: :runners:flink:1.16:job-server:validatesPortableRunnerDocker
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
