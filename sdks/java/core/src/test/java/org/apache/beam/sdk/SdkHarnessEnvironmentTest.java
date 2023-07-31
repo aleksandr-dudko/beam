@@ -110,6 +110,7 @@ public class SdkHarnessEnvironmentTest {
   @Test
   @Category({ValidatesRunner.class, UsesSdkHarnessEnvironment.class})
   public void testTlsAvailable() throws Exception {
+    p.run();
     PCollection<String> input = p.apply(Create.of("TLS").withCoder(StringUtf8Coder.of()));
 
     PCollection<String> output = input.apply(ParDo.of(new TLSDoFn()));
