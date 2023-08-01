@@ -86,6 +86,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Install Java
         uses: actions/setup-java@v3.8.0
         with:
