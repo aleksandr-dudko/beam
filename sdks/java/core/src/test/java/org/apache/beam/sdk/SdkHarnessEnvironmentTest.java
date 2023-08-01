@@ -29,8 +29,6 @@ import java.security.Security;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import javax.net.ssl.SSLContext;
-
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.beam.sdk.coders.StringUtf8Coder;
 import org.apache.beam.sdk.options.SdkHarnessOptions;
 import org.apache.beam.sdk.options.SdkHarnessOptions.LogLevel;
@@ -57,7 +55,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class SdkHarnessEnvironmentTest {
 
-  @Rule public final TestPipeline p = TestPipeline.create().enableAbandonedNodeEnforcement(false);
+  @Rule public final TestPipeline p = TestPipeline.create();
 
   /**
    * {@link DoFn} used to validate that Jamm was setup as a java agent to get accurate measuring.
@@ -66,7 +64,7 @@ public class SdkHarnessEnvironmentTest {
     @ProcessElement
     public void processElement(ProcessContext c) {
       MemoryMeter memoryMeter =
-          MemoryMeter.builder().withGuessing(Guess.ALWAYS_INSTRUMENTATION).build();
+              MemoryMeter.builder().withGuessing(Guess.ALWAYS_INSTRUMENTATION).build();
       assertThat(memoryMeter.measureDeep(c.element()), greaterThan(0L));
       c.output("measured");
     }
@@ -80,6 +78,7 @@ public class SdkHarnessEnvironmentTest {
     PCollection<String> output = input.apply(ParDo.of(new JammDoFn()));
 
     PAssert.that(output).containsInAnyOrder("measured");
+    p.run().waitUntilFinish();
   }
 
   /** {@link DoFn} used to validate that TLS was enabled as part of java security properties. */
@@ -87,9 +86,9 @@ public class SdkHarnessEnvironmentTest {
     @ProcessElement
     public void processElement(ProcessContext c) throws Exception {
       String[] disabledAlgorithms =
-          Security.getProperty("jdk.tls.disabledAlgorithms").trim().split("\\s*,\\s*");
+              Security.getProperty("jdk.tls.disabledAlgorithms").trim().split("\\s*,\\s*");
       String[] legacyAlgorithms =
-          Security.getProperty("jdk.tls.legacyAlgorithms").trim().split("\\s*,\\s*");
+              Security.getProperty("jdk.tls.legacyAlgorithms").trim().split("\\s*,\\s*");
       assertThat(disabledAlgorithms, not(hasItemInArray("TLSv1")));
       assertThat(disabledAlgorithms, not(hasItemInArray("TLSv1.1")));
       assertThat(legacyAlgorithms, hasItemInArray("TLSv1"));
@@ -118,6 +117,7 @@ public class SdkHarnessEnvironmentTest {
 
     PAssert.that(output).containsInAnyOrder("TLSv1-TLSv1.1 enabled");
 
+    p.run().waitUntilFinish();
   }
 
   private static class LoggingDoFn extends DoFn<String, String> {
@@ -148,15 +148,15 @@ public class SdkHarnessEnvironmentTest {
         final org.slf4j.Logger slf4jLogger = org.slf4j.LoggerFactory.getLogger("logger.slf4j");
         slf4jLogger.info("SLF4J log messages work");
         final org.apache.commons.logging.Log jclLogger =
-            org.apache.commons.logging.LogFactory.getLog("logger.jcl");
+                org.apache.commons.logging.LogFactory.getLog("logger.jcl");
         jclLogger.info("JCL log messages work");
         final java.util.logging.Logger julLogger = java.util.logging.Logger.getLogger("logger.jul");
         julLogger.info("JUL log messages work");
         final org.apache.log4j.Logger log4jLogger =
-            org.apache.log4j.Logger.getLogger("logger.log4j");
+                org.apache.log4j.Logger.getLogger("logger.log4j");
         log4jLogger.info("Log4j log messages work");
         final org.apache.logging.log4j.Logger log4j2Logger =
-            org.apache.logging.log4j.LogManager.getLogger("logger.log4j2");
+                org.apache.logging.log4j.LogManager.getLogger("logger.log4j2");
         log4j2Logger.info("Log4j2 log messages work");
 
         verifyNotLogged(ExpectedLogs.matcher(Level.FINEST, "a.Foo-Trace"), logSaver);
@@ -188,11 +188,12 @@ public class SdkHarnessEnvironmentTest {
   public void testLogging() throws Exception {
     p.getOptions().as(SdkHarnessOptions.class).setDefaultSdkHarnessLogLevel(LogLevel.DEBUG);
     p.getOptions()
-        .as(SdkHarnessOptions.class)
-        .setSdkHarnessLogLevelOverrides(
-            new SdkHarnessLogLevelOverrides().addOverrideForName("a.b.Bar", LogLevel.WARN));
+            .as(SdkHarnessOptions.class)
+            .setSdkHarnessLogLevelOverrides(
+                    new SdkHarnessLogLevelOverrides().addOverrideForName("a.b.Bar", LogLevel.WARN));
     PCollection<String> input = p.apply(Create.of("Logging Works").withCoder(StringUtf8Coder.of()));
     PCollection<String> output = input.apply(ParDo.of(new LoggingDoFn()));
     PAssert.that(output).containsInAnyOrder("Logging Works");
+    p.run().waitUntilFinish();
   }
 }
