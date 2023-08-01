@@ -20,7 +20,7 @@ name: PreCommit Java PVR Flink Docker
 on:
   push:
     tags: ['v*']
-    branches: ['precommit-java-pvr-flink-docker/master', 'release-*']
+    branches: ['precommit-java-pvr-flink-docker/master2', 'release-*']
     paths:
       - 'sdks/java/core/src/test/java/org/apache/beam/sdk/**'
       - 'sdks/java/container/**'
