@@ -17,7 +17,6 @@
 
 name: PreCommit Java PVR Flink Docker
 
-
 on:
   push:
     tags: ['v*']
