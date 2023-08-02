@@ -55,7 +55,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class SdkHarnessEnvironmentTest {
 
-  @Rule public final TestPipeline p = TestPipeline.create().enableAbandonedNodeEnforcement(false);
+  @Rule public final TestPipeline p = TestPipeline.create();
 
   /**
    * {@link DoFn} used to validate that Jamm was setup as a java agent to get accurate measuring.
