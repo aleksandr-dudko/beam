@@ -1,8 +1,8 @@
 name: Python Dependency Tests
 
 on:
- # schedule:
- #   - cron: '10 2 * * *'
+  schedule:
+    - cron: '10 2 * * *'
   pull_request:
     branches: ['master', 'release-*']
     tags: 'v*'
