@@ -1,9 +1,6 @@
 name: Precommit Portable Python
 run-name: Portable Python Precommit
 on:
-  push:
-    tags: [ 'v*' ]
-    branches: [ 'master', 'release-*' ]
   pull_request:
     branches: [ "master", "release-*" ]
     paths: [ 'model/.*', 'runners/core-construction-java/.*', 'runners/core-java/.*', 'runners/extensions-java/.*', 'runners/flink/.*', 'runners/java-fn-execution/.*', 'runners/reference/.*$', 'sdks/python/.*', 'release/.*' ]
