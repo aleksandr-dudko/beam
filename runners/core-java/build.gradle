@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+
 plugins { id 'org.apache.beam.module' }
 applyJavaNature(
   classesTriggerCheckerBugs: [
