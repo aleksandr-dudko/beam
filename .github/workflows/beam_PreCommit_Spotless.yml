@@ -64,28 +64,35 @@ permissions:
 
 jobs:
   beam_PreCommit_Spotless:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    name: beam_PreCommit_Spotless (Run Spotless PreCommit)
     timeout-minutes: 120
     runs-on: [self-hosted, ubuntu-20.04, main]
-    strategy:
-      fail-fast: false
-      matrix:
-        job_name: [beam_PreCommit_Spotless]
-        job_phrase: [Run Spotless PreCommit]
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch' ||
       github.event.comment.body == 'Run Spotless PreCommit'
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup repository
-        uses: ./.github/actions/setup-action
+      - name: Git checkout
+        uses: actions/checkout@v3
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          ref: ${{github.event.pull_request.head.sha}}
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run Spotless PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
+      - name: Install Java
+        uses: actions/setup-java@v3.8.0
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          cache: 'gradle'
+          check-latest: true
       - name: run Spotless PreCommit script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
