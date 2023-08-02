@@ -5,7 +5,7 @@ on:
     branches: [ "master", "release-*" ]
     paths: [ 'model/.*', 'runners/core-construction-java/.*', 'runners/core-java/.*', 'runners/extensions-java/.*', 'runners/flink/.*', 'runners/java-fn-execution/.*', 'runners/reference/.*$', 'sdks/python/.*', 'release/.*' ]
   issue_comment:
-    types: [created]
+    types: [created, edited]
 
 jobs:
   PortablePythonPrecommit:
