@@ -87,7 +87,7 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
       - name: Remove gcloud directory
-        run: rm -rf /home/runner/.config/gcloud
+        run: sudo rm -rf /home/runner/.config/gcloud
       - name: Authenticate on GCP
         uses: google-github-actions/setup-gcloud@v0
         with:
