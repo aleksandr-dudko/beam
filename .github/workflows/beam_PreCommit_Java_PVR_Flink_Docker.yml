@@ -40,7 +40,6 @@ on:
     types: [created]
   # schedule:
   #   - cron: '0 * * * *'
-  workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -60,18 +59,13 @@ permissions:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
 jobs:
   beam_PreCommit_Java_PVR_Flink_Docker:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    name: beam_PreCommit_Java_PVR_Flink_Docker
     runs-on: [self-hosted, ubuntu-20.04, main]
-    strategy:
-      fail-fast: false
-      matrix:
-        job_name: [ beam_PreCommit_Java_PVR_Flink_Docker ]
-        job_phrase: [ Run Java_PVR_Flink_Docker PreCommit ]
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
@@ -79,8 +73,9 @@ jobs:
       github.event.comment.body == 'Run Java_PVR_Flink_Docker PreCommit'
     timeout-minutes: 240
     steps:
+      - uses: actions/checkout@v3
       - name: Setup repository
-        uses: actions/checkout@v3
+        uses: ./.github/actions/setup-action
         with:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -89,8 +84,8 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :runners:flink:1.15:job-server:validatesPortableRunnerDocker
-        env:
-          CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
+          env:
+            CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
