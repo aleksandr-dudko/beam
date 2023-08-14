@@ -143,7 +143,7 @@ permissions:
 
 jobs:
   beam_PreCommit_Java:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}} ${{matrix.java_version}})
+    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     timeout-minutes: 180
     runs-on: [self-hosted, ubuntu-20.04, main]
     strategy:
@@ -151,7 +151,6 @@ jobs:
       matrix:
         job_name: [beam_PreCommit_Java]
         job_phrase: [Run Java PreCommit]
-        java_version: ['8']
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
@@ -162,17 +161,10 @@ jobs:
       - name: Setup repository
         uses: actions/checkout@v3
         with:
-          comment_phrase: ${{ matrix.job_phrase }} ${{matrix.java_version}}
+          comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }}) ${{matrix.java_version}}
-      - name: Set up Java${{ matrix.java_version }}
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'temurin'
-          java-version: ${{ matrix.java_version }}
-          cache: 'gradle'
-          check-latest: true
-      - name: run Java PreCommit script for Java${{ matrix.java_version }}
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+      - name: run Java PreCommit script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :javaPreCommit --rerun-tasks
