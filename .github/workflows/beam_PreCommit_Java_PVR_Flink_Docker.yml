@@ -65,13 +65,13 @@ concurrency:
 
 jobs:
   beam_PreCommit_Java:
-    name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     strategy:
       fail-fast: false
       matrix:
-        job_name: ["beam_PreCommit_Java_PVR_Flink_Docker"]
-        job_phrase: ["Run Java_PVR_Flink_Docker PreCommit"]
+        job_name: [ beam_PreCommit_Java_PVR_Flink_Docker ]
+        job_phrase: [ Run Java_PVR_Flink_Docker PreCommit ]
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
