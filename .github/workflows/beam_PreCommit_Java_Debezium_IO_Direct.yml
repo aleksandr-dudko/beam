@@ -18,7 +18,7 @@ name: PreCommit Java Debezium IO Direct
 on:
   push:
     tags: ['v*']
-    branches: ['master', 'release-*']
+    branches: ['precommit-java-debezium-io-direct/master', 'release-*']
     paths:
       - "sdks/java/io/debezium/**"
       - ".github/workflows/beam_PreCommit_Java_Debezium_IO_Direct.yml"
