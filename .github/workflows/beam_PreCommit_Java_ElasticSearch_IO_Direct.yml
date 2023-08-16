@@ -21,11 +21,13 @@ on:
     branches: ['precommit-java-elasticsearch-io-direct/master', 'release-*']
     paths:
       - "sdks/java/io/elasticsearch/**"
+      - "sdks/java/io/elasticsearch-tests/**"
       - ".github/workflows/beam_PreCommit_Java_ElasticSearch_IO_Direct.yml"
   pull_request_target:
     branches: ['master', 'release-*']
     paths:
       - "sdks/java/io/elasticsearch/**"
+      - "sdks/java/io/elasticsearch-tests/**"
   issue_comment:
     types: [created]
   schedule:
