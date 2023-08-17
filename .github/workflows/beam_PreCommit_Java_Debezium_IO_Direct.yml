@@ -76,11 +76,17 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run Debezium IO build script
+      - name: run Debezium IO build task
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:io:debezium:build
+          arguments: |
+            -PdisableSpotlessCheck=true \
+            -PdisableCheckStyle=true \
+      - name: run Debezium IO additional tasks
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: |
-            :sdks:java:io:debezium:build \
             :sdks:java:io:debezium:expansion-service:build \
             :sdks:java:io:debezium:integrationTest \
           arguments: |
