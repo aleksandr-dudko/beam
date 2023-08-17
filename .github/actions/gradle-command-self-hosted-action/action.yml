@@ -49,5 +49,3 @@ runs:
         fi
         ./gradlew ${{ inputs.gradle-command }} --max-workers=${{ inputs.max-workers }} ${{ inputs.arguments }} \
         ${{ inputs.default-arguments }}
-        max_retries: 10  # Максимальное количество повторных попыток
-        retry_delay: 60  # Задержка между повторными попытками (в секундах)
