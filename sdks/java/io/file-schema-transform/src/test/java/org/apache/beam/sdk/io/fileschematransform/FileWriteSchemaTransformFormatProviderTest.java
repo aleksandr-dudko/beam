@@ -63,9 +63,13 @@ import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Base class for tests of {@link FileWriteSchemaTransformFormatProvider} implementations. */
 abstract class FileWriteSchemaTransformFormatProviderTest {
+  private static final Logger LOG = LoggerFactory.getLogger(FileWriteSchemaTransformFormatProviderTest.class);
+
 
   /**
    * The {@link FileWriteSchemaTransformConfiguration#getFormat()} mapped to this {@link
@@ -381,6 +385,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     applyProviderAndAssertFilesWritten(to, rows, schema);
     writePipeline.run().waitUntilFinish();
     assertFolderContainsInAnyOrder(to, rows, schema);
+    LOG.error("arrayPrimitiveDataTypes arrayPrimitiveDataTypes arrayPrimitiveDataTypes");
     readPipeline.run();
   }
 
