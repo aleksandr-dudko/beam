@@ -51,7 +51,7 @@ permissions:
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   beam_PreCommit_Java_File-schema-transform_IO_Direct:
@@ -76,34 +76,6 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run File-schema-transform IO build script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:io:file-schema-transform:build
-          arguments: |
-            -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
-      - name: run File-schema-transform IO build script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:io:file-schema-transform:build
-          arguments: |
-            -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
-      - name: run File-schema-transform IO build script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:io:file-schema-transform:build
-          arguments: |
-            -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
-      - name: run File-schema-transform IO build script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:io:file-schema-transform:build
-          arguments: |
-            -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
       - name: run File-schema-transform IO build script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
