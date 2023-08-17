@@ -80,11 +80,11 @@ jobs:
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
       - name: run File-schema-transform IO build script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:java:io:file-schema-transform:test --continue
+          gradle-command: :sdks:java:io:file-schema-transform:build
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
