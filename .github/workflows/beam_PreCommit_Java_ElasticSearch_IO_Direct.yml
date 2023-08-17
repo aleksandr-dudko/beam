@@ -78,11 +78,17 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run ElasticSearch IO build script
+      - name: run ElasticSearch IO build task
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:io:elasticsearch:build
+          arguments: |
+            -PdisableSpotlessCheck=true \
+            -PdisableCheckStyle=true \
+      - name: run ElasticSearch IO additional tasks
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: |
-            :sdks:java:io:elasticsearch:build  \
             :sdks:java:io:elasticsearch-tests:elasticsearch-tests-5:build \
             :sdks:java:io:elasticsearch-tests:elasticsearch-tests-7:build \
             :sdks:java:io:elasticsearch-tests:elasticsearch-tests-8:build \
