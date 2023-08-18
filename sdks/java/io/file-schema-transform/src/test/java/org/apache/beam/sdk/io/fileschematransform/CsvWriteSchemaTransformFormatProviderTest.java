@@ -143,14 +143,14 @@ public class CsvWriteSchemaTransformFormatProviderTest
     return Optional.empty();
   }
 
-  @Override
+/*  @Override
   public void arrayPrimitiveDataTypes() {
     assertThrowsWith(
         "columns in header match fields in Schema with invalid types: integerList,stringList,doubleList,floatList,booleanList,longList. See CsvIO#VALID_FIELD_TYPE_SET for a list of valid field types.",
         "arrayPrimitiveDataTypes",
         DATA.arrayPrimitiveDataTypesRows,
         ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA);
-  }
+  }*/
 
   @Override
   public void doublyNestedDataTypesRepeat() {
