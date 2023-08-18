@@ -379,7 +379,6 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   }
 
   @Test
-  @Ignore
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
