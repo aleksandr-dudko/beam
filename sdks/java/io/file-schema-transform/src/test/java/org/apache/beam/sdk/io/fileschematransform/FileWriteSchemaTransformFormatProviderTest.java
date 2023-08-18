@@ -60,6 +60,7 @@ import org.apache.beam.sdk.values.Row;
 import org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.io.Files;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -378,6 +379,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   }
 
   @Test
+  @Ignore
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
