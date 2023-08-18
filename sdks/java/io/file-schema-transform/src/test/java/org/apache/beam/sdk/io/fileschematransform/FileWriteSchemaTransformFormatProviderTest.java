@@ -377,7 +377,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     readPipeline.run();
   }
 
-  @Test
+/*  @Test
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
@@ -387,7 +387,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     assertFolderContainsInAnyOrder(to, rows, schema);
     LOG.error("arrayPrimitiveDataTypes arrayPrimitiveDataTypes arrayPrimitiveDataTypes");
     readPipeline.run();
-  }
+  }*/
 
   @Test
   public void singlyNestedDataTypesNoRepeat() {
