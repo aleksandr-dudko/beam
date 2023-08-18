@@ -68,7 +68,8 @@ import org.slf4j.LoggerFactory;
 
 /** Base class for tests of {@link FileWriteSchemaTransformFormatProvider} implementations. */
 abstract class FileWriteSchemaTransformFormatProviderTest {
-  private static final Logger LOG = LoggerFactory.getLogger(FileWriteSchemaTransformFormatProviderTest.class);
+  private static final Logger LOG =
+      LoggerFactory.getLogger(FileWriteSchemaTransformFormatProviderTest.class);
 
   /**
    * The {@link FileWriteSchemaTransformConfiguration#getFormat()} mapped to this {@link
