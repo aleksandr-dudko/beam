@@ -68,6 +68,7 @@ import org.slf4j.LoggerFactory;
 
 /** Base class for tests of {@link FileWriteSchemaTransformFormatProvider} implementations. */
 abstract class FileWriteSchemaTransformFormatProviderTest {
+  private static final Logger LOG = LoggerFactory.getLogger(FileWriteSchemaTransformFormatProviderTest.class);
 
   /**
    * The {@link FileWriteSchemaTransformConfiguration#getFormat()} mapped to this {@link
@@ -375,7 +376,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     readPipeline.run();
   }
 
-/*  @Test
+  @Test
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
@@ -385,7 +386,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     assertFolderContainsInAnyOrder(to, rows, schema);
     LOG.error("arrayPrimitiveDataTypes arrayPrimitiveDataTypes arrayPrimitiveDataTypes");
     readPipeline.run();
-  }*/
+  }
 
   @Test
   public void singlyNestedDataTypesNoRepeat() {
