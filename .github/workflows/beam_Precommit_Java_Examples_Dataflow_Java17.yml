@@ -26,6 +26,7 @@ on:
       - 'examples/java/**'
       - 'examples/kotlin/**'
       - 'release/**'
+      - '.github/workflows/beam_PreCommit_Java_Examples_Dataflow_Java17.yml'
   pull_request_target:
     branches: ['master', 'release-*']
     paths:
