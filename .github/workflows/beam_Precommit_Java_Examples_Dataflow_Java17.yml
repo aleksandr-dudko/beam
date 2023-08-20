@@ -18,7 +18,7 @@ name: PreCommit Java Examples Dataflow Java17
 on:
   push:
     tags: ['v*']
-    branches: ['precommit-java-file-schema-transform-io-direct/master', 'release-*']
+    branches: ['precommit-java-examples-dataflow-java17/master', 'release-*']
     paths:
       - 'model/**'
       - 'sdks/java/**'
