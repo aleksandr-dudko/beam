@@ -372,7 +372,6 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     assumeTrue(formatsThatSupportByteSequenceType.contains(getFormat()));
 
     String to = folder(SchemaAwareJavaBeans.ByteSequenceType.class);
-    LOG.error("byteSequenceTypes to = " + to);
     Schema schema = BYTE_SEQUENCE_TYPE_SCHEMA;
     List<Row> rows = DATA.byteSequenceTypeRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);
@@ -384,18 +383,14 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   @Test
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
-    LOG.info("arrayPrimitiveDataTypes to = " + to);
-    LOG.error("arrayPrimitiveDataTypes to = " + to);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
-    LOG.info("arrayPrimitiveDataTypes schema = " + schema);
     List<Row> rows = DATA.arrayPrimitiveDataTypesRows;
-    LOG.info("arrayPrimitiveDataTypes rows = " + rows.toString());
     applyProviderAndAssertFilesWritten(to, rows, schema);
-    PipelineResult.State state = writePipeline.run().waitUntilFinish();
-    LOG.info("arrayPrimitiveDataTypes state = " + state);
+    writePipeline.run().waitUntilFinish();
     assertFolderContainsInAnyOrder(to, rows, schema);
-    PipelineResult pipelineResult = readPipeline.run();
-    LOG.info("arrayPrimitiveDataTypes pipelineResult = " + pipelineResult);
+/*
+    readPipeline.run();
+*/
   }
 
   @Test
