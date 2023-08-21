@@ -409,7 +409,7 @@ public class XmlSource<T> extends FileBasedSource<T> {
           LOG.error(content);
           System.out.println(content);
         } catch (IOException e1) {
-          e.printStackTrace();
+          throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
         }
         throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
