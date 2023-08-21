@@ -456,8 +456,12 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
 
   private String folder(String... paths) {
     try {
+      LOG.info("arrayPrimitiveDataTypes paths = " + Arrays.toString(paths));
+      LOG.error("arrayPrimitiveDataTypes paths = " + Arrays.toString(paths));
       return tmpFolder.newFolder(paths).getAbsolutePath() + getFilenamePrefix();
     } catch (IOException e) {
+      LOG.info("arrayPrimitiveDataTypes IllegalStateException = " + e);
+      LOG.error("arrayPrimitiveDataTypes IllegalStateException = " + e);
       throw new IllegalStateException(e);
     }
   }
