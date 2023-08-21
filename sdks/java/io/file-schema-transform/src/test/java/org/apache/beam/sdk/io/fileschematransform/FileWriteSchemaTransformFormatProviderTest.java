@@ -384,6 +384,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     LOG.info("arrayPrimitiveDataTypes to = " + to);
+    LOG.error("arrayPrimitiveDataTypes to = " + to);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
     LOG.info("arrayPrimitiveDataTypes schema = " + schema);
     List<Row> rows = DATA.arrayPrimitiveDataTypesRows;
