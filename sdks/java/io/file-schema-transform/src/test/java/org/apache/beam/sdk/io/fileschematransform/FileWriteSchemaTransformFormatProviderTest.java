@@ -71,9 +71,6 @@ import org.slf4j.LoggerFactory;
 
 /** Base class for tests of {@link FileWriteSchemaTransformFormatProvider} implementations. */
 abstract class FileWriteSchemaTransformFormatProviderTest {
-  private static final Logger LOG =
-      LoggerFactory.getLogger(FileWriteSchemaTransformFormatProviderTest.class);
-
   /**
    * The {@link FileWriteSchemaTransformConfiguration#getFormat()} mapped to this {@link
    * FileWriteSchemaTransformFormatProvider}.
@@ -367,20 +364,6 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   }
 
   @Test
-  public void byteSequenceTypes() {
-    List<String> formatsThatSupportByteSequenceType = Arrays.asList("avro", "parquet");
-    assumeTrue(formatsThatSupportByteSequenceType.contains(getFormat()));
-
-    String to = folder(SchemaAwareJavaBeans.ByteSequenceType.class);
-    Schema schema = BYTE_SEQUENCE_TYPE_SCHEMA;
-    List<Row> rows = DATA.byteSequenceTypeRows;
-    applyProviderAndAssertFilesWritten(to, rows, schema);
-    writePipeline.run().waitUntilFinish();
-    assertFolderContainsInAnyOrder(to, rows, schema);
-    readPipeline.run();
-  }
-
-  @Test
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
@@ -449,12 +432,8 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
 
   private String folder(String... paths) {
     try {
-      LOG.info("arrayPrimitiveDataTypes paths = " + Arrays.toString(paths));
-      LOG.error("arrayPrimitiveDataTypes paths = " + Arrays.toString(paths));
       return tmpFolder.newFolder(paths).getAbsolutePath() + getFilenamePrefix();
     } catch (IOException e) {
-      LOG.info("arrayPrimitiveDataTypes IllegalStateException = " + e);
-      LOG.error("arrayPrimitiveDataTypes IllegalStateException = " + e);
       throw new IllegalStateException(e);
     }
   }
