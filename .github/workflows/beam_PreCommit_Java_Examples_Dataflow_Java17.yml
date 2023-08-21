@@ -98,6 +98,16 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
+      - name: Clean
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :clean
+          arguments: |
+            -PdisableSpotlessCheck=true \
+            -PdisableCheckStyle=true \
+            -PcompileAndRunTestsWithJava17 \
+            -PskipCheckerFramework \
+            -Pjava17Home=$JAVA_HOME_17_X64 \
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -108,6 +118,7 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=$JAVA_HOME_17_X64 \
+          max-workers: 12
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
