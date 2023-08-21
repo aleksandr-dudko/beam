@@ -105,9 +105,7 @@ jobs:
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
-            -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
-            -Pjava17Home=$JAVA_HOME_17_X64 \
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
