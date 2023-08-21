@@ -32,10 +32,6 @@ configurations.implementation {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
 def parquet_version = "1.12.0"
 
 dependencies {

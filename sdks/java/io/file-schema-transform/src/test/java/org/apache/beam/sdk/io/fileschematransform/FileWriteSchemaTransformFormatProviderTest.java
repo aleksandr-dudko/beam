@@ -388,9 +388,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     applyProviderAndAssertFilesWritten(to, rows, schema);
     writePipeline.run().waitUntilFinish();
     assertFolderContainsInAnyOrder(to, rows, schema);
-/*
     readPipeline.run();
-*/
   }
 
   @Test
