@@ -87,6 +87,7 @@ jobs:
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
+            --info \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
