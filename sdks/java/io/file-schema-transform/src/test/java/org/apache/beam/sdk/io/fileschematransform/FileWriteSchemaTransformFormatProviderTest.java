@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.io.Compression;
 import org.apache.beam.sdk.io.common.SchemaAwareJavaBeans;
 import org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.AllPrimitiveDataTypes;
@@ -381,13 +383,17 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   @Test
   public void arrayPrimitiveDataTypes() {
     String to = folder(SchemaAwareJavaBeans.ArrayPrimitiveDataTypes.class);
+    LOG.info("arrayPrimitiveDataTypes to = " + to);
     Schema schema = ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
+    LOG.info("arrayPrimitiveDataTypes schema = " + schema);
     List<Row> rows = DATA.arrayPrimitiveDataTypesRows;
+    LOG.info("arrayPrimitiveDataTypes rows = " + rows.toString());
     applyProviderAndAssertFilesWritten(to, rows, schema);
-    writePipeline.run().waitUntilFinish();
+    PipelineResult.State state = writePipeline.run().waitUntilFinish();
+    LOG.info("arrayPrimitiveDataTypes state = " + state);
     assertFolderContainsInAnyOrder(to, rows, schema);
-    LOG.error("arrayPrimitiveDataTypes arrayPrimitiveDataTypes arrayPrimitiveDataTypes");
-    readPipeline.run();
+    PipelineResult pipelineResult = readPipeline.run();
+    LOG.info("arrayPrimitiveDataTypes pipelineResult = " + pipelineResult);
   }
 
   @Test
