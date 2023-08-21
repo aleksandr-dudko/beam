@@ -29,6 +29,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -397,11 +399,23 @@ public class XmlSource<T> extends FileBasedSource<T> {
         currentRecord = jb.getValue();
         return true;
       } catch (JAXBException | XMLStreamException e) {
-        throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
+        String content = this.getCurrentSource().getFileOrPatternSpec();
+        try {
+          content = readFileToString(this.getCurrentSource().getFileOrPatternSpec());
+          System.out.println(content);
+        } catch (IOException e1) {
+          throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
+        }
+        throw new IOException(content);
 /*
         throw new IOException(e);
 */
       }
+    }
+
+    public static String readFileToString(String filePath) throws IOException {
+      byte[] encodedBytes = Files.readAllBytes(Paths.get(filePath));
+      return new String(encodedBytes, StandardCharsets.UTF_8);
     }
 
     @Override
