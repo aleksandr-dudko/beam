@@ -372,6 +372,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     assumeTrue(formatsThatSupportByteSequenceType.contains(getFormat()));
 
     String to = folder(SchemaAwareJavaBeans.ByteSequenceType.class);
+    LOG.error("byteSequenceTypes to = " + to);
     Schema schema = BYTE_SEQUENCE_TYPE_SCHEMA;
     List<Row> rows = DATA.byteSequenceTypeRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);
