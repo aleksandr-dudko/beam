@@ -48,12 +48,16 @@ import org.apache.beam.sdk.io.fs.MatchResult.Metadata;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.ValueProvider;
 import org.codehaus.stax2.XMLInputFactory2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Implementation of {@link XmlIO#read}. */
 @SuppressWarnings({
   "nullness" // TODO(https://github.com/apache/beam/issues/20497)
 })
 public class XmlSource<T> extends FileBasedSource<T> {
+
+  private static final Logger LOG = LoggerFactory.getLogger(XmlSource.class);
 
   private static final String XML_VERSION = "1.1";
 
@@ -397,16 +401,17 @@ public class XmlSource<T> extends FileBasedSource<T> {
         JAXBElement<T> jb =
             jaxbUnmarshaller.unmarshal(parser, getCurrentSource().configuration.getRecordClass());
         currentRecord = jb.getValue();
+
         return true;
       } catch (JAXBException | XMLStreamException e) {
-        String content = this.getCurrentSource().getFileOrPatternSpec();
         try {
-          content = readFileToString(this.getCurrentSource().getFileOrPatternSpec());
+          String content = readFileToString(this.getCurrentSource().getFileOrPatternSpec());
+          LOG.error(content);
           System.out.println(content);
         } catch (IOException e1) {
-          throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
+          e.printStackTrace();
         }
-        throw new IOException(content);
+        throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
         throw new IOException(e);
 */
