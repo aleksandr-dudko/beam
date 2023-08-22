@@ -89,9 +89,6 @@ jobs:
             -PdisableCheckStyle=true \
             --info \
             -Dfile.encoding=UTF-8 \
-      - name: Sleep
-        if: always()
-        run: sleep 600
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
