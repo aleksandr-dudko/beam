@@ -78,8 +78,8 @@ jobs:
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '11'
+          distribution: 'zulu'
+          java-version: '8'
       - name: run File-schema-transform IO build script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -87,7 +87,6 @@ jobs:
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
-            --info \
             -Dfile.encoding=UTF-8 \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
