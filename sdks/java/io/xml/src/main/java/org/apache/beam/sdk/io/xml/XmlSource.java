@@ -57,8 +57,6 @@ import org.slf4j.LoggerFactory;
 })
 public class XmlSource<T> extends FileBasedSource<T> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(XmlSource.class);
-
   private static final String XML_VERSION = "1.1";
 
   private final XmlIO.MappingConfiguration<T> configuration;
@@ -404,13 +402,6 @@ public class XmlSource<T> extends FileBasedSource<T> {
 
         return true;
       } catch (JAXBException | XMLStreamException e) {
-        try {
-          String content = readFileToString(this.getCurrentSource().getFileOrPatternSpec());
-          LOG.error(content);
-          System.out.println(content);
-        } catch (IOException e1) {
-          throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
-        }
         throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
         throw new IOException(e);
