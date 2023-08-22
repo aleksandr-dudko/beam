@@ -397,7 +397,7 @@ public class XmlSource<T> extends FileBasedSource<T> {
 
         return true;
       } catch (JAXBException | XMLStreamException e) {
-        new File("/runner/_work/beam/beam/sdks/java/tmp123" + this.getCurrentSource().getFileOrPatternSpec());
+        new File("/runner/_work/beam/beam/sdks/java/tmp123/" + this.getCurrentSource().getFileOrPatternSpec());
         throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
         throw new IOException(e);
