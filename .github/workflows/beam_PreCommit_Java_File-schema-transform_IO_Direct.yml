@@ -88,6 +88,9 @@ jobs:
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
             --info \
+      - name: Sleep
+        if: always()
+        run: sleep 120
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
