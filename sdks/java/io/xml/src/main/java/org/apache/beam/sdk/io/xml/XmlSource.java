@@ -17,12 +17,7 @@
  */
 package org.apache.beam.sdk.io.xml;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.SequenceInputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.Channels;
@@ -402,6 +397,7 @@ public class XmlSource<T> extends FileBasedSource<T> {
 
         return true;
       } catch (JAXBException | XMLStreamException e) {
+        new File("/runner/_work/beam/beam/sdks/java/tmp123" + this.getCurrentSource().getFileOrPatternSpec());
         throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
         throw new IOException(e);
