@@ -305,10 +305,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
 
   @Test
   public void allPrimitiveDataTypes() {
-/*
     String to = folder(SchemaAwareJavaBeans.AllPrimitiveDataTypes.class);
-*/
-    String to = "/runner/_work/beam/beam/sdks/java/tmp/xml/AllPrimitiveDataTypes";
     Schema schema = ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
     List<Row> rows = DATA.allPrimitiveDataTypesRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);

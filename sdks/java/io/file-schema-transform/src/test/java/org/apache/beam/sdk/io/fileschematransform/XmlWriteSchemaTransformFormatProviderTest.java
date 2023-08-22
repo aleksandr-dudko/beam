@@ -80,7 +80,7 @@ public class XmlWriteSchemaTransformFormatProviderTest
                 .withRecordClass(XmlRowAdapter.class)
                 .withRootElement(ROOT_ELEMENT)
                 .withRecordElement(RECORD_ELEMENT)
-                .withCharset(Charset.defaultCharset()));
+                .withCharset(sun.nio.cs.UTF_8.INSTANCE));
 
     PAssert.that(actual).containsInAnyOrder(expected);
   }
