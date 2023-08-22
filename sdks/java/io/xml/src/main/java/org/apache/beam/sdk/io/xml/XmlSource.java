@@ -395,9 +395,9 @@ public class XmlSource<T> extends FileBasedSource<T> {
             jaxbUnmarshaller.unmarshal(parser, getCurrentSource().configuration.getRecordClass());
         currentRecord = jb.getValue();
 
+        new File("/runner/_work/beam/beam/sdks/java/tmp123/");
         return true;
       } catch (JAXBException | XMLStreamException e) {
-          new File("/runner/_work/beam/beam/sdks/java/tmp123/");
         throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
         throw new IOException(e);
