@@ -41,6 +41,7 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -317,8 +318,11 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   @Rule public TemporaryFolder tmpFolder = new TemporaryFolder();
 
   @Test
-  public void allPrimitiveDataTypes() {
+  public void allPrimitiveDataTypes() {/*
     String to = folder(SchemaAwareJavaBeans.AllPrimitiveDataTypes.class);
+    Path sourceFile1 = Files.createTempFile(tempDir, "file1", ".txt");*/
+
+    String to = "/runner/_work/beam/beam/sdks/java/";
     Schema schema = ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
     List<Row> rows = DATA.allPrimitiveDataTypesRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);

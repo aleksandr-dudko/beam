@@ -397,10 +397,10 @@ public class XmlSource<T> extends FileBasedSource<T> {
 
         return true;
       } catch (JAXBException | XMLStreamException e) {
-        throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 /*
-        throw new IOException(e);
+        throw new IOException(this.getCurrentSource().getFileOrPatternSpec());
 */
+        throw new IOException(e);
       }
     }
 
