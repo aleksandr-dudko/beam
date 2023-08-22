@@ -88,6 +88,7 @@ jobs:
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
             --info \
+            -Dfile.encoding=UTF-8 \
       - name: Sleep
         if: always()
         run: sleep 600
