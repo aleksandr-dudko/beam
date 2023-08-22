@@ -39,7 +39,6 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -319,7 +318,7 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
 
   @Test
   public void allPrimitiveDataTypes() {
-    String to = folder("/tmp/junit_all_privitive");
+    String to = folder(SchemaAwareJavaBeans.AllPrimitiveDataTypes.class);
     Schema schema = ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
     List<Row> rows = DATA.allPrimitiveDataTypesRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);
@@ -431,20 +430,12 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
     return folder(getFormat(), clazz.getSimpleName());
   }
 
-  private <T> String folder(String name) {
-    return createTmpFolder(name);
-  }
-
   private String folder(String... paths) {
     try {
       return tmpFolder.newFolder(paths).getAbsolutePath() + getFilenamePrefix();
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
-  }
-
-  private String createTmpFolder(String paths) {
-    return new File(paths).getAbsolutePath();
   }
 
   private PCollection<String> applyProviderAndAssertFilesWritten(
