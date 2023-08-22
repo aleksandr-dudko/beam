@@ -17,40 +17,9 @@
  */
 package org.apache.beam.sdk.io.fileschematransform;
 
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.ARRAY_PRIMITIVE_DATA_TYPES_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.BYTE_SEQUENCE_TYPE_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.BYTE_TYPE_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.DOUBLY_NESTED_DATA_TYPES_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.NULLABLE_ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.SINGLY_NESTED_DATA_TYPES_SCHEMA;
-import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.TIME_CONTAINING_SCHEMA;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformConfiguration.csvConfigurationBuilder;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformConfiguration.parquetConfigurationBuilder;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformConfiguration.xmlConfigurationBuilder;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformFormatProviderTestData.DATA;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformFormatProviders.loadProviders;
-import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformProvider.RESULT_TAG;
-import static org.apache.beam.sdk.values.TypeDescriptors.booleans;
-import static org.apache.beam.sdk.values.TypeDescriptors.strings;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeTrue;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.io.Compression;
 import org.apache.beam.sdk.io.common.SchemaAwareJavaBeans;
-import org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.AllPrimitiveDataTypes;
+import org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.*;
 import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.testing.PAssert;
 import org.apache.beam.sdk.testing.TestPipeline;
@@ -63,12 +32,29 @@ import org.apache.beam.sdk.values.Row;
 import org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.io.Files;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.apache.beam.sdk.io.common.SchemaAwareJavaBeans.*;
+import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformConfiguration.*;
+import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformFormatProviderTestData.DATA;
+import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformFormatProviders.loadProviders;
+import static org.apache.beam.sdk.io.fileschematransform.FileWriteSchemaTransformProvider.RESULT_TAG;
+import static org.apache.beam.sdk.values.TypeDescriptors.booleans;
+import static org.apache.beam.sdk.values.TypeDescriptors.strings;
+import static org.junit.Assert.*;
+import static org.junit.Assume.assumeTrue;
 
 /** Base class for tests of {@link FileWriteSchemaTransformFormatProvider} implementations. */
 abstract class FileWriteSchemaTransformFormatProviderTest {
@@ -318,11 +304,11 @@ abstract class FileWriteSchemaTransformFormatProviderTest {
   @Rule public TemporaryFolder tmpFolder = new TemporaryFolder();
 
   @Test
-  public void allPrimitiveDataTypes() {/*
+  public void allPrimitiveDataTypes() {
+/*
     String to = folder(SchemaAwareJavaBeans.AllPrimitiveDataTypes.class);
-    Path sourceFile1 = Files.createTempFile(tempDir, "file1", ".txt");*/
-
-    String to = "/runner/_work/beam/beam/sdks/java/";
+*/
+    String to = "/runner/_work/beam/beam/sdks/java/tmp/xml/AllPrimitiveDataTypes";
     Schema schema = ALL_PRIMITIVE_DATA_TYPES_SCHEMA;
     List<Row> rows = DATA.allPrimitiveDataTypesRows;
     applyProviderAndAssertFilesWritten(to, rows, schema);
