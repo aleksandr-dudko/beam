@@ -60,7 +60,7 @@ jobs:
   beam_PostCommit_Java:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}} ${{matrix.java_version}}) 
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 120
+    timeout-minutes: 100
     strategy:
       fail-fast: false
       matrix: 
