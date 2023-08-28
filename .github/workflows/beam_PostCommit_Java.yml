@@ -33,7 +33,7 @@ on:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -54,13 +54,14 @@ permissions:
 
 jobs:
   beam_PostCommit_Java:
-    name: ${{matrix.job_name}}
+    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
       fail-fast: false
       matrix: 
         job_name: [beam_PostCommit_Java]
+        job_phrase: [Run Java PostCommit]
     if: |
       github.event_name == 'push' ||
       github. event_name == 'workflow_dispatch'
@@ -69,8 +70,9 @@ jobs:
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
+          comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }}
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - name: run PostCommit Java script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
