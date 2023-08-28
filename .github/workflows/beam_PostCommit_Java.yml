@@ -29,15 +29,11 @@ on:
       - 'examples/kotlin/**'
       - 'release/**'
       - '.github/workflows/beam_PostCommit_Java.yml'
-  issue_comment:
-    types: [created]
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
+  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -58,33 +54,28 @@ permissions:
 
 jobs:
   beam_PostCommit_Java:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    name: ${{matrix.job_name}}
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 100
+    timeout-minutes: 240
     strategy:
       fail-fast: false
       matrix: 
         job_name: [beam_PostCommit_Java]
-        job_phrase: [Run Java PostCommit]
     if: |
       github.event_name == 'push' ||
-      github.event_name == 'schedule' ||
-      github. event_name == 'workflow_dispatch' ||
-      startswith(github.event.comment.body, 'Run Java PostCommit')
+      github. event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+          github_job: ${{ matrix.job_name }}
       - name: run PostCommit Java script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :javaPostCommit
-            arguments: |
-              -Pmaven_home=/home/jenkins/tools/maven/apache-maven-3.5.4 \
+            arguments: -Pmaven_home=/home/jenkins/tools/maven/apache-maven-3.5.4
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
