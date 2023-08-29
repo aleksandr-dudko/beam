@@ -20,14 +20,8 @@ name: PostCommit Java
 on:
   push:
     tags: ['v*']
-    branches: ['postcommit-java/master', 'release-*']
+    branches: ['master', 'release-*']
     paths:
-      - 'model/**'
-      - 'sdks/java/**'
-      - 'runners/google-cloud-dataflow-java/**'
-      - 'examples/java/**'
-      - 'examples/kotlin/**'
-      - 'release/**'
       - '.github/workflows/beam_PostCommit_Java.yml'
   workflow_dispatch:
 
