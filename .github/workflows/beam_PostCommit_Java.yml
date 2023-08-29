@@ -23,11 +23,13 @@ on:
     branches: ['master', 'release-*']
     paths:
       - '.github/workflows/beam_PostCommit_Java.yml'
+  issue_comment:
+    types: [created]
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -58,7 +60,8 @@ jobs:
         job_phrase: [Run Java PostCommit]
     if: |
       github.event_name == 'push' ||
-      github. event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event.comment.body == 'Run Java PostCommit'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
