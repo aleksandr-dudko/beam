@@ -18,6 +18,10 @@
 name: PostCommit Python310
 
 on:
+  push:
+    tags: [ 'v*' ]
+    branches: [ 'master', 'release-*' ]
+    paths: [ '.github/workflows/beam_PostCommit_Python310.yml' ]
   issue_comment:
     types: [created]
   schedule:
@@ -53,7 +57,7 @@ env:
 jobs:
   beam_PostCommit_Python310:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
-    runs-on: [self-hosted, ubuntu-20.04, main]
+    runs-on: [self-hosted, Linux, X86]
     timeout-minutes: 240
     strategy:
       fail-fast: false
