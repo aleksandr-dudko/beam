@@ -79,8 +79,6 @@ jobs:
             gradle-command: :python310PostCommit
             arguments: |
               -PuseWheelDistribution
-      - name: env
-        run: env
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
