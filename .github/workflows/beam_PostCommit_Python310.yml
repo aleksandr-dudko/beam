@@ -81,14 +81,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: |
-            3.8
             3.10
+            3.8
       - name: run PostCommit Python310 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :python310PostCommit --info
             arguments: |
-              -PuseWheelDistribution
+              -PuseWheelDistribution \
+              -PpythonVersion=3.10 \
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
