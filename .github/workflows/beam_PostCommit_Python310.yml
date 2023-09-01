@@ -56,7 +56,7 @@ env:
 
 jobs:
   beam_PostCommit_Python310:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    name: ${{matrix.job_name}} (${{matrix.job_phrase}} ${{matrix.python_version}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
@@ -64,6 +64,7 @@ jobs:
       matrix: 
         job_name: [beam_PostCommit_Python310]
         job_phrase: [Run Python 3.10 PostCommit]
+        python_version: ['3.8','3.9','3.10','3.11']
     if: |
       github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
@@ -74,24 +75,28 @@ jobs:
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          comment_phrase: ${{ matrix.job_phrase }} ${{ matrix.python_version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }} ${{ matrix.python_version }})
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: |
-            3.10
-            3.8
+          python-version: ${{ matrix.python_version }}
+      - name: Set PY_VER_CLEAN
+        id: set_py_ver_clean
+        run: |
+          PY_VER=${{ matrix.python_version }}
+          PY_VER_CLEAN=${PY_VER//.}
+          echo "py_ver_clean=$PY_VER_CLEAN" >> $GITHUB_OUTPUT
       - name: run PostCommit Python310 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :python310PostCommit
+            gradle-command: :python${{steps.set_py_ver_clean.outputs.py_ver_clean}}PostCommit
             arguments: |
               -PuseWheelDistribution \
-              -PpythonVersion=3.10 \
-      - name: Upload test report
+              -PpythonVersion=${{ matrix.python_version }} \
+      - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: python-code-coverage-report
-          path: "**/build/test-results/**/*.xml"
+          path: "**/pytest*.xml"
