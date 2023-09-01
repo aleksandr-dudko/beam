@@ -18,14 +18,14 @@
 name: PostCommit Python310
 
 on:
-  push:
-    tags: [ 'v*' ]
-    branches: [ 'master', 'release-*' ]
-    paths: [ '.github/workflows/beam_PostCommit_Python310.yml' ]
+#  push:
+#    tags: [ 'v*' ]
+#    branches: [ 'master', 'release-*' ]
+#    paths: [ '.github/workflows/beam_PostCommit_Python310.yml' ]
   issue_comment:
     types: [created]
-  schedule:
-    - cron: '0 */6 * * *'
+#  schedule:
+ #   - cron: '0 */6 * * *'
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
