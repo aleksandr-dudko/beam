@@ -86,7 +86,7 @@ jobs:
       - name: run PostCommit Python310 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :python310PostCommit --info
+            gradle-command: :python310PostCommit
             arguments: |
               -PuseWheelDistribution \
               -PpythonVersion=3.10 \
