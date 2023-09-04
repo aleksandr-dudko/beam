@@ -51,7 +51,7 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PostCommit_Java:
+  beam_PostCommit_Java_Dataflow_Examples_Java11:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 180
@@ -83,6 +83,7 @@ jobs:
         with:
           gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
           arguments: |
+            -Dfile.encoding=UTF-8 \
             -PcompileAndRunTestsWithJava11 \
             -Pjava11Home=$JAVA_HOME_11_X64 \
           max-workers: 12
