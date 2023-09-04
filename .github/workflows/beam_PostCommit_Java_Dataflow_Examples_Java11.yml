@@ -88,9 +88,6 @@ jobs:
             -PcompileAndRunTestsWithJava11 \
             -Pjava11Home=$JAVA_HOME_11_X64 \
           max-workers: 12
-      - name: Sleep
-        if: always()
-        run: sleep 600
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
