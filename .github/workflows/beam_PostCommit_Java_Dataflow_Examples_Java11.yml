@@ -83,12 +83,9 @@ jobs:
         with:
             gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
             arguments: |
+              -Dorg.gradle.vfs.watch=false
               -PcompileAndRunTestsWithJava11 \
               -Pjava11Home=$JAVA_HOME_11_X64 \
-            default-arguments: |
-              --continue \
-              -Dorg.gradle.jvmargs=-Xms2g \
-              -Dorg.gradle.jvmargs=-Xmx4g \
             max-workers: 6
       - name: Upload test report
         uses: actions/upload-artifact@v3
