@@ -81,7 +81,9 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python_version }}
+          python-version: |
+            ${{matrix.python_version}}
+            3.8
       - name: Set PY_VER_CLEAN
         id: set_py_ver_clean
         run: |
