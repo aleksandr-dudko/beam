@@ -87,7 +87,7 @@ jobs:
       - name: run PostCommit Python ${{ matrix.python_version }} script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :sdks:python:test-suites:dataflow:py310:postCommitSickbay
+            gradle-command: :sdks:python:test-suites:dataflow:py310:postCommitSickbay --info
             arguments: |
               -PpythonVersion=${{ matrix.python_version }} \
       - name: Archive code coverage results
