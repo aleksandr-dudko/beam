@@ -83,10 +83,12 @@ jobs:
         with:
           gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
           arguments: |
-            -Dfile.encoding=UTF-8 \
             -PcompileAndRunTestsWithJava11 \
             -Pjava11Home=$JAVA_HOME_11_X64 \
           max-workers: 12
+      - name: Sleep
+        if: always()
+        run: sleep 600
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
