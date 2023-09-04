@@ -77,7 +77,9 @@ jobs:
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: |
+            11
+            8
       - name: run PostCommit Java script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
