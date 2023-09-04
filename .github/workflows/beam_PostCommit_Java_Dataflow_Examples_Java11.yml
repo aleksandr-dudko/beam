@@ -57,7 +57,7 @@ jobs:
     timeout-minutes: 180
     strategy:
       fail-fast: false
-      matrix: 
+      matrix:
         job_name: [beam_PostCommit_Java_Dataflow_Examples_Java11]
         job_phrase: [Run Java examples on Dataflow Java 11]
     if: |
@@ -81,12 +81,15 @@ jobs:
       - name: run PostCommit Java script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
-            arguments: |
-              -Dorg.gradle.vfs.watch=false
-              -PcompileAndRunTestsWithJava11 \
-              -Pjava11Home=$JAVA_HOME_11_X64 \
-            max-workers: 6
+          gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
+          arguments: |
+            -PcompileAndRunTestsWithJava11 \
+            -Pjava11Home=$JAVA_HOME_11_X64 \
+          default-arguments: |
+            --continue \
+            -Dorg.gradle.jvmargs=-Xms2g \
+            -Dorg.gradle.jvmargs=-Xmx4g \
+          max-workers: 6
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
