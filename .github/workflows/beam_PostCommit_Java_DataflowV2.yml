@@ -75,8 +75,7 @@ jobs:
       - name: run PostCommit Java Dataflow V2 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :runners:google-cloud-dataflow-java:examplesJavaRunnerV2IntegrationTest
-            max-workers: 12
+            gradle-command: :runners:google-cloud-dataflow-java:postCommitRunnerV2
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
