@@ -18,11 +18,6 @@
 name: PostCommit Java Avro Versions
 
 on:
-  push:
-    tags: ['v*']
-    branches: ['master', 'release-*']
-    paths:
-      - '.github/workflows/beam_PostCommit_Java_Avro_Versions.yml'
   issue_comment:
     types: [created]
   workflow_dispatch:
@@ -49,12 +44,11 @@ permissions:
   statuses: read
 
 jobs:
-  beam_PostCommit_Java:
+  beam_PostCommit_Java_Avro_Versions:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      fail-fast: false
       matrix: 
         job_name: [beam_PostCommit_Java_Avro_Versions]
         job_phrase: [Run Java Avro Versions PostCommit]
@@ -70,11 +64,10 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run PostCommit Java script
+      - name: run PostCommit Java Avro Versions script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :javaAvroVersionsTest
-            arguments: -Pmaven_home=$HOME/tools
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
