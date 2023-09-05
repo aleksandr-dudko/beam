@@ -26,7 +26,7 @@ on:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.issue.number || github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.schedule || github.event.comment.body || github.event.sender.login}}'
+  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -56,10 +56,11 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      matrix:
+      matrix: 
         job_name: [beam_PostCommit_Java_DataflowV2]
         job_phrase: [Run PostCommit_Java_DataflowV2]
     if: |
+      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run PostCommit_Java_DataflowV2'
@@ -74,7 +75,8 @@ jobs:
       - name: run PostCommit Java Dataflow V2 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :runners:google-cloud-dataflow-java:postCommitRunnerV2
+            gradle-command: :runners:google-cloud-dataflow-java:examplesJavaRunnerV2IntegrationTest
+            max-workers: 12
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
