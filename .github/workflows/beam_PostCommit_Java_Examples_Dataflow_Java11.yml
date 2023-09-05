@@ -79,7 +79,7 @@ jobs:
           java-version: |
             11
             8
-      - name: run PostCommit Java script
+      - name: run PostCommit Java  Examples Dataflow Java11 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :runners:google-cloud-dataflow-java:examples:java11PostCommit
