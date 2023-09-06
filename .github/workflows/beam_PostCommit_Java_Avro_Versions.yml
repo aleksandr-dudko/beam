@@ -20,11 +20,13 @@ name: PostCommit Java Avro Versions
 on:
   issue_comment:
     types: [created]
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
+  group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -53,9 +55,9 @@ jobs:
         job_name: [beam_PostCommit_Java_Avro_Versions]
         job_phrase: [Run Java Avro Versions PostCommit]
     if: |
-      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
-      github.event.comment.body == 'Run Java Avro Versions PostCommit'
+      github.event_name == 'schedule' ||
+      github.event.comment.body == 'Run Python 3.8 PostCommit'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
