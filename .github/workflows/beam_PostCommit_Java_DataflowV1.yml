@@ -54,8 +54,7 @@ jobs:
   beam_PostCommit_Java_DataflowV1:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
-    #todo: revert to 240
-    timeout-minutes: 2400
+    timeout-minutes: 300
     strategy:
       matrix:
         job_name: [beam_PostCommit_Java_DataflowV1]
