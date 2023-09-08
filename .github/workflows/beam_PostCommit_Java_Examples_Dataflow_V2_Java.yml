@@ -69,18 +69,8 @@ jobs:
          endswith(github.event.comment.body, 'Examples on Dataflow Runner V2')
       )
     steps:
-      - name: Check Java Version
-        id: check_version
-        run: |
-          for version in ${{ matrix.java_version }}; do
-            if [[ "${{ github.event.comment.body }}" == *"Java $version"* ]]; then
-              echo "Java $version found in the comment."
-              echo "::set-output name=java_version_found::true"
-            fi
-          done
       - uses: actions/checkout@v3
       - name: Setup repository
-        if: steps.check_version.outputs.java_version_found == 'true'
         uses: ./.github/actions/setup-action
         with:
           comment_phrase: ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
