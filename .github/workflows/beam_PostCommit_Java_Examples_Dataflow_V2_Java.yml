@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java]
-        job_phrase_1: [ 'Run Java ']
+        job_phrase_1: ['Run Java']
         job_phrase_2: [ 'Examples on Dataflow Runner V2' ]
         java_version: ['11','17']
     if: |
