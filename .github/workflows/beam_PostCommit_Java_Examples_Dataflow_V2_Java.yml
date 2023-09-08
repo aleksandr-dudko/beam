@@ -57,6 +57,7 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 180
     strategy:
+      fail-fast: false
       matrix:
         job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java]
         job_phrase_1: ['Run Java']
