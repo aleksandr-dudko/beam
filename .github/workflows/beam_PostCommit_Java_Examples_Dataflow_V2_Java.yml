@@ -24,6 +24,7 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
@@ -44,6 +45,7 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+
 
 env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
