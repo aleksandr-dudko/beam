@@ -57,14 +57,15 @@ jobs:
     timeout-minutes: 180
     strategy:
       matrix:
-        job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java11, beam_PostCommit_Java_Examples_Dataflow_V2_Java17]
-        job_phrase: [Run Java 11 Examples on Dataflow Runner V2, Run Java 17 Examples on Dataflow Runner V2]
+        job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java]
+        job_phrase: [Run Java Examples on Dataflow Runner V2]
         java_version: ['11','17']
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java 11 Examples on Dataflow Runner V2' ||
-      github.event.comment.body == 'Run Java 17 Examples on Dataflow Runner V2'
+      (startswith(github.event.comment.body, 'Run Java 1') && endswith(github.event.comment.body, 'Examples on Dataflow Runner V2'))
+#      github.event.comment.body == 'Run Java 11 Examples on Dataflow Runner V2' ||
+#      github.event.comment.body == 'Run Java 17 Examples on Dataflow Runner V2'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
