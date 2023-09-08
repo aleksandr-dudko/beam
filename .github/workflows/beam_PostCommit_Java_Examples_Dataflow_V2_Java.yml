@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java Examples Dataflow V2 Java11
+name: PostCommit Java Examples Dataflow V2 Java
 
 on:
   issue_comment:
@@ -51,33 +51,34 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PostCommit_Java_Examples_Dataflow_V2_java11:
+  beam_PostCommit_Java_Examples_Dataflow_V2_java:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 180
     strategy:
       matrix:
-        job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_java11]
-        job_phrase: [Run Java 11 Examples on Dataflow Runner V2]
+        job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java11, beam_PostCommit_Java_Examples_Dataflow_V2_Java17]
+        job_phrase: [Run Java 11 Examples on Dataflow Runner V2, Run Java 17 Examples on Dataflow Runner V2]
+        java_version: ['11','17']
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java 11 Examples on Dataflow Runner V2'
+      github.event.comment.body == 'Run Java 11 Examples on Dataflow Runner V2' ||
+      github.event.comment.body == 'Run Java 17 Examples on Dataflow Runner V2'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          comment_phrase: ${{ matrix.job_phrase }} ${{matrix.java_version}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Set up Java
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }}) ${{matrix.java_version}}
+      - name: Set up Java${{ matrix.java_version }}
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'temurin'
-          java-version: 11
-
-      - name: run PostCommit Java Examples Dataflow V2 Java11 script
+          java-version: ${{ matrix.java_version }}
+      - name: run PostCommit Java Examples Dataflow V2 Java${{ matrix.java_version }} script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :runners:google-cloud-dataflow-java:examplesJavaRunnerV2IntegrationTest
@@ -85,8 +86,8 @@ jobs:
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
             -PskipCheckerFramework \
-            -PcompileAndRunTestsWithJava11 \
-            -Pjava11Home=$JAVA_HOME_11_X64 \
+            -PcompileAndRunTestsWithJava${{ matrix.java_version }} \
+            -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
