@@ -53,26 +53,27 @@ env:
 
 jobs:
   beam_PostCommit_Java_Examples_Dataflow_V2_java:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    name: ${{matrix.job_name}} (${{matrix.job_phrase_1}}${{matrix.job_phrase_2}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 180
     strategy:
       matrix:
         job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java]
-        job_phrase: [Run Java Examples on Dataflow Runner V2]
+        job_phrase_1: [ 'Run Java ']
+        job_phrase_2: [ 'Examples on Dataflow Runner V2' ]
         java_version: ['11','17']
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      (startswith(github.event.comment.body, 'Run Java 1') && endswith(github.event.comment.body, 'Examples on Dataflow Runner V2'))
+      (startswith(github.event.comment.body, 'Run Java') && endswith(github.event.comment.body, 'Examples on Dataflow Runner V2'))
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          comment_phrase: ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }}) ${{matrix.java_version}}
+          github_job: ${{ matrix.job_name }} ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
       - name: Set up Java${{ matrix.java_version }}
         uses: actions/setup-java@v3.8.0
         with:
