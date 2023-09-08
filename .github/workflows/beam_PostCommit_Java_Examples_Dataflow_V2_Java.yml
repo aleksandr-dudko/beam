@@ -63,8 +63,8 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java'
-    steps:
+      (${{ github.event.comment.body.startsWith('Run Java 1') }})
+      steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
