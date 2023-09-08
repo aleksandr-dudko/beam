@@ -72,7 +72,7 @@ jobs:
         with:
           comment_phrase: ${{ matrix.job_phrase }} ${{matrix.java_version}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }}) ${{matrix.java_version}}
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - name: Set up Java${{ matrix.java_version }}
         uses: actions/setup-java@v3.8.0
         with:
