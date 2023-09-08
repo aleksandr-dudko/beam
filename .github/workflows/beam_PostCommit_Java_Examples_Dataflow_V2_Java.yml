@@ -66,7 +66,6 @@ jobs:
       github.event.comment.body == 'Run Java 11 Examples on Dataflow Runner V2' ||
       github.event.comment.body == 'Run Java 17 Examples on Dataflow Runner V2'
     #      (startswith(github.event.comment.body, 'Run Java 1') && endswith(github.event.comment.body, 'Examples on Dataflow Runner V2'))
-
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
