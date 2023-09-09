@@ -28,7 +28,7 @@ on:
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -60,9 +60,9 @@ jobs:
       fail-fast: false
       matrix:
         job_name: [beam_PostCommit_Java_Examples_Dataflow_V2_Java]
-        job_phrase_1: ['Run Java']
-        job_phrase_2: ['Examples on Dataflow Runner V2']
-        java_version: ['11','17']
+        job_phrase_1: [Run Java ]
+        job_phrase_2: [Examples on Dataflow Runner V2]
+        java_version: ['11', '17']
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
