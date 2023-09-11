@@ -54,7 +54,6 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      max-parallel: 2
       fail-fast: false
       matrix:
         job_name: [beam_PostCommit_Python]
@@ -75,7 +74,9 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{matrix.python_version}}
+          python-version: | 
+            ${{matrix.python_version}}
+            3.8
       - name: Install docker compose
         run: |
           sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
