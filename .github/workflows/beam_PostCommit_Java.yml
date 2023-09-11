@@ -56,12 +56,10 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      fail-fast: false
       matrix: 
         job_name: [beam_PostCommit_Java]
         job_phrase: [Run Java PostCommit]
     if: |
-      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Java PostCommit'
@@ -77,8 +75,6 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :javaPostCommit
-      - name: env
-        run: env
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
