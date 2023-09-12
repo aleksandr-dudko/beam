@@ -58,7 +58,7 @@ jobs:
     strategy:
       matrix: 
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow]
-
+        job_phrase: [Run Dataflow Runner Nexmark Tests]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule'
