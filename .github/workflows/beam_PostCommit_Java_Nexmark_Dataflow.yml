@@ -87,7 +87,7 @@ jobs:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "${{steps.base_arguments.value}} --streaming=false" \
+              "${{steps.base_arguments.value}}--streaming=false" \
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
