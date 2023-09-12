@@ -49,7 +49,7 @@ env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
-  COMMON_ARGUMENTS: '-Pnexmark.args=--manageResources=false --monitorJobs=true --bigQueryTable=nexmark --bigQueryDataset=nexmark --project=apache-beam-testing --resourceNameMode=QUERY_RUNNER_AND_MODE --exportSummaryToBigQuery=true --tempLocation=gs://temp-storage-for-perf-tests/nexmark --influxDatabase=beam_test_metrics --influxHost=http://10.128.0.96:8086 --baseInfluxMeasurement=nexmark --exportSummaryToInfluxDB=true --influxRetentionPolicy=forever --region=us-central1 --suite=STRESS --numWorkers=4 --maxNumWorkers=4 --autoscalingAlgorithm=NONE --nexmarkParallel=16 --enforceEncodability=true --enforceImmutability=true --runner=DataflowRunner'
+  COMMON_ARGUMENTS: -Pnexmark.args=--manageResources=false --monitorJobs=true --bigQueryTable=nexmark --bigQueryDataset=nexmark --project=apache-beam-testing --resourceNameMode=QUERY_RUNNER_AND_MODE --exportSummaryToBigQuery=true --tempLocation=gs://temp-storage-for-perf-tests/nexmark --influxDatabase=beam_test_metrics --influxHost=http://10.128.0.96:8086 --baseInfluxMeasurement=nexmark --exportSummaryToInfluxDB=true --influxRetentionPolicy=forever --region=us-central1 --suite=STRESS --numWorkers=4 --maxNumWorkers=4 --autoscalingAlgorithm=NONE --nexmarkParallel=16 --enforceEncodability=true --enforceImmutability=true --runner=DataflowRunner
 
 jobs:
   beam_PostCommit_Java_Nexmark_Dataflow:
