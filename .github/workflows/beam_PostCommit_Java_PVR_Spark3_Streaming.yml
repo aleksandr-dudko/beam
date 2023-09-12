@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java PVR Samza
+name: PostCommit Java PortableValidatesRunner Spark3 Streaming
 
 on:
   issue_comment:
@@ -51,18 +51,18 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PostCommit_Java_PVR_Samza:
+  beam_PostCommit_Java_PVR_Spark3_Streaming:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 120
     strategy:
       matrix: 
-        job_name: [beam_PostCommit_Java_PVR_Samza]
-        job_phrase: [Run Java Samza PortableValidatesRunner]
+        job_name: [beam_PostCommit_Java_PVR_Spark3_Streaming]
+        job_phrase: [Run Java Spark v3 PortableValidatesRunner Streaming]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java Samza PortableValidatesRunner'
+      github.event.comment.body == 'Run Java Spark v3 PortableValidatesRunner Streaming'
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
@@ -71,10 +71,10 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run PostCommit Java Samza script
+      - name: run PostCommit Java PortableValidatesRunner Spark3 Streaming script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :runners:samza:job-server:validatesPortableRunner
+            gradle-command: :runners:spark:3:job-server:validatesPortableRunnerStreaming
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
