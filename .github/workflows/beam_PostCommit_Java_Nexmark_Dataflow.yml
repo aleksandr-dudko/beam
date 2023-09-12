@@ -93,7 +93,7 @@ jobs:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java
-              "${{steps.base_arguments_with_variable.VALUE}}"
+              ${{steps.base_arguments_with_variable.VALUE}}
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
