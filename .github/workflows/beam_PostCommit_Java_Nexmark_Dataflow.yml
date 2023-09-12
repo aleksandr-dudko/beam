@@ -80,12 +80,12 @@ jobs:
                 --exportSummaryToInfluxDB=true --influxRetentionPolicy=forever --region=us-central1 --suite=STRESS 
                 --numWorkers=4 --maxNumWorkers=4 --autoscalingAlgorithm=NONE --nexmarkParallel=16 
                 --enforceEncodability=true --enforceImmutability=true --runner=DataflowRunner"
-          echo "base_arguments=VALUE" >> $GITHUB_OUTPUT
+          echo "base_arguments=$VALUE" >> $GITHUB_OUTPUT
       - name: Add variable
         id: base_arguments_with_variable
         run: |
           VALUE="--streaming=false"
-          echo "base_arguments_with_variable=${{steps.base_arguments.value}}VALUE" >> $GITHUB_OUTPUT
+          echo "base_arguments_with_variable=${{steps.base_arguments.outputs.base_arguments}}$VALUE" >> $GITHUB_OUTPUT
       - name: run PostCommit Java Nexmark Dataflow script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
