@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java Samza
+name: PostCommit Java PVR Samza
 
 on:
   issue_comment:
