@@ -73,7 +73,7 @@ jobs:
       - name: Set Base arguments
         id: base_arguments
         run: |
-          VALUE=-Pnexmark.runner=:runners:google-cloud-dataflow-java "-Pnexmark.args=--manageResources=false \
+          VALUE=-Pnexmark.runner=:runners:google-cloud-dataflow-java -Pnexmark.args=--manageResources=false \
                   --monitorJobs=true --bigQueryTable=nexmark --bigQueryDataset=nexmark --project=apache-beam-testing \
                   --resourceNameMode=QUERY_RUNNER_AND_MODE --exportSummaryToBigQuery=true \
                   --tempLocation=gs://temp-storage-for-perf-tests/nexmark --influxDatabase=beam_test_metrics \
