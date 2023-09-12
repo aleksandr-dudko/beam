@@ -72,7 +72,7 @@ jobs:
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - name: Set Base arguments
         id: base_arguments
-        run: echo "-Pnexmark.runner=:runners:google-cloud-dataflow-java "-Pnexmark.args=--manageResources=false 
+        run: VALUE="-Pnexmark.runner=:runners:google-cloud-dataflow-java "-Pnexmark.args=--manageResources=false 
                   --monitorJobs=true --bigQueryTable=nexmark --bigQueryDataset=nexmark --project=apache-beam-testing 
                   --resourceNameMode=QUERY_RUNNER_AND_MODE --exportSummaryToBigQuery=true 
                   --tempLocation=gs://temp-storage-for-perf-tests/nexmark --influxDatabase=beam_test_metrics 
@@ -85,7 +85,7 @@ jobs:
         with:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
-              ${{ base_arguments }} \
+              ${{ base_arguments.VALUE }} \
               --streaming=true \
               --queryLanguage=zetasql \
       - name: Upload test report
