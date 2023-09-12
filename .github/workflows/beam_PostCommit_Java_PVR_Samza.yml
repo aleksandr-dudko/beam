@@ -72,6 +72,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - name: run PostCommit Java Samza script
+        env:
+          CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :runners:samza:job-server:validatesPortableRunner
