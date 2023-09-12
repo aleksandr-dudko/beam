@@ -85,7 +85,7 @@ jobs:
         id: base_arguments_with_variable
         run: |
           VARIABLE="--streaming=false"
-          VALUE="${{steps.base_arguments.outputs.value}}${VARIABLE}"
+          VALUE=${{steps.base_arguments.outputs.value}}${VARIABLE}
           echo "base_arguments_with_variable=$VALUE" >> $GITHUB_OUTPUT
       - name: run PostCommit Java Nexmark Dataflow script
         uses: ./.github/actions/gradle-command-self-hosted-action
