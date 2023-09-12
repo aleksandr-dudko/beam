@@ -73,14 +73,14 @@ jobs:
       - name: Set Base arguments
         id: base_arguments
         run: |
-          VALUE=-Pnexmark.runner=:runners:google-cloud-dataflow-java -Pnexmark.args=--manageResources=false \
+          VALUE=-Pnexmark.runner=:runners:google-cloud-dataflow-java //"-Pnexmark.args=--manageResources=false \
                   --monitorJobs=true --bigQueryTable=nexmark --bigQueryDataset=nexmark --project=apache-beam-testing \
                   --resourceNameMode=QUERY_RUNNER_AND_MODE --exportSummaryToBigQuery=true \
                   --tempLocation=gs://temp-storage-for-perf-tests/nexmark --influxDatabase=beam_test_metrics \
                   --influxHost=http://10.128.0.96:8086 --baseInfluxMeasurement=nexmark --exportSummaryToInfluxDB=true \
                   --influxRetentionPolicy=forever --region=us-central1 --suite=STRESS --numWorkers=4 --maxNumWorkers=4 \
                   --autoscalingAlgorithm=NONE --nexmarkParallel=16 --enforceEncodability=true \
-                  --enforceImmutability=true --runner=DataflowRunner
+                  --enforceImmutability=true --runner=DataflowRunner --streaming=true --queryLanguage=zetasql//"
           echo "base_arguments=VALUE" >> $GITHUB_OUTPUT
       - name: run PostCommit Java Nexmark Dataflow script
         uses: ./.github/actions/gradle-command-self-hosted-action
