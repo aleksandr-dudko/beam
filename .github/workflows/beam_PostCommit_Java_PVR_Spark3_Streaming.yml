@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java PortableValidatesRunner Spark3 Streaming
+name: PostCommit Java PVR Spark3 Streaming
 
 on:
   issue_comment:
