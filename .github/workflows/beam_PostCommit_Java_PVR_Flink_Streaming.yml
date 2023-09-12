@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java Flink PortableValidatesRunner Streaming
+name: PostCommit Java PortableValidatesRunner Flink Streaming
 
 on:
   issue_comment:
