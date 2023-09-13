@@ -88,7 +88,7 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-             "${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+             "${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=true--streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }}) script
         if: matrix.queryLanguage == 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -96,4 +96,4 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }}"
+            "${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=true--streaming=${{ matrix.streaming }}"
