@@ -21,7 +21,6 @@
 --bigQueryDataset=nexmark
 --project=apache-beam-testing
 --resourceNameMode=QUERY_RUNNER_AND_MODE
---exportSummaryToBigQuery=true
 --tempLocation=gs://temp-storage-for-perf-tests/nexmark
 --influxDatabase=beam_test_metrics
 --influxHost=http://10.128.0.96:8086
