@@ -1,3 +1,4 @@
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -57,16 +58,11 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      matrix: 
+      matrix:
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow]
         job_phrase: [Run Dataflow Runner Nexmark Tests]
-        command_args:
-          - { streaming: false }
-          - { streaming: true }
-          - { streaming: false, queryLanguage: sql }
-          - { streaming: true, queryLanguage: sql }
-          - { streaming: false, queryLanguage: zetasql }
-          - { streaming: true, queryLanguage: zetasql }
+        streaming: [false, true]
+        queryLanguage: [sql, zetasql, none]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule'
@@ -78,10 +74,19 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run PostCommit Java Nexmark Dataflow(${{ matrix.command_add.streaming }} ${{ matrix.command_add.queryLanguage }}) script
+      - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
+        if: matrix.queryLanguage != 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-            gradle-command: :sdks:java:testing:nexmark:run
-            arguments: |
-              -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "$COMMON_ARGUMENTS --streaming=false" \
+          gradle-command: :sdks:java:testing:nexmark:run
+          arguments: |
+            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
+            "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+      - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
+        if: matrix.queryLanguage == 'none'
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:nexmark:run
+          arguments: |
+            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
+            "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }} \
