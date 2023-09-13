@@ -84,10 +84,10 @@ jobs:
       - name: Determine Query Language
         id: conditions
         run: |
-          if [ "${{ matrix.queryLanguage }}" != "none" ]; then
-            query_language_condition="--queryLanguage=\"${{ matrix.queryLanguage }}\""
+          if [ ${{ matrix.queryLanguage }} != 'none' ]; then
+            query_language_condition=--queryLanguage=${{ matrix.queryLanguage }}
           else
-            query_language_condition=""
+            query_language_condition=''
           fi
           echo "query-language-condition=$query_language_condition" >> $GITHUB_ENV
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
