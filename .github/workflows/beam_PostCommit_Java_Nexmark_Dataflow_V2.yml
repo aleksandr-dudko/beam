@@ -61,6 +61,7 @@ jobs:
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow_V2]
         job_phrase: [Run Dataflow Runner V2 Nexmark Tests]
         streaming: [false, true]
+        java_version: ['8','11','17']
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
@@ -81,10 +82,13 @@ jobs:
           CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_V2_args.txt | tr '\n' ' ')
           CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-v2-args-/postcommit-tests-java-nexmark-dataflow-v2-args-$CURDATE}")
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
-      - name: run PostCommit Java Nexmark Dataflow V2 (${{ matrix.streaming }}) script
+      - name: run PostCommit Java ${{matrix.java_version}} Nexmark Dataflow V2 (${{ matrix.streaming }}) script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
+            -PcompileAndRunTestsWithJava${{ matrix.java_version }} \
+            -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
+            -Pnexmark.runner.version=V2 \
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"8"}--streaming=${{ matrix.streaming }}'
+            '${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"${{matrix.java_version}}"}--streaming=${{ matrix.streaming }}'
