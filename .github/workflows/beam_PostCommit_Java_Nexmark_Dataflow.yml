@@ -81,19 +81,19 @@ jobs:
           CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_args.txt | tr '\n' ' ')
           CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
-      - name: Determine Query Language
-        id: queryLanguage
-        run: |
-          if [ '${{ matrix.queryLanguage }}' != 'none' ]; then
-            query_language_condition=--queryLanguage=${{matrix.queryLanguage}}
-          else
-            query_language_condition=''
-          fi
-          echo "query-language-value=$query_language_condition" >> $GITHUB_ENV
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
+        if: ${{ matrix.queryLanguage }} != 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }}${{ steps.queryLanguage.query-language-value }}" \
+             "${{ steps.set_configs.outputs.prepared_config }} --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+      - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }}) script
+        if: ${{ matrix.queryLanguage }} == 'none'
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:nexmark:run
+          arguments: |
+            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
+            "${{ steps.set_configs.outputs.prepared_config }} --streaming=${{ matrix.streaming }}" \
