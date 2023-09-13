@@ -57,13 +57,12 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
-      max-parallel: 1
       matrix: 
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow]
         job_phrase: [Run Dataflow Runner Nexmark Tests]
         command_args:
-          - { streaming: false, queryLanguage: '' }
-          - { streaming: true, queryLanguage: '' }
+          - { streaming: false }
+          - { streaming: true }
           - { streaming: false, queryLanguage: sql }
           - { streaming: true, queryLanguage: sql }
           - { streaming: false, queryLanguage: zetasql }
@@ -85,4 +84,4 @@ jobs:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "$COMMON_ARGUMENTS --streaming=false --queryLanguage=sql" \
+              "$COMMON_ARGUMENTS --streaming=false" \
