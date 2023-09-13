@@ -87,5 +87,5 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-             "${{ steps.set_configs.outputs.prepared_config }} --streaming=${{ matrix.streaming }} \
-              ${{ if ne(matrix.queryLanguage, 'none') }}--queryLanguage=${{ matrix.queryLanguage }}{{ endif }}"
+            "${{ steps.set_configs.outputs.prepared_config }} --streaming=${{ matrix.streaming }} \
+            ${{ if ne(matrix.queryLanguage, 'none') }}--queryLanguage=${{ matrix.queryLanguage }}{{ endif }}" \
