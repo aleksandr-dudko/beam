@@ -28,7 +28,6 @@
 --baseInfluxMeasurement=nexmark
 --exportSummaryToInfluxDB=true
 --influxRetentionPolicy=forever
---influxTags={"runnerVersion":"V2","javaVersion":"8"}
 --region=us-central1
 --suite=STRESS
 --numWorkers=4
