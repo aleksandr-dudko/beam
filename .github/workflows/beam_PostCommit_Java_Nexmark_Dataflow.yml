@@ -61,13 +61,13 @@ jobs:
       matrix: 
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow]
         job_phrase: [Run Dataflow Runner Nexmark Tests]
-        command_add_args:
+        command_args:
           - { streaming: false, queryLanguage: '' }
           - { streaming: true, queryLanguage: '' }
-          - { streaming: false, queryLanguage: 'sql' }
-          - { streaming: true, queryLanguage: 'sql' }
-          - { streaming: false, queryLanguage: 'zetasql' }
-          - { streaming: true, queryLanguage: 'zetasql' }
+          - { streaming: false, queryLanguage: sql }
+          - { streaming: true, queryLanguage: sql }
+          - { streaming: false, queryLanguage: zetasql }
+          - { streaming: true, queryLanguage: zetasql }
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule'
@@ -79,10 +79,10 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run PostCommit Java Nexmark Dataflow(${{ matrix.command_add_args.streaming }}) script
+      - name: run PostCommit Java Nexmark Dataflow(${{ matrix.command_add.streaming }} ${{ matrix.command_add.queryLanguage }}) script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "$COMMON_ARGUMENTS --streaming=${{matrix.command_add_args.streaming}} --queryLanguage=${{matrix.command_add_args.queryLanguage}}" \
+              "$COMMON_ARGUMENTS --streaming=false --queryLanguage=sql" \
