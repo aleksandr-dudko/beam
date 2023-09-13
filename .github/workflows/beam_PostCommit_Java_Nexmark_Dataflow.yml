@@ -88,4 +88,4 @@ jobs:
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
              "${{ steps.set_configs.outputs.prepared_config }} --streaming=${{ matrix.streaming }} \
-              ${{ matrix.queryLanguage != 'none' && '--queryLanguage=' + matrix.queryLanguage || '' }}"
+              ${{ if ne(matrix.queryLanguage, 'none') }}--queryLanguage=${{ matrix.queryLanguage }}{{ endif }}"
