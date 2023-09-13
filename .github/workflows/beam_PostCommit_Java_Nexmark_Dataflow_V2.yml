@@ -87,4 +87,4 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ steps.set_configs.outputs.prepared_config }}--influxTags={\\"runnerVersion\\":\\"V2\\",\\"javaVersion\\":\\"8\\"}--streaming=${{ matrix.streaming }}'
+            '${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }}'
