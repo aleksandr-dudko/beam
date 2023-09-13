@@ -60,6 +60,7 @@ jobs:
       matrix: 
         job_name: [beam_PostCommit_Java_Nexmark_Dataflow]
         job_phrase: [Run Dataflow Runner Nexmark Tests]
+        add_args: [--streaming=false, --streaming=true, --streaming=false --queryLanguage=sql, --streaming=true --queryLanguage=sql, --streaming=false --queryLanguage=zetasql, --streaming=true --queryLanguage=zetasql]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule'
@@ -71,45 +72,10 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: run PostCommit Java Nexmark Dataflow(streaming=false) script
+      - name: run PostCommit Java Nexmark Dataflow(${{ matrix.add_args }}) script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "$COMMON_ARGUMENTS --streaming=false" \
-      - name: run PostCommit Java Nexmark Dataflow(streaming=true) script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:testing:nexmark:run
-          arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=true" \
-      - name: run PostCommit Java Nexmark Dataflow(streaming=false queryLanguage=sql) script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:testing:nexmark:run
-          arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=false --queryLanguage=sql" \
-      - name: run PostCommit Java Nexmark Dataflow(streaming=true queryLanguage=sql) script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:testing:nexmark:run
-          arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=true --queryLanguage=sql" \
-      - name: run PostCommit Java Nexmark Dataflow(streaming=false queryLanguage=zetasql) script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:testing:nexmark:run
-          arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=false --queryLanguage=zetasql" \
-      - name: run PostCommit Java Nexmark Dataflow(streaming=true queryLanguage=zetasql) script
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:java:testing:nexmark:run
-          arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=true --queryLanguage=zetasql" \
+              "$COMMON_ARGUMENTS ${{ matrix.add_args }}" \
