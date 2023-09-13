@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java Nexmark Dataflow V2
+name: PostCommit Java Nexmark Dataflow V2 Java
 
 on:
   issue_comment:
@@ -51,40 +51,44 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PostCommit_Java_Nexmark_Dataflow_V2:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+  beam_PostCommit_Java_Nexmark_Dataflow_V2_Java:
+    name: ${{matrix.job_name}} (${{matrix.job_phrase_1}}${{matrix.job_phrase_2}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     strategy:
       fail-fast: false
       matrix:
-        job_name: [beam_PostCommit_Java_Nexmark_Dataflow_V2]
-        job_phrase: [Run Dataflow Runner V2 Nexmark Tests]
+        job_name: [beam_PostCommit_Java_Nexmark_Dataflow_V2_Java]
+        job_phrase_1: [Run Dataflow Runner V2 Java]
+        job_phrase_2: [Nexmark Tests]
+        java_version: ['11','17']
         streaming: [false, true]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Dataflow Runner V2 Nexmark Tests'
+      (startswith(github.event.comment.body, 'Run Dataflow Runner V2 Java') &&
+         endswith(github.event.comment.body, 'Nexmark Tests')
+      )
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          comment_phrase: ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+          github_job: ${{ matrix.job_name }} ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
       - name: Prepare configs
         id: set_configs
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_V2_args.txt | tr '\n' ' ')
-          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-v2-args-/postcommit-tests-java-nexmark-dataflow-v2-args-$CURDATE}")
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_V2_Java_args.txt | tr '\n' ' ')
+          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-v2-java-args-/postcommit-tests-java-nexmark-dataflow-v2-java-args-$CURDATE}")
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
-      - name: run PostCommit Java Nexmark Dataflow V2 (${{ matrix.streaming }}) script
+      - name: run PostCommit Java Nexmark Dataflow V2 Java${{ matrix.java_version }} (${{ matrix.streaming }}) script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ steps.set_configs.outputs.prepared_config }}--influxTags={\\"runnerVersion\\":\\"V2\\",\\"javaVersion\\":\\"8\\"}--streaming=${{ matrix.streaming }}' \
+            '${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }}' \
