@@ -1,4 +1,3 @@
-
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -81,7 +80,7 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+             "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
         if: matrix.queryLanguage == 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -89,4 +88,4 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }} \
+            "$COMMON_ARGUMENTS --streaming=${{ matrix.streaming }}" \
