@@ -75,6 +75,8 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: :runners:spark:3:job-server:validatesPortableRunnerBatch :runners:spark:3:job-server:validatesPortableRunnerDocker
+            arguments: |
+              -Dfile.encoding=UTF-8 \
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
