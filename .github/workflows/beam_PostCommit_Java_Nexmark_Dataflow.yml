@@ -78,4 +78,4 @@ jobs:
             gradle-command: :sdks:java:testing:nexmark:run
             arguments: |
               -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-              "$COMMON_ARGUMENTS ${{ matrix.command_add_args }}" \
+              "$COMMON_ARGUMENTS ${{matrix.command_add_args}}" \
