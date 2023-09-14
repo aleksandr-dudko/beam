@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: PostCommit Java Nexmark Dataflow V2 Java
+name: PostCommit Java Nexmark Direct
 
 on:
   issue_comment:
@@ -51,44 +51,59 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PostCommit_Java_Nexmark_Dataflow_V2_Java:
-    name: ${{matrix.job_name}} (${{matrix.job_phrase_1}}${{matrix.job_phrase_2}})
-    runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 240
-    strategy:
-      fail-fast: false
-      matrix:
-        job_name: [beam_PostCommit_Java_Nexmark_Dataflow_V2_Java]
-        job_phrase_1: [Run Dataflow Runner V2 Java]
-        job_phrase_2: [Nexmark Tests]
-        java_version: ['11','17']
-        streaming: [false, true]
+  read_Config:
+    runs-on: [ self-hosted, ubuntu-20.04, main ]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      (startswith(github.event.comment.body, 'Run Dataflow Runner V2 Java') &&
-         endswith(github.event.comment.body, 'Nexmark Tests')
-      )
+      github.event.comment.body == 'Run Direct Runner Nexmark Tests'
+    outputs:
+      output: ${{ steps.set_config.outputs.prepared_config }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Read and Prepare config
+        id: set_config
+        shell: bash
+        run: |
+          CURDATE=$(date '+%m%d%H%M%S' --utc)
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_args.txt | tr '\n' ' ')
+          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
+          echo "prepared_config=$CURCONFIG --suite=SMOKE --runner=DirectRunner --exportSummaryToBigQuery=true" >> $GITHUB_OUTPUT
+
+  beam_PostCommit_Java_Nexmark_Direct:
+    name: ${{matrix.job_name}} (${{matrix.job_phrase}})
+    runs-on: [self-hosted, ubuntu-20.04, main]
+    timeout-minutes: 240
+    needs: read_Config
+    strategy:
+      fail-fast: false
+      matrix:
+        job_name: [beam_PostCommit_Java_Nexmark_Direct]
+        job_phrase: [Run Direct Runner Nexmark Tests]
+        streaming: [false, true]
+        queryLanguage: [sql, zetasql, none]
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
-          comment_phrase: ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
+          comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
-      - name: Prepare configs
-        id: set_configs
-        shell: bash
-        run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_V2_Java_args.txt | tr '\n' ' ')
-          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-v2-java-args-/postcommit-tests-java-nexmark-dataflow-v2-java-args-$CURDATE}")
-          echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
-      - name: run PostCommit Java Nexmark Dataflow V2 Java${{ matrix.java_version }} (${{ matrix.streaming }}) script
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+      - name: run PostCommit Java Nexmark Direct (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
+        if: matrix.queryLanguage != 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
-            -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ steps.set_configs.outputs.prepared_config }}--streaming=${{ matrix.streaming }}' \
+            -Pnexmark.runner=:runners:direct-java \
+             "${{ needs.read_Config.outputs.output }}--streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+      - name: run PostCommit Java Nexmark Direct (${{ matrix.streaming }}) script
+        if: matrix.queryLanguage == 'none'
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:nexmark:run
+          arguments: |
+            -Pnexmark.runner=:runners:direct-java \
+            "${{ needs.read_Config.outputs.output }}--streaming=${{ matrix.streaming }}"
