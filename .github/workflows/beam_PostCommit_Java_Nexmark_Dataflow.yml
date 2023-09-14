@@ -71,6 +71,7 @@ jobs:
           CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
 
+#
   beam_PostCommit_Java_Nexmark_Dataflow:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
