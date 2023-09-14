@@ -53,6 +53,10 @@ env:
 jobs:
   read_Config:
     runs-on: [ self-hosted, ubuntu-20.04, main ]
+    strategy:
+      matrix:
+        job_name: [ beam_PostCommit_Java_Nexmark_Dataflow ]
+        job_phrase: [ Run Dataflow Runner Nexmark Tests ]
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
@@ -60,8 +64,13 @@ jobs:
     outputs:
       output: ${{ steps.set_config.outputs.prepared_config }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Setup repository
+        uses: ./.github/actions/setup-action
+        with:
+          comment_phrase: ${{ matrix.job_phrase }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
       - name: Read and Prepare config
         id: set_config
         shell: bash
