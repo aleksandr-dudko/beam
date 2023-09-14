@@ -99,7 +99,7 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java_version }}
       - name: run PostCommit Java ${{matrix.java_version}} Nexmark Dataflow V2 (${{ matrix.streaming }}) script
-        if: env.prepared_config != ''
+        if: needs.read-config.set_configs.CURCONFIG != ''
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:nexmark:run
@@ -108,4 +108,4 @@ jobs:
             -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
             -Pnexmark.runner.version=V2 \
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ env.prepared_config }}--exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"${{matrix.java_version}}"}--streaming=${{ matrix.streaming }}'
+            '${{ needs.read-config.set_configs.CURCONFIG }}--exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"${{matrix.java_version}}"}--streaming=${{ matrix.streaming }}'
