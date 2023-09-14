@@ -51,10 +51,31 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
+  read_Config:
+    runs-on: [ self-hosted, ubuntu-20.04, main ]
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      github.event.comment.body == 'Run Dataflow Runner V2 Nexmark Tests'
+    outputs:
+      output: ${{ steps.set_config.outputs.prepared_config }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Read and Prepare config
+        id: set_config
+        shell: bash
+        run: |
+          CURDATE=$(date '+%m%d%H%M%S' --utc)
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_args.txt | tr '\n' ' ')
+          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
+          echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
+
   beam_PostCommit_Java_Nexmark_Dataflow:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
+    needs: read_Config
     strategy:
       fail-fast: false
       matrix:
@@ -73,14 +94,6 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Prepare configs
-        id: set_configs
-        shell: bash
-        run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_args.txt | tr '\n' ' ')
-          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
-          echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }} ${{ matrix.queryLanguage }}) script
         if: matrix.queryLanguage != 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -88,7 +101,7 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-             "${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=true --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
+             "${{ needs.read_Config.outputs.output }}--exportSummaryToBigQuery=true --streaming=${{ matrix.streaming }} --queryLanguage=${{ matrix.queryLanguage }}" \
       - name: run PostCommit Java Nexmark Dataflow (${{ matrix.streaming }}) script
         if: matrix.queryLanguage == 'none'
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -96,4 +109,4 @@ jobs:
           gradle-command: :sdks:java:testing:nexmark:run
           arguments: |
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            "${{ steps.set_configs.outputs.prepared_config }}--exportSummaryToBigQuery=true --streaming=${{ matrix.streaming }}"
+            "${{ needs.read_Config.outputs.output }}--exportSummaryToBigQuery=true --streaming=${{ matrix.streaming }}"
