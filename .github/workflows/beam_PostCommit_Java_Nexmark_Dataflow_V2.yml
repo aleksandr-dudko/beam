@@ -58,17 +58,17 @@ jobs:
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Dataflow Runner V2 Nexmark Tests'
     outputs:
-      output: ${{ steps.set_configs.outputs.prepared_config }}
+      output: ${{ steps.set_config.outputs.prepared_config }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Read and Prepare configs
-        id: set_configs
+      - name: Read and Prepare config
+        id: set_config
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_V2_args.txt | tr '\n' ' ')
-          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-v2-args-/postcommit-tests-java-nexmark-dataflow-v2-args-$CURDATE}")
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/postcommit-job-configs/config_PostCommit_Java_Nexmark_Dataflow_args.txt | tr '\n' ' ')
+          CURCONFIG=$(echo "${CURCONFIG/postcommit-java-nexmark-dataflow-args-/postcommit-tests-java-nexmark-dataflow-args-$CURDATE}")
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
 
   beam_PostCommit_Java_Nexmark_Dataflow_V2:
@@ -100,7 +100,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java_version }}
-      - name: run PostCommit Java ${{matrix.java_version}} Nexmark Dataflow V2 (${{ matrix.streaming }}) script
+      - name: run PostCommit Java ${{matrix.java_version}} Nexmark Dataflow V2 (streaming = ${{ matrix.streaming }}) script
         if: needs.read_Config.outputs.output != ''
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -110,4 +110,4 @@ jobs:
             -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
             -Pnexmark.runner.version=V2 \
             -Pnexmark.runner=:runners:google-cloud-dataflow-java \
-            '${{ needs.read_Config.outputs.output }}--exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"${{matrix.java_version}}"}--streaming=${{ matrix.streaming }}'
+            '${{ needs.read_Config.outputs.output }} --exportSummaryToBigQuery=false --influxTags={"runnerVersion":"V2","javaVersion":"${{matrix.java_version}}"}--streaming=${{ matrix.streaming }}'
