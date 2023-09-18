@@ -96,6 +96,8 @@ jobs:
           arguments: |
             --postgresServerName=${{ steps.postgres_for_dev.outputs.pfd_ip }}
       - name: Run Java JdbcIO Performance Test
+        env:
+          CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:io:jdbc:integrationTest
