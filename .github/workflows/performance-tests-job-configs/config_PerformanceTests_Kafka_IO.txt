@@ -18,7 +18,11 @@
 '["--tempRoot=gs://temp-storage-for-perf-tests",
 "--project=apache-beam-testing",
 "--runner=DataflowRunner",
-"--sourceOptions={\"numRecords\":\"100000000\",\"keySizeBytes\":\"10\",\"valueSizeBytes\":\"90\"}",
+"--sourceOptions=
+{\"numRecords\":\"100000000\",
+\"keySizeBytes\":\"10\",
+\"valueSizeBytes\":\"90\"
+}",
 "--bigQueryDataset=beam_performance",
 "--bigQueryTable=kafkaioit_results_runner_v2",
 "--influxMeasurement=kafkaioit_results_runner_v2",
