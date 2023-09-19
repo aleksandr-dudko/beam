@@ -73,6 +73,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
+      - name: Sleep
+        run: sleep 3600
       - name: run Performance SpannerIO Write 2GB Test Python
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
