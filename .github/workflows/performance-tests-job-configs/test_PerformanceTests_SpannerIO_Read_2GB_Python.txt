@@ -27,7 +27,7 @@
 --influx_measurement=python_spannerio_read_2GB_results
 --influx_db_name=beam_test_metrics
 --influx_hostname=http://10.128.0.96:8086
---input_options=''{\\"num_records\\":2097152,\\"key_size\\":1,\\"value_size\\":1024,\\"algorithm\\":\\"lcg\\"}'
+--input_options=''{\\"num_records\\":2097152,\\"key_size\\":1,\\"value_size\\":1024,\\"algorithm\\":\\"lcg\\"}''
 --num_****s=5
 --autoscaling_algorithm=NONE
 --runner=DataflowRunner
