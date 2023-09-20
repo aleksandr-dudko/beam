@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/text-io/config_TextIOIT_HDFS.txt | tr '\n' ' ')
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_TextIOIT_HDFS.txt | tr '\n' ' ')
           CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
       - name: Run Java TextIO Performance Test
