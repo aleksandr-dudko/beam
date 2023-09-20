@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Performance Tests TextIOIT
+name: Performance Tests TextIOIT HDFS
 
 on:
   issue_comment:
@@ -49,18 +49,18 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PerformanceTests_TextIOIT:
+  beam_PerformanceTests_TextIOIT_HDFS:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java TextIO Performance Test'
+      github.event.comment.body == 'Run Java TextIO Performance Test HDFS'
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 240
+    timeout-minutes: 100
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
-        job_name: ["beam_PerformanceTests_TextIOIT"]
-        job_phrase: ["Run Java TextIO Performance Test"]
+        job_name: ["beam_PerformanceTests_TextIOIT_HDFS"]
+        job_phrase: ["Run Java TextIO Performance Test HDFS"]
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/text-io/performance-tests-job-configs/config_TextIOIT.txt | tr '\n' ' ')
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/text-io/config_TextIOIT_HDFS.txt | tr '\n' ' ')
           CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
       - name: Run Java TextIO Performance Test
@@ -84,6 +84,6 @@ jobs:
           arguments: |
             --tests org.apache.beam.sdk.io.text.TextIOIT \
             --info \
-            -Dfilesystem=gcs \
+            -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
             '-DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }}'
