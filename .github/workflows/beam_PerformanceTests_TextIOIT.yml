@@ -73,13 +73,13 @@ jobs:
         id: set_config
         shell: bash
         run: |
-        #capture the current date and time in a specific format
+        # capture the current date and time in a specific format
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-        #reads the configurations file and exclude lines starting with # and then remove line breaks
+        # reads the configurations file and exclude lines starting with # and then remove line breaks
           CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_TextIOIT.txt | tr '\n' ' ')
-        #appends the value of CURDATE to the original configuration  
+        # appends the value of CURDATE to the original configuration  
           CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
-        #assigns $CONFIGWITHDATE to a variable named prepared_config
+        # assigns $CONFIGWITHDATE to a variable named prepared_config
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
       - name: Run Java TextIO Performance Test
         uses: ./.github/actions/gradle-command-self-hosted-action
