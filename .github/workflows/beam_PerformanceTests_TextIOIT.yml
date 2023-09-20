@@ -86,4 +86,4 @@ jobs:
             --info \
             -Dfilesystem=gcs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }} \
+            '-DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }}'
