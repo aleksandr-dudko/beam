@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 6,18 * * *'
+    - cron: '0 7,19 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/text-io/performance-tests-job-configs/config_TextIOIT.txt | tr '\n' ' ')
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/text-io/config_TextIOIT.txt | tr '\n' ' ')
           CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
       - name: Run Java TextIO Performance Test

@@ -13,13 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Performance Tests TextIOIT HDFS
+name: Performance Tests TextIOIT Python
 
 on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 7,19 * * *'
+    - cron: '0 8,20 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -49,18 +49,18 @@ env:
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_PerformanceTests_TextIOIT_HDFS:
+  beam_PerformanceTests_TextIOIT_Python:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Java TextIO Performance Test HDFS'
+      github.event.comment.body == 'Run Python TextIO Performance Test'
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 100
+    timeout-minutes: 240
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
-        job_name: ["beam_PerformanceTests_TextIOIT_HDFS"]
-        job_phrase: ["Run Java TextIO Performance Test HDFS"]
+        job_name: ["beam_PerformanceTests_TextIOIT_Python"]
+        job_phrase: ["Run Python TextIO Performance Test"]
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
@@ -74,16 +74,15 @@ jobs:
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/text-io/config_TextIOIT_HDFS.txt | tr '\n' ' ')
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/text-io/config_TextIOIT_Python.txt | tr '\n' ' ')
           CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
-      - name: Run Java TextIO Performance Test
+      - name: Run Python TextIO Performance Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:java:io:file-based-io-tests:integrationTest
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
           arguments: |
-            --tests org.apache.beam.sdk.io.text.TextIOIT \
-            --info \
-            -Dfilesystem=hdfs \
-            -DintegrationTestRunner=dataflow \
-            '-DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }}'
+            -PpythonVersion=3.8 \
+            -PloadTest.mainClass=apache_beam.io.filebasedio_perf_test \
+            -Prunner=DataflowRunner \
+            '-PloadTest.args=${{ steps.set_config.outputs.prepared_config }}'
