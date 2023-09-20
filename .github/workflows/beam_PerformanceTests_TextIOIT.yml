@@ -86,4 +86,4 @@ jobs:
             --info \
             -Dfilesystem=gcs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }}
+            -DintegrationTestPipelineOptions=["--runner=DataflowRunner","--project=apache-beam-testing","--tempRoot=gs://temp-storage-for-perf-tests","--filenamePrefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_TextIOIT/7743/","--bigQueryDataset=beam_performance","--bigQueryTable=textioit_results","--influxMeasurement=textioit_results","--numberOfRecords=25000000","--expectedHash=f8453256ccf861e8a312c125dfe0e436","--datasetSize=1062290000","--numWorkers=5","--autoscalingAlgorithm=NONE","--influxDatabase=beam_test_metrics","--influxHost=http://10.128.0.96:8086"] \
