@@ -82,7 +82,7 @@ jobs:
         with:
           gradle-command: :sdks:java:io:file-based-io-tests:integrationTest
           arguments: |
-            --tests org.apache.beam.sdk.io.text.TextIOIT
+            --tests org.apache.beam.sdk.io.text.TextIOIT \
             --info \
             -Dfilesystem=gcs \
             -DintegrationTestRunner=dataflow \
