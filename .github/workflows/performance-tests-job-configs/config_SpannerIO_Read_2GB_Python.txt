@@ -15,7 +15,6 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
---job_name=performance-tests-spanner-read-python-2gb0921065615
 --project=apache-beam-testing
 --region=us-west1
 --temp_location=gs://temp-storage-for-perf-tests/loadtests
