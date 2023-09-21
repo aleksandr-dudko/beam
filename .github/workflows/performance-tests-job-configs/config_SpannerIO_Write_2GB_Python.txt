@@ -15,19 +15,19 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
---job_name=performance-tests-bqio-write-python-batch-10gb0920155402
+--job_name=performance-tests-spannerio-write-python-batch-2gb0921182333
 --project=apache-beam-testing
---region=us-central1
+--region=us-west1
 --temp_location=gs://temp-storage-for-perf-tests/loadtests
---output_dataset=beam_performance
---output_table=bqio_write_10GB
+--spanner_instance=beam-test
+--spanner_database=pyspanner_write_2gb
 --publish_to_big_query=true
 --metrics_dataset=beam_performance
---metrics_table=bqio_write_10GB_results
---influx_measurement=python_bqio_write_10GB_results
+--metrics_table=pyspanner_write_2GB_results
+--influx_measurement=python_spanner_write_2GB_results
 --influx_db_name=beam_test_metrics
 --influx_hostname=http://10.128.0.96:8086
---input_options=''{\\"num_records\\":10485760,\\"key_size\\":1,\\"value_size\\":1024,\\"algorithm\\":\\"lcg\\"}''
+--input_options=''{\\"num_records\\":2097152,\\"key_size\\":1,\\"value_size\\":1024,\\"algorithm\\":\\"lcg\\"}''
 --num_****s=5
 --autoscaling_algorithm=NONE
 --runner=DataflowRunner
