@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-'["--tempRoot=gs://temp-storage-for-perf-tests",
+"--tempRoot=gs://temp-storage-for-perf-tests",
 "--project=apache-beam-testing",
 "--runner=DataflowRunner",
 "--numberOfRecords=5000000",
@@ -27,8 +27,7 @@
 "--postgresUsername=postgres",
 "--postgresPassword=uuinkks",
 "--postgresDatabaseName=postgres",
-"--postgresServerName=35.224.15.187",
 "--postgresSsl=false",
 "--postgresPort=5432",
 "--autoscalingAlgorithm=NONE",
-"--numWorkers=5"]'
+"--numWorkers=5",
