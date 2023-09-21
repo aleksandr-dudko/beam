@@ -27,6 +27,4 @@
 "--influxHost=http://10.128.0.96:8086",
 "--runner=DataflowRunner",
 "--project=apache-beam-testing",
-"--tempRoot=gs://temp-storage-for-perf-tests",
-"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:34.135.167.212:9000\",\"dfs.replication\":1}]",
-"--filenamePrefix=hdfs://34.135.167.212:9000/TEXTIO_IT_"]
+"--tempRoot=gs://temp-storage-for-perf-tests"]
