@@ -104,4 +104,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--filenamePrefix=hdfs://${{ steps.install_hadoop.outputs.hadoop_IP }}:9000/TEXTIO_IT_", "--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:${{ steps.install_hadoop.outputs.hadoop_IP }}:9000\",\"dfs.replication\":1}]"]' \
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--filenamePrefix=hdfs://${{ steps.install_hadoop.outputs.hadoop_IP }}:9000/TEXTIO_IT_", "--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:${{ steps.install_hadoop.outputs.hadoop_IP }}:9000\",\"dfs.replication\":1}]"]'
