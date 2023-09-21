@@ -15,7 +15,7 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-["--bigQueryDataset=beam_performance",
+"--bigQueryDataset=beam_performance",
 "--bigQueryTable=textioit_hdfs_results",
 "--influxMeasurement=textioit_hdfs_results",
 "--numberOfRecords=25000000",
@@ -27,4 +27,4 @@
 "--influxHost=http://10.128.0.96:8086",
 "--runner=DataflowRunner",
 "--project=apache-beam-testing",
-"--tempRoot=gs://temp-storage-for-perf-tests"]
+"--tempRoot=gs://temp-storage-for-perf-tests",
