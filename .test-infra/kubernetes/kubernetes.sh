@@ -115,11 +115,9 @@ function getAvailablePort() {
       availablePort=$((availablePort + 1))
       used=false
     else
-      echo "availablePort completed"
       echo $availablePort
       return 0
     fi
-    echo "availablePort completed"
     echo $availablePort
   done
 }
