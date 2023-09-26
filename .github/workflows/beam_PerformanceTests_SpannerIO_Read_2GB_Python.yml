@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: PerformanceTests SpannerIO Read 2GB Python
+name: Performance Tests SpannerIO Read 2GB Python
 
 on:
   issue_comment:
@@ -47,7 +47,6 @@ env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
-  beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1: ''
 
 jobs:
   beam_PerformanceTests_SpannerIO_Read_2GB_Python:
@@ -70,17 +69,13 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Setup environment
-        uses: ./.github/actions/setup-environment-action
-        with:
-          python-version: 3.8
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
-          test-type: load
+          test-type: performance
           test-language: python
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/spannerIO_Read_2GB_Python.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_SpannerIO_Read_2GB_Python.txt
           arguments: |
             --job_name=performance-tests-spanner-read-python-2gb$(date '+%m%d%H%M%S' --utc)
       - name: run Performance SpannerIO Read 2GB Test Python
@@ -91,4 +86,4 @@ jobs:
             -PloadTest.mainClass=apache_beam.io.gcp.experimental.spannerio_read_perf_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            -PloadTest.args='${{env.beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1}}'
+            '-PloadTest.args=${{env.beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1}}'
