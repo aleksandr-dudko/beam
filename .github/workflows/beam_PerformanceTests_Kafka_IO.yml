@@ -61,11 +61,6 @@ jobs:
       matrix:
         job_name: ["beam_PerformanceTests_Kafka_IO"]
         job_phrase: ["Run Java KafkaIO Performance Test"]
-    env:
-      KAFKA_SERVICE_PORT_0: 0
-      KAFKA_SERVICE_PORT_1: 0
-      KAFKA_SERVICE_PORT_2: 0
-      KAFKA_SERVICE_PORT_3: 0
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
@@ -101,7 +96,7 @@ jobs:
             fi
             input=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
             kafka_service_ports[$service]=$(echo "$input" | head -n 1 | sed 's/:$//')
-            ${KAFKA_SERVICE_PORT_${service}}="${kafka_service_ports[$service]}"
+            echo "KAFKA_SERVICE_PORT_${service}=${kafka_service_ports[service]}" >> $GITHUB_OUTPUT
             KAFKA_SERVICE_PORT_DEBUG="${kafka_service_ports[$service]}"
             echo "KAFKA_SERVICE_PORT_DEBUG=${KAFKA_SERVICE_PORT_DEBUG}"
             sed -i -e 's/${configuredPorts[$service]}/${KAFKA_SERVICE_PORT_${service}}/' ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/04-outside-services/outside-${service}.yml
@@ -131,4 +126,4 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInStreaming \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:$KAFKA_SERVICE_PORT_0,${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:$KAFKA_SERVICE_PORT_1,${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:$KAFKA_SERVICE_PORT_2 }}"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_0 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_1 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_2 }}"]'
