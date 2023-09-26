@@ -128,7 +128,7 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInStreaming \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_1 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_0 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_1 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_2 }}"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_1 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:32404,${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:32405,${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:32406"]'
       - name: Run Java KafkaIO Performance Test Batch
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
