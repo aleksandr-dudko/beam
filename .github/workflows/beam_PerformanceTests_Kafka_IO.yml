@@ -109,6 +109,8 @@ jobs:
             kubectl wait svc/outside-${INDEX} --for=jsonpath='{.status.loadBalancer.ingress[0].ip}' --timeout=40m
             kafka_service_brokers[$INDEX]=$(kubectl get svc outside-${INDEX} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "KAFKA_SERVICE_BROKER_${INDEX}=${kafka_service_brokers[$INDEX]}" >> $GITHUB_OUTPUT
+            KAFKA_SERVICE_BROKER_DEBUG="${kafka_service_brokers[$INDEX]}"
+            echo "KAFKA_SERVICE_BROKER_DEBUG=${KAFKA_SERVICE_BROKER_DEBUG}"
           done
       - name: Prepare config
         id: set_config
