@@ -98,9 +98,9 @@ jobs:
               new_port=${kafka_service_ports[$previous_service]}
             fi
             input=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
-            KAFKA_SERVICE_PORT_0=$(echo "$input" | head -n 1 | sed 's/:$//')
+            KAFKA_SERVICE_PORT_${service}=$(echo "$input" | head -n 1 | sed 's/:$//')
             # Print the extracted and modified variable
-            echo "KAFKA_SERVICE_PORT_0=$KAFKA_SERVICE_PORT_0"
+            echo "KAFKA_SERVICE_PORT_${service}=${KAFKA_SERVICE_PORT_${service}}"
             sed -i -e 's/${configuredPorts[$service]}/${KAFKA_SERVICE_PORT_${service}}/' ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/04-outside-services/outside-${service}.yml
           done
       - name: Set up Kafka brokers
