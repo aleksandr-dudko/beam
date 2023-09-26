@@ -98,7 +98,7 @@ jobs:
               new_port=${kafka_service_ports[$previous_service]}
             fi
             available_port=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
-            kafka_service_ports[$service]=$(echo "$available_port" | grep -o '^[0-9]\+' | awk 'NR==1')
+            kafka_service_ports[$service]=$(echo "$available_port" | grep -o '[0-9]\+' | awk 'NR==1')
             KAFKA_SERVICE_PORT_${service}="${kafka_service_ports[$service]}"
             KAFKA_SERVICE_PORT_DEBUG="${kafka_service_ports[$service]}"
             echo "KAFKA_SERVICE_PORT_DEBUG=${KAFKA_SERVICE_PORT_DEBUG}"
