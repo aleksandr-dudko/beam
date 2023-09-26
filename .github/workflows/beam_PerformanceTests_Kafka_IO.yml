@@ -94,6 +94,7 @@ jobs:
             fi
             kafka_service_ports[$service]=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
             echo "KAFKA_SERVICE_PORT_${service}="${kafka_service_ports[$service]}"" >> $GITHUB_OUTPUT
+            echo "KAFKA_SERVICE_PORT_DEBUG=${KAFKA_SERVICE_PORT_${service}}"
             sed -i -e 's/${configuredPorts[$service]}/${KAFKA_SERVICE_PORT_${service}}/' ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/04-outside-services/outside-${service}.yml
           done
       - name: Set up Kafka brokers
