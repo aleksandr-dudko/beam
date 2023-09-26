@@ -98,6 +98,9 @@ jobs:
               new_port=${kafka_service_ports[$previous_service]}
             fi
             kafka_service_ports[$service]=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
+            KAFKA_SERVICE_PORT_0=$(echo "${kafka_service_ports[$service]}" | head -n 1 | sed 's/:$//')
+            # Print the extracted and modified variable
+            echo "KAFKA_SERVICE_PORT_0=$KAFKA_SERVICE_PORT_0"
             KAFKA_SERVICE_PORT_${service}="${kafka_service_ports[$service]}"
             KAFKA_SERVICE_PORT_DEBUG="${kafka_service_ports[$service]}"
             echo "KAFKA_SERVICE_PORT_DEBUG=${KAFKA_SERVICE_PORT_DEBUG}"
