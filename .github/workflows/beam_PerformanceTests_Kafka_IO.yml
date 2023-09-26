@@ -117,4 +117,4 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInBatch \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_1 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_2 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}"]'
