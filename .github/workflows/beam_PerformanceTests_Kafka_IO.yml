@@ -100,7 +100,8 @@ jobs:
             kafka_service_ports[$service]=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
             echo "KAFKA_SERVICE_PORT_$service=${kafka_service_ports[$service]}" >> $GITHUB_OUTPUT
             sed -i -e 's/${configuredPorts[$service]}/${KAFKA_SERVICE_PORT_${service}}/' ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/04-outside-services/outside-${service}.yml
-            kafka_service_brokers[$service]=$(kubectl get svc outside-0 -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+            kubectl wait svc/outside-${service} --for=jsonpath='{.status.loadBalancer.ingress[0].ip}' --timeout=40m
+            kafka_service_brokers[$service]=$(kubectl get svc outside-${service} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "kafka_service_brokers=${kafka_service_brokers[$service]}"
             result="${result}${kafka_service_brokers[$service]}:${kafka_service_ports[$service]},"
             echo "result=${result}"
