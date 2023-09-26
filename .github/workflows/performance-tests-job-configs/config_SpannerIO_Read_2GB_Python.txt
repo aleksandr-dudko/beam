@@ -23,7 +23,7 @@
 --metrics_dataset=beam_performance
 --metrics_table=pyspanner_read_2GB_results
 --influx_measurement=python_spannerio_read_2GB_results
---input_options=''{\\"num_records\\":2097152,\\"key_size\\":1,\\"value_size\\":1024,\\"algorithm\\":\\"lcg\\"}''
+--input_options={"num_records":2097152,"key_size":1,"value_size":1024,"algorithm":"lcg"}
 --num_****s=5
 --autoscaling_algorithm=NONE
 --runner=DataflowRunner
