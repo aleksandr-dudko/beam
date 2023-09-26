@@ -83,10 +83,7 @@ jobs:
         run: |
           configuredPorts=(32400 32401 32402)
           HIGH_RANGE_PORT=32767
-          result=""
-          declare -a kafka_service_ports
-          declare -a kafka_service_brokers
-
+          declare -a kafka_service_ports  
           for service in {0..2}; do
             new_port=0
             if [ $service -eq 0 ]; then
@@ -96,20 +93,15 @@ jobs:
               new_port=${kafka_service_ports[$previous_service]}
             fi
             kafka_service_ports[$service]=$(.test-infra/kubernetes/kubernetes.sh getAvailablePort ${new_port} ${HIGH_RANGE_PORT})
-            echo "KAFKA_SERVICE_PORT_$service=${kafka_service_ports[$service]}" >> $GITHUB_OUTPUT
+            echo "KAFKA_SERVICE_PORT_${service}=${kafka_service_ports[$service]}" >> $GITHUB_OUTPUT
             sed -i -e 's/${configuredPorts[$service]}/${KAFKA_SERVICE_PORT_${service}}/' ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/04-outside-services/outside-${service}.yml
-            kubectl wait svc/outside-${service} --for=jsonpath='{.status.loadBalancer.ingress[0].ip}' --timeout=40m
-            kafka_service_brokers[$service]=$(kubectl get svc outside-${service} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-            echo "kafka_service_brokers=${kafka_service_brokers[$service]}"
-            result="${result}""${kafka_service_brokers[$service]}:${kafka_service_ports[$service]},"
-            echo "result=${result}"
           done
-          echo "kafkaBootstrapServerAddresses=${result}" >> $GITHUB_OUTPUT
       - name: Set up Kafka brokers
         id: set_brokers
         run: |
           declare -a kafka_service_brokers
           for INDEX in {0..2}; do
+            kubectl wait svc/outside-${INDEX} --for=jsonpath='{.status.loadBalancer.ingress[0].ip}' --timeout=40m
             kafka_service_brokers[$INDEX]=$(kubectl get svc outside-${INDEX} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "KAFKA_SERVICE_BROKER_${INDEX}=${kafka_service_brokers[$INDEX]}" >> $GITHUB_OUTPUT
           done
@@ -129,4 +121,4 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInStreaming \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.kafkaBootstrapServerAddresses }}"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_0 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_1 }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ steps.set_ports.outputs.KAFKA_SERVICE_PORT_2 }}"]'
