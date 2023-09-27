@@ -90,18 +90,16 @@ jobs:
             kafka_service_brokers[$INDEX]=$(kubectl get svc outside-${INDEX} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
             echo "KAFKA_SERVICE_BROKER_${INDEX}=${kafka_service_brokers[$INDEX]}" >> $GITHUB_OUTPUT
           done
-      - name: Prepare config
-        id: set_config
-        shell: bash
-        run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CONFIG_ARR=('config_Kafka_IO_Stream.txt' 'config_Kafka_IO_Batch.txt')
-          for INDEX in ${!CONFIG_ARR[@]}
-          do
-            CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/${CONFIG_ARR[INDEX]} | tr '\n' ' ')
-            CURCONFIG=$(echo "${CURCONFIG/performance-tests-kafka-io-$((INDEX + 1))-/performance-tests-kafka-io-$((INDEX + 1))-$CURDATE}")
-            echo "prepared_config_$((INDEX + 1))=$CURCONFIG" >> $GITHUB_OUTPUT
-          done
+      - name: Prepare test arguments
+        uses: ./.github/actions/test-arguments-action
+        with:
+          test-type: performance
+          test-language: java
+          argument-file-paths: |
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_Kafka_IO_Stream.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_Kafka_IO_Batch.txt
+          arguments: |
+            "--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}"
       - name: Run Java KafkaIO Performance Stream Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -110,7 +108,7 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInStreaming \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_1 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}"]' \
+            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_Kafka_IO_test_arguments_1}}]' \
       - name: Run Java KafkaIO Performance Batch Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -119,4 +117,4 @@ jobs:
             --tests org.apache.beam.sdk.io.kafka.KafkaIOIT.testKafkaIOReadsAndWritesCorrectlyInBatch \
             --info \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config_2 }}"--kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}"]'
+            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_Kafka_IO_test_arguments_2}}]'
