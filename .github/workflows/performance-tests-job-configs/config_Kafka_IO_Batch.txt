@@ -16,14 +16,11 @@
 # limitations under the License.
 ###############################################################################
 "--tempRoot=gs://temp-storage-for-perf-tests",
-"--project=apache-beam-testing",
 "--runner=DataflowRunner",
 "--sourceOptions={\"numRecords\":\"100000000\",\"keySizeBytes\":\"10\",\"valueSizeBytes\":\"90\"}",
 "--bigQueryDataset=beam_performance",
 "--bigQueryTable=kafkaioit_results",
 "--influxMeasurement=kafkaioit_results",
-"--influxDatabase=beam_test_metrics",
-"--influxHost=http://10.128.0.96:8086",
 "--kafkaTopic=beam-batch",
 "--readTimeout=1800",
 "--numWorkers=5",
