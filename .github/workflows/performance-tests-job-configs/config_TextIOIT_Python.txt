@@ -13,7 +13,6 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 # limitations under the License.
-
 --runner=DataflowRunner
 --region=us-central1
 --temp_location=gs://temp-storage-for-perf-tests/
