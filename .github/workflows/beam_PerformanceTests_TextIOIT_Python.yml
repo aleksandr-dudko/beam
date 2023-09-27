@@ -73,15 +73,13 @@ jobs:
         uses: ./.github/actions/setup-environment-action
         with:
           python-version: 3.8
-      - name: Prepare config
-        id: set_config
-        #Reads config files, excludes comments, appends current date to the job_name parameter
-        shell: bash
-        run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_TextIOIT_Python.txt | tr '\n' ' ')
-          CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
-          echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
+      - name: Prepare test arguments
+        uses: ./.github/actions/test-arguments-action
+        with:
+          test-type: performance
+          test-language: python
+          argument-file-paths: |
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_TextIOIT_Python.txt
       - name: Run Python TextIO Performance Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -90,4 +88,4 @@ jobs:
             -PpythonVersion=3.8 \
             -PloadTest.mainClass=apache_beam.io.filebasedio_perf_test \
             -Prunner=DataflowRunner \
-            '-PloadTest.args=${{ steps.set_config.outputs.prepared_config }}'
+            '-PloadTest.args=${{env.beam_PerformanceTests_TextIOIT_Python_test_arguments_1}}'

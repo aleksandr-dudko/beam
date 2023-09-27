@@ -100,4 +100,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_TextIOIT_test_arguments_1}}]'
+            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_TextIOIT_HDFS_test_arguments_1}}]'
