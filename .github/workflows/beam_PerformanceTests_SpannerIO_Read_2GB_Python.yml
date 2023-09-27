@@ -76,7 +76,7 @@ jobs:
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
-          test-type: performance
+          test-type: load
           test-language: python
           argument-file-paths: |
             ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_SpannerIO_Read_2GB_Python.txt
