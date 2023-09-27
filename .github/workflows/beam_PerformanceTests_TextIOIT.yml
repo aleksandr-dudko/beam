@@ -87,4 +87,4 @@ jobs:
             --info \
             -Dfilesystem=gcs \
             -DintegrationTestRunner=dataflow \
-            '-DintegrationTestPipelineOptions=[${{env.${{ matrix.job_name }}_test_arguments_1}}]'
+            '-DintegrationTestPipelineOptions=[${{env.beam_PerformanceTests_TextIOIT_test_arguments_1}}]'
