@@ -15,12 +15,11 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-["--project=apache-beam-testing",
-"--tempLocation=gs://temp-storage-for-perf-tests/loadtests",
-"--tempRoot=gs://temp-storage-for-perf-tests/loadtests",
-"--metricsBigQueryDataset=beam_performance",
-"--metricsBigQueryTable=sql_bqio_read_java_batch",
-"--runner=DataflowRunner",
-"--maxNumWorkers=5",
-"--numWorkers=5",
-"--autoscalingAlgorithm=NONE"]
+--tempLocation=gs://temp-storage-for-perf-tests/loadtests
+--tempRoot=gs://temp-storage-for-perf-tests/loadtests
+--metricsBigQueryDataset=beam_performance
+--metricsBigQueryTable=sql_bqio_read_java_batch
+--runner=DataflowRunner
+--maxNumWorkers=5
+--numWorkers=5
+--autoscalingAlgorithm=NONE

@@ -87,7 +87,7 @@ jobs:
           arguments: |
             --tests org.apache.beam.sdk.extensions.sql.meta.provider.bigquery.BigQueryIOPushDownIT \
             -DintegrationTestRunner=dataflow  \
-            '-DintegrationTestPipelineOptions=${{env.beam_PerformanceTests_Kafka_IO_test_arguments_1}}' \
+            '-DintegrationTestPipelineOptions=[${{env.beam_PerformanceTests_Kafka_IO_test_arguments_1}}]' \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         if: failure()
