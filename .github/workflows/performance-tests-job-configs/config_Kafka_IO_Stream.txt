@@ -25,4 +25,4 @@
 "--readTimeout=1500",
 "--numWorkers=5",
 "--autoscalingAlgorithm=NONE",
-"--experiments=use_runner_v2,use_unified_worker",
+"--experiments=use_runner_v2,use_unified_worker"
