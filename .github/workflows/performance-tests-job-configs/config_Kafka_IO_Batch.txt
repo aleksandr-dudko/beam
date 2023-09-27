@@ -24,4 +24,4 @@
 "--kafkaTopic=beam-batch",
 "--readTimeout=1800",
 "--numWorkers=5",
-"--autoscalingAlgorithm=NONE",
+"--autoscalingAlgorithm=NONE"
