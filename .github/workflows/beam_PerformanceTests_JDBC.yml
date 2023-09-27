@@ -106,4 +106,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1}}]'
+            -DintegrationTestPipelineOptions='[${{env.${{ JOB_NAME }}_test_arguments_1}}]'
