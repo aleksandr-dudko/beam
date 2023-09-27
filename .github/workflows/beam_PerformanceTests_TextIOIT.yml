@@ -69,14 +69,15 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Prepare config
-        id: set_config
-        shell: bash
-        run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_TextIOIT.txt | tr '\n' ' ')
-          CONFIGWITHDATE=$(echo "${CURCONFIG/textioit_/textioit_$CURDATE}")
-          echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
+      - name: Prepare test arguments
+        uses: ./.github/actions/test-arguments-action
+        with:
+          test-type: performance
+          test-language: java
+          argument-file-paths: |
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_TextIOIT.txt
+          arguments: |
+            --filenamePrefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}
       - name: Run Java TextIO Performance Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -86,4 +87,4 @@ jobs:
             --info \
             -Dfilesystem=gcs \
             -DintegrationTestRunner=dataflow \
-            '-DintegrationTestPipelineOptions=${{ steps.set_config.outputs.prepared_config }}'
+            '-DintegrationTestPipelineOptions=[${{env.beam_PerformanceTests_Kafka_IO_test_arguments_1}}]'
