@@ -104,4 +104,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{env.${{ github.job }}_test_arguments_1}}]'
+            -DintegrationTestPipelineOptions='[${{env.beam_PerformanceTests_JDBC_test_arguments_1}}]'
