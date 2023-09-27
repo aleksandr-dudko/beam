@@ -15,14 +15,14 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-"--tempRoot=gs://temp-storage-for-perf-tests",
-"--runner=DataflowRunner",
-"--sourceOptions={\"numRecords\":\"100000000\",\"keySizeBytes\":\"10\",\"valueSizeBytes\":\"90\"}",
-"--bigQueryDataset=beam_performance",
-"--bigQueryTable=kafkaioit_results_runner_v2",
-"--influxMeasurement=kafkaioit_results_runner_v2",
-"--kafkaTopic=beam-sdf",
-"--readTimeout=1500",
-"--numWorkers=5",
-"--autoscalingAlgorithm=NONE",
-"--experiments=use_runner_v2,use_unified_worker"
+--tempRoot=gs://temp-storage-for-perf-tests
+--runner=DataflowRunner
+--sourceOptions={\"numRecords\":\"100000000\",\"keySizeBytes\":\"10\",\"valueSizeBytes\":\"90\"}
+--bigQueryDataset=beam_performance
+--bigQueryTable=kafkaioit_results_runner_v2
+--influxMeasurement=kafkaioit_results_runner_v2
+--kafkaTopic=beam-sdf
+--readTimeout=1500
+--numWorkers=5
+--autoscalingAlgorithm=NONE
+--experiments=use_runner_v2,use_unified_worker
