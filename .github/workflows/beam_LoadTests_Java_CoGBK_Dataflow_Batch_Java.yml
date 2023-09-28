@@ -85,8 +85,10 @@ jobs:
           test-language: java
           argument-file-paths: |
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow-batch/java_CoGBK_Dataflow_Batch_Java_100b_Single_Key.txt
-          arguments: |
-            --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_1
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow-batch/java_CoGBK_Dataflow_Batch_Java_100b_Multiple_Keys.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow-batch/java_CoGBK_Dataflow_Batch_Java_10kB.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow-batch/java_CoGBK_Dataflow_Batch_Java_2MB.txt          
+            arguments: |            
             --influxTags={\"runnerVersion\":\"v2\",\"jdk\":\"java${{ matrix.java_version }}\"}
       - name: run CoGBK 2GB 100  byte records - single key
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -97,4 +99,34 @@ jobs:
             -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_1 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_1 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_1'
+      - name: run CoGBK 2GB 100 byte records - multiple keys
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:load-tests:run
+          arguments: |
+            -PcompileAndRunTestsWithJava${{ matrix.java_version }} \
+            -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
+            -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
+            -Prunner=:runners:google-cloud-dataflow-java \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_2 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_2' \
+      - name: run CoGBK 2GB reiteration 10kB value
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:load-tests:run
+          arguments: |
+            -PcompileAndRunTestsWithJava${{ matrix.java_version }} \
+            -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
+            -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
+            -Prunner=:runners:google-cloud-dataflow-java \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_3 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_3' \
+      - name: run CoGBK 2GB reiteration 2MB value
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:java:testing:load-tests:run
+          arguments: |
+            -PcompileAndRunTestsWithJava${{ matrix.java_version }} \
+            -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
+            -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
+            -Prunner=:runners:google-cloud-dataflow-java \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_4 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_4'
