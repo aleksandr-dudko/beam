@@ -79,7 +79,7 @@ jobs:
           test-type: load
           test-language: python
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_TextIOIT_Python.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/textIOIT_Python.txt
           arguments: |
             --filename_prefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}
       - name: Run Python TextIO Performance Test
