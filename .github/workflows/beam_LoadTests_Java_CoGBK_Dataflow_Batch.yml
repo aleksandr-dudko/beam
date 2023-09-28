@@ -95,7 +95,7 @@ jobs:
             --info
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_ParDo_Dataflow_Batch_test_arguments_2 }}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_Batch_test_arguments_2 }}' \
       - name: run CoGBK 2GB reiteration 10kB value
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -103,7 +103,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_ParDo_Dataflow_Batch_test_arguments_3 }}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_Batch_test_arguments_3 }}' \
       - name: run CoGBK 2GB reiteration 2MB value
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -111,4 +111,4 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_ParDo_Dataflow_Batch_test_arguments_4 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_Batch_test_arguments_4 }}'
