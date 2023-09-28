@@ -93,6 +93,7 @@ jobs:
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
+            --info
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
             '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_Batch_test_arguments_2 }} --appName=load_tests_Java_Dataflow_batch_CoGBK_2' \
