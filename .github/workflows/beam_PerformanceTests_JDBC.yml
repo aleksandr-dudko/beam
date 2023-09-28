@@ -45,6 +45,7 @@ env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
+  beam_PerformanceTests_JDBC_test_arguments_1: ''
 
 jobs:
   beam_PerformanceTests_JDBC:
@@ -53,7 +54,7 @@ jobs:
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Java JdbcIO Performance Test'
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 240
+    timeout-minutes: 100
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:

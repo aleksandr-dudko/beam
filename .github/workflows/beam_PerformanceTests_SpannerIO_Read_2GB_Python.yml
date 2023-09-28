@@ -45,6 +45,7 @@ env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
+  beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1: ''
 
 jobs:
   beam_PerformanceTests_SpannerIO_Read_2GB_Python:
@@ -80,9 +81,6 @@ jobs:
             ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/spannerIO_Read_2GB_Python.txt
           arguments: |
             --job_name=performance-tests-spanner-read-python-2gb$(date '+%m%d%H%M%S' --utc)
-      - name: Echo
-        run: |
-          echo "beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1 =${{env.beam_PerformanceTests_SpannerIO_Read_2GB_Python_test_arguments_1}}"
       - name: run Performance SpannerIO Read 2GB Test Python
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
