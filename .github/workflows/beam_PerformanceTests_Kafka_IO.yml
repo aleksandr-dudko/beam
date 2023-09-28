@@ -96,8 +96,8 @@ jobs:
           test-type: performance
           test-language: java
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/Kafka_IO_Streaming.txt
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/Kafka_IO_Batch.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/kafka_IO_Streaming.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/kafka_IO_Batch.txt
           arguments: |
             --kafkaBootstrapServerAddresses=${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_0 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_1 }}:${{ env.KAFKA_SERVICE_PORT }},${{ steps.set_brokers.outputs.KAFKA_SERVICE_BROKER_2 }}:${{ env.KAFKA_SERVICE_PORT }}
       - name: Run Java KafkaIO Performance Streaming Test
