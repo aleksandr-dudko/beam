@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: PerformanceTests SpannerIORead 2GB Python
+name: PerformanceTests SpannerIO Read 2GB Python
 
 on:
   issue_comment:
