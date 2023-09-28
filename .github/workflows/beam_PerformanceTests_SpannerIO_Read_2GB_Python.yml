@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Performance Tests SpannerIO Read 2GB Python
+name: PerformanceTests SpannerIORead 2GB Python
 
 on:
   issue_comment:
@@ -79,7 +79,7 @@ jobs:
           test-type: load
           test-language: python
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_SpannerIO_Read_2GB_Python.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/spannerIO_Read_2GB_Python.txt
           arguments: |
             --job_name=performance-tests-spanner-read-python-2gb$(date '+%m%d%H%M%S' --utc)
       - name: Echo
