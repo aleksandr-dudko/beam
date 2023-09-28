@@ -87,7 +87,7 @@ jobs:
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow-batch/java_CoGBK_Dataflow_Batch_Java_100b_Single_Key.txt
           arguments: |
             --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_1
-            --influxTags={\\\"runnerVersion\\\":\\\"v2\\\",\\\"jdk\\\":\\\"java${{ matrix.java_version }}"\\\}
+            --influxTags={\\\"runnerVersion\\\":\\\"v2\\\",\\\"jdk\\\":\\\"java${{ matrix.java_version }}\\\"}
       - name: run CoGBK 2GB 100  byte records - single key
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
