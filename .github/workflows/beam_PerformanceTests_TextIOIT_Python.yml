@@ -81,7 +81,7 @@ jobs:
           argument-file-paths: |
             ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_TextIOIT_Python.txt
           arguments: |
-            --filenamePrefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}
+            --filename_prefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}
       - name: Run Python TextIO Performance Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
