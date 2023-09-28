@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Performance Tests TextIOIT
+name: PerformanceTests TextIOIT
 
 on:
   issue_comment:
@@ -75,7 +75,7 @@ jobs:
           test-type: performance
           test-language: java
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_TextIOIT.txt
+            ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/textIOIT.txt
           arguments: |
             --filenamePrefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}
       - name: Run Java TextIO Performance Test
