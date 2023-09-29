@@ -99,7 +99,7 @@ jobs:
             -Pjava${{ matrix.java_version }}Home=$JAVA_HOME_${{ matrix.java_version }}_X64 \
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.CoGroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_1 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_1'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_CoGBK_Dataflow_V2_Batch_Java_test_arguments_1 }} --appName=load_tests_Java${{ matrix.java_version }}_Dataflow_V2_batch_CoGBK_1' \
       - name: run CoGBK 2GB 100 byte records - multiple keys
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
