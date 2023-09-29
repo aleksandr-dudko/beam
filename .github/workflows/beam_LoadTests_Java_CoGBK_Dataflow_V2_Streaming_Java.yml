@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 9 * * *'
+    - cron: '30 10 * * *'
   workflow_dispatch:
 
 # Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -84,10 +84,10 @@ jobs:
           test-type: load
           test-language: java
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow/java_CoGBK_Dataflow_V2_Streaming_Java_100b_Single_Key.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow/java_CoGBK_Dataflow_V2_Streaming_Java_100b_Multiple_Keys.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow/java_CoGBK_Dataflow_V2_Streaming_Java_10kB.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk-dataflow/java_CoGBK_Dataflow_V2_Streaming_Java_2MB.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk/java_CoGBK_Dataflow_V2_Streaming_Java_100b_Single_Key.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk/java_CoGBK_Dataflow_V2_Streaming_Java_100b_Multiple_Keys.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk/java_CoGBK_Dataflow_V2_Streaming_Java_10kB.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk/java_CoGBK_Dataflow_V2_Streaming_Java_2MB.txt
           arguments: |
             --influxTags={\"runnerVersion\":\"v2\",\"jdk\":\"java${{ matrix.java_version }}\"}
       - name: run CoGBK 2GB 100 byte records - single key
