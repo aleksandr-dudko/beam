@@ -24,7 +24,7 @@
 --iterations=1
 --number_of_counter_operations=10
 --number_of_counters=1
---num_****s=5
+--num_workers=5
 --autoscaling_algorithm=NONE
 --streaming
 --experiments=use_runner_v2

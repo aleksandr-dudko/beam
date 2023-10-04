@@ -14,8 +14,6 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 
---job_name=load-tests-python-dataflow-streaming-pardo-2-1002005503
---project=apache-beam-testing
 --region=us-central1
 --temp_location=gs://temp-storage-for-perf-tests/loadtests
 --publish_to_big_query=true
