@@ -19,3 +19,4 @@
 --stepOptions={outputRecordsPerInputRecord:1,preservesInputKeyDistribution:true}
 --fanout=10
 --iterations=1
+--runner=SparkRunner
