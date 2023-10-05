@@ -15,7 +15,7 @@
 # limitations under the License.
 
 --region=us-central1
---temp_location=gs://temp-storage-for-perf-tests/loadtests
+--tempLocation=gs://temp-storage-for-perf-tests/loadtests
 --sourceOptions={"numRecords":100000,"splitPointFrequencyRecords":1}
 --stepOptions={"outputRecordsPerInputRecord":1,"preservesInputKeyDistribution":true}
 --fanout=10
