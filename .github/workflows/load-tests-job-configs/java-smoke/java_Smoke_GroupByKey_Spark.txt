@@ -14,7 +14,6 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 
---region=us-central1
 --sparkMaster=local[4]
 --sourceOptions={"numRecords":100000,"splitPointFrequencyRecords":1}
 --stepOptions={outputRecordsPerInputRecord:1,preservesInputKeyDistribution:true}
