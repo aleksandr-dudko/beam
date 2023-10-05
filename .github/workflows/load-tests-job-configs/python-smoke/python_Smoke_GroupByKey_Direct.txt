@@ -17,5 +17,4 @@
 --publish_to_big_query=true
 --metrics_dataset=load_test_SMOKE
 --metrics_table=python_direct_gbk
---influx_measurement=python_batch_pardo_3
 --input_options=''{\\"num_records\\":100000,\\"key_size\\":1,\\"value_size\\":1}''
