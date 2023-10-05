@@ -56,7 +56,7 @@ jobs:
       (contains(github.event.comment.body, 'Run Load Tests Java') &&
          contains(github.event.comment.body, 'CoGBK Dataflow V2 Streaming'))
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 960
+    timeout-minutes: 240
     name: ${{matrix.job_name}} (${{matrix.job_phrase_1}} ${{matrix.java_version}} ${{matrix.job_phrase_2}})
     strategy:
       fail-fast: false
@@ -73,10 +73,9 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} ${{ matrix.job_phrase_1 }} ${{matrix.java_version}} ${{ matrix.job_phrase_2 }}
-      - name: Set up Java${{ matrix.java_version }}
-        uses: actions/setup-java@v3.8.0
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment-action
         with:
-          distribution: 'temurin'
           java-version: ${{ matrix.java_version }}
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
@@ -90,6 +89,7 @@ jobs:
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/java-cogbk/java_CoGBK_Dataflow_V2_Streaming_Java_2MB.txt
           arguments: |
             --influxTags={\"runnerVersion\":\"v2\",\"jdk\":\"java${{ matrix.java_version }}\"}
+      # The env variable is created and populated in the test-arguments-action as "beam_LoadTests_Java_CoGBK_Dataflow_V2_Streaming_Java_test_arguments_1"
       - name: run CoGBK 2GB 100 byte records - single key
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
