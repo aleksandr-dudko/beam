@@ -16,7 +16,7 @@
 
 --sparkMaster=local[4]
 --sourceOptions={"numRecords":100000,"splitPointFrequencyRecords":1}
---stepOptions={outputRecordsPerInputRecord:1,preservesInputKeyDistribution:true}
+--stepOptions={"outputRecordsPerInputRecord":1,"preservesInputKeyDistribution":true}
 --fanout=10
 --iterations=1
 --runner=SparkRunner
