@@ -96,7 +96,7 @@ jobs:
           name: JUnit Test Results
           path: "**/build/reports/tests/"
       - name: Publish JUnit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.10.0
+        uses: EnricoMi/publish-unit-test-result-action@v2.1.0
         if: always()
         with:
           commit: '${{ env.prsha || env.GITHUB_SHA }}'
