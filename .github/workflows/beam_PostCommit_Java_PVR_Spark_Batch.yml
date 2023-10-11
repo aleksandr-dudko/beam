@@ -75,10 +75,10 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
             gradle-command: |
-              :runners:spark:3:job-server:validatesPortableRunnerBatch 
-              :runners:spark:3:job-server:validatesPortableRunnerDocker
+              :runners:spark:3:job-server:validatesPortableRunnerBatch \
+              :runners:spark:3:job-server:validatesPortableRunnerDocker \
             arguments: |
-              --info
+              --info \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         if: failure()
