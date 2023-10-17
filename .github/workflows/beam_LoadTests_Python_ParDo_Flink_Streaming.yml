@@ -107,7 +107,7 @@ jobs:
       - name: run ParDo Flink Streaming Python Load Test 1 (10 iterations)
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run --info
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.pardo_test \
             -Prunner=PortableRunner \
