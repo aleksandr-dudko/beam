@@ -73,11 +73,6 @@ jobs:
         uses: ./.github/actions/setup-environment-action
         with:
           python-version: 3.8
-      - name: Pip install requirements
-        run: |
-          pip install pip-tools
-          pip-compile --generate-hashes requirements.in
-          pip install -r requirements.txt
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
