@@ -73,10 +73,9 @@ jobs:
         uses: ./.github/actions/setup-environment-action
         with:
           python-version: 3.8
-      - name: Install pip
+      - name: Update pip and setuptools
         run: |
-          python -m ensurepip --default-pip
-          python -m pip install --upgrade pip
+          pip install --upgrade pip setuptools
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
