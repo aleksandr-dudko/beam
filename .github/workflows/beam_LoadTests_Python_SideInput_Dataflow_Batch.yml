@@ -73,9 +73,9 @@ jobs:
         uses: ./.github/actions/setup-environment-action
         with:
           python-version: 3.8
-      - name: Clear pip cache
+      - name: Pip install requirements
         run: |
-          pip cache purge
+          pip install -r requirements.txt
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
