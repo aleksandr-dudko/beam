@@ -72,9 +72,10 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment-action
         with:
-          python-version: |
-            3.11
-            3.8
+          python-version: 3.8
+      - name: Clear pip cache
+        run: |
+          pip cache purge
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
