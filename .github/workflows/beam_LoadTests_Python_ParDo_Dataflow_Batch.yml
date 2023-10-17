@@ -73,9 +73,9 @@ jobs:
         uses: ./.github/actions/setup-environment-action
         with:
           python-version: 3.8
-      - name: Update pip and setuptools
+      - name: Clear pip cache
         run: |
-          pip install --upgrade pip setuptools
+          pip cache purge
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
